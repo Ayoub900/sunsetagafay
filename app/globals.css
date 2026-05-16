@@ -299,8 +299,7 @@ img, video { max-width: 100%; display: block; }
   text-decoration: none;
   color: inherit;
 }
-.nav-wordmark-icon { transition: filter 400ms; }
-.nav-root.scrolled .nav-wordmark-icon { filter: invert(1); }
+.nav-wordmark-icon { transition: opacity 400ms; }
 
 .nav-lang {
   display: inline-flex;
@@ -741,20 +740,33 @@ img, video { max-width: 100%; display: block; }
 /* ── Experiences list ─────────────────────────────── */
 .exp-row {
   display: grid;
-  grid-template-columns: 70px 1fr 1.2fr 200px;
+  grid-template-columns: 70px 1fr 1.2fr 200px 40px;
   gap: 32px;
-  align-items: baseline;
+  align-items: center;
   padding: 28px 0;
   border-bottom: 1px solid rgba(31,26,20,0.18);
 }
 @media (max-width: 900px) {
-  .exp-row { grid-template-columns: 50px 1fr; gap: 16px 24px; }
+  .exp-row { grid-template-columns: 50px 1fr 40px; gap: 16px 24px; }
   .exp-row-who, .exp-row-when { display: none; }
 }
 @media (max-width: 480px) {
-  .exp-row { grid-template-columns: 1fr; gap: 8px; }
+  .exp-row { grid-template-columns: 1fr 40px; gap: 8px; }
   .exp-row-num { display: none; }
 }
+
+.exp-row-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--sienna);
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.exp-row-arrow:hover { opacity: 1; transform: translateX(3px); }
 
 /* ── Hammam layout ────────────────────────────────── */
 .hammam-grid {
@@ -926,9 +938,35 @@ img, video { max-width: 100%; display: block; }
 }
 
 /* ── Suites article (alternating) ───────────────────── */
+.suite-grid {
+  display: grid;
+  gap: clamp(32px, 5vw, 80px);
+  align-items: center;
+}
 @media (max-width: 767px) {
+  .suite-grid {
+    grid-template-columns: 1fr !important;
+  }
   article[style*="grid-template-columns"] {
     grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Transfer list ───────────────────────────────────── */
+.transfer-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: clamp(24px, 4vw, 64px);
+}
+@media (max-width: 640px) {
+  .transfer-row {
+    grid-template-columns: 1fr;
+  }
+  .transfer-row-meta {
+    text-align: left !important;
+    padding-top: 0 !important;
+    flex-shrink: unset;
   }
 }
 

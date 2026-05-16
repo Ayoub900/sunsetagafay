@@ -115,11 +115,7 @@ export default async function SuitesPage({ params }: { params: Promise<{ lang: s
         <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(64px,9vw,120px)' }}>
           {rooms.map((r, i) => (
             <article key={r.name} id={anchorMap[i]} style={{ scrollMarginTop: 'var(--nav-h)' }}>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: i % 2 === 0 ? '1fr 1.1fr' : '1.1fr 1fr',
-                gap: 'clamp(32px,5vw,80px)', alignItems: 'center',
-              }}>
+              <div className="suite-grid" style={{ gridTemplateColumns: i % 2 === 0 ? '1fr 1.1fr' : '1.1fr 1fr' }}>
                 {i % 2 === 0 ? (
                   <>
                     <SuiteImage r={r} kind={kindMap[Math.min(i, kindMap.length - 1)]} />

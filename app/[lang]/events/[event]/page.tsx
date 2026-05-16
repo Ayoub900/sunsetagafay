@@ -151,7 +151,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ la
             </div>
           </div>
 
-          <div style={{ position: 'sticky', top: 'calc(var(--nav-h) + 24px)', display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5' }}>
               <Photo kind="courtyard" src={coverImage} alt={name} style={{ position: 'absolute', inset: 0 }} />
             </div>

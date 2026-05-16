@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { GrainOverlay, SunburstMark } from './shared'
+import { GrainOverlay } from './shared'
 import { NewsletterForm } from './NewsletterForm'
 
 interface FooterLink { label: string; href: string }
@@ -129,8 +129,8 @@ export function Footer({ dict, lang }: FooterProps) {
           <div style={{ fontFamily: 'var(--sans)', fontSize: 10.5, letterSpacing: '0.26em', textTransform: 'uppercase', color: 'rgba(242,232,213,0.55)' }}>
             {dict.legal}
           </div>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, fontFamily: 'var(--serif)', fontWeight: 400, fontSize: 14, letterSpacing: '0.42em', textTransform: 'uppercase', justifySelf: 'center' }}>
-            <SunburstMark size={14} stroke={0.9} color="var(--paper)" />
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--serif)', fontWeight: 400, fontSize: 14, letterSpacing: '0.42em', textTransform: 'uppercase', justifySelf: 'center' }}>
+            <img src="/logo_emblem_gold.png" alt="" aria-hidden="true" style={{ height: 40, width: 'auto', display: 'block' }} />
             Sunset Agafay
           </div>
           <div style={{ justifySelf: 'end', fontFamily: 'var(--sans)', fontSize: 10.5, letterSpacing: '0.26em', textTransform: 'uppercase', color: 'rgba(242,232,213,0.55)', display: 'flex', gap: 24, flexWrap: 'wrap' }}>

@@ -78,12 +78,9 @@ export default async function TransfersPage({ params }: { params: Promise<{ lang
               <article
                 key={opt.id}
                 id={opt.id}
+                className="transfer-row"
                 style={{
                   scrollMarginTop: 'var(--nav-h)',
-                  display: 'grid',
-                  gridTemplateColumns: '1fr auto',
-                  alignItems: 'start',
-                  gap: 'clamp(24px,4vw,64px)',
                   padding: 'clamp(32px,4vw,52px) 0',
                   borderTop: '1px solid rgba(31,26,20,0.14)',
                 }}
@@ -118,7 +115,7 @@ export default async function TransfersPage({ params }: { params: Promise<{ lang
                     </Link>
                   </div>
                 </div>
-                <div style={{ textAlign: 'right', flexShrink: 0, paddingTop: 'clamp(28px,3vw,38px)' }}>
+                <div className="transfer-row-meta" style={{ textAlign: 'right', flexShrink: 0, paddingTop: 'clamp(28px,3vw,38px)' }}>
                   <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 6 }}>
                     {lang === 'fr' ? 'Durée' : 'Duration'}
                   </div>

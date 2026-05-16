@@ -38,6 +38,13 @@ export function Experiences({ dict, experiences, lang }: { dict: ExpSectionDict;
                   {it.who}
                 </div>
               </div>
+              <Link
+                href={`/${lang}/experiences`}
+                aria-label={`${lang === 'fr' ? 'En savoir plus' : 'Learn more'}: ${it.name}`}
+                className="exp-row-arrow"
+              >
+                →
+              </Link>
             </li>
           ))}
         </ul>

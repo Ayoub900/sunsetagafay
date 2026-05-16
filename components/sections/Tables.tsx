@@ -62,6 +62,12 @@ function TableText({ t, service, lang, anchor }: { t: TableEntry; service: strin
         <span style={{ fontFamily: 'var(--sans)', fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--ink-soft)' }}>{service}</span>
         <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(14px,1.5vw,16px)', color: 'var(--ink)' }}>{t.hours}</span>
       </div>
+      <div style={{ marginTop: 28 }}>
+        <Link href={`/${lang}/restaurants/${anchor}`} className="cta">
+          <span className="cta-label">{lang === 'fr' ? 'Découvrir' : 'Discover'}</span>
+          <span className="cta-arrow" aria-hidden="true">→</span>
+        </Link>
+      </div>
     </div>
   )
 }
