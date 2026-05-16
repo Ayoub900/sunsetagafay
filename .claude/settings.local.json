@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "mcp__Claude_in_Chrome__browser_batch",
+      "Bash(npx tsc *)",
+      "Bash(npm install *)",
+      "Bash(npx prisma *)",
+      "PowerShell(Get-Process node -ErrorAction SilentlyContinue)",
+      "Bash(npx --yes prisma generate --force)",
+      "Bash(node -e \"const { execSync } = require\\('child_process'\\); try { execSync\\('npx prisma generate', { stdio: 'inherit' }\\); } catch\\(e\\) { process.exit\\(1\\); }\")",
+      "Bash(node scripts/convert-logos.mjs)",
+      "Bash(Get-ChildItem -Path \"E:\\\\projects\\\\nextjs\\\\sunsetagafay\" -Recurse -Directory)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Sort-Object)"
+    ]
+  }
+}

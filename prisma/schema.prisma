@@ -1,0 +1,182 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URL")
+}
+
+model AdminUser {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Suite {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug      String   @unique
+  plate     String
+  nameEn    String
+  nameFr    String
+  briefEn          String
+  briefFr          String
+  descriptionEn    String   @default("")
+  descriptionFr    String   @default("")
+  area      String
+  view      String
+  rate      String
+  imageKind String   @default("sunset")
+  imageUrl  String   @default("")
+  images    String[] @default([])
+  active    Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Restaurant {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug      String   @unique
+  plate     String
+  nameEn    String
+  nameFr    String
+  ledeEn    String
+  ledeFr    String
+  copyEn    String
+  copyFr    String
+  hours     String
+  imageUrl  String   @default("")
+  images    String[] @default([])
+  active    Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Experience {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  n         String
+  nameEn    String
+  nameFr    String
+  when      String
+  who       String
+  ledeEn    String
+  ledeFr    String
+  imageUrl  String   @default("")
+  active    Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Event {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug      String   @unique
+  nameEn    String
+  nameFr    String
+  ledeEn    String   @default("")
+  ledeFr    String   @default("")
+  copyEn    String
+  copyFr    String
+  capacity  String
+  imageUrl  String   @default("")
+  images    String[] @default([])
+  active    Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SunsetParty {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug      String   @unique
+  nameEn    String
+  nameFr    String
+  ledeEn    String
+  ledeFr    String
+  copyEn    String
+  copyFr    String
+  capacity  String
+  season    String
+  imageUrl  String   @default("")
+  images    String[] @default([])
+  active    Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Transfer {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug      String   @unique
+  nameEn    String
+  nameFr    String
+  ledeEn    String
+  ledeFr    String
+  copyEn    String
+  copyFr    String
+  duration  String
+  price     String
+  imageUrl  String   @default("")
+  active    Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String
+  phone     String   @default("")
+  subject   String
+  message   String
+  checkin   String   @default("")
+  checkout  String   @default("")
+  guests    String   @default("")
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Treatment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  nameEn    String
+  nameFr    String
+  duration  String
+  price     String
+  active    Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Reservation {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  guestName String
+  suite     String
+  checkIn   String
+  checkOut  String
+  nights    Int      @default(1)
+  guests    Int      @default(1)
+  total     String   @default("")
+  status    String   @default("Pending")
+  notes     String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Guest {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @default("")
+  phone     String   @default("")
+  country   String   @default("")
+  stays     Int      @default(0)
+  vip       Boolean  @default(false)
+  notes     String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

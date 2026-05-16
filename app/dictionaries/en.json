@@ -1,0 +1,529 @@
+{
+  "nav": {
+    "story": "Story",
+    "suites": "Suites",
+    "suites_all": "All Suites",
+    "suites_agafay": "Suite Agafay",
+    "suites_khoutoubia": "Suite La Khoutoubia",
+    "suites_sunset": "Suite Sunset",
+    "suites_family": "Family Suite",
+    "restaurants": "Restaurants & Bars",
+    "restaurants_all": "All Tables",
+    "restaurants_souk": "Le Souk",
+    "restaurants_arish": "Bar Arish",
+    "restaurants_idriss": "La Table d'Idriss",
+    "events": "Events",
+    "events_all": "All Events",
+    "events_wedding": "Wedding",
+    "events_gathering": "Private Gathering",
+    "events_corporate": "Corporate Retreat",
+    "sunset_parties": "Sunset Parties",
+    "sunset_parties_all": "All Parties",
+    "sunset_parties_white": "White Sunset Party",
+    "sunset_parties_pool": "Pool Party",
+    "sunset_parties_red": "Red Sunset Party",
+    "transfers": "Transfers",
+    "transfers_all": "All Transfers",
+    "transfers_day": "Airport Day Transfer",
+    "transfers_night": "Airport Night Transfer",
+    "transfers_private": "Private Transfer",
+    "experiences": "Experiences",
+    "experiences_all": "All Experiences",
+    "contact": "Contact",
+    "reserve": "Reserve a Stay",
+    "menu_open": "Open navigation menu",
+    "menu_close": "Close navigation menu"
+  },
+  "hero": {
+    "eyebrow": "Bulletin No. 01 · Saison 2026",
+    "headline": "Where the day ends slowly.",
+    "subline": "A boutique kasbah of fourteen rooms in the Agafay desert, an hour south of Marrakech.",
+    "cta_reserve": "Reserve a Stay",
+    "cta_story": "Our Story",
+    "scroll": "Scroll"
+  },
+  "marquee": {
+    "items": ["Boutique Kasbah", "Fourteen Rooms", "Open All Year", "31°22′N — 08°10′W", "Aperitif at Six", "Maroc"]
+  },
+  "story": {
+    "eyebrow": "Maison No. 01 · A Letter",
+    "headline_1": "We built a small house in the desert,",
+    "headline_script": "and let it sit",
+    "headline_2": "inside the longest hour of the day.",
+    "p1": "Sunset Agafay is fourteen rooms wrapped around a courtyard of olive trees, an hour south of Marrakech and a world away from it. We bought the land in 2019 and spent four years rebuilding it stone by stone with masons from the valley. It opened, quietly, in the spring of 2025.",
+    "p2": "There is a pool that catches the last of the sun, an old-world bar that opens at six, and dinners that begin when the muezzin sings. The rest is space, and the light. We hope you will stay long enough to notice it.",
+    "founders": "Camille & Idriss",
+    "founders_role": "Founders · Marrakech",
+    "fact_locale": "Locale",
+    "fact_locale_val": "Agafay Desert, Maroc",
+    "fact_distance": "Distance",
+    "fact_distance_val": "47 km from Marrakech-Menara",
+    "fact_rooms": "Rooms",
+    "fact_rooms_val": "Fourteen, all with terrace",
+    "fact_saison": "Season",
+    "fact_saison_val": "All year, 6:30 — 23:00"
+  },
+  "suites_section": {
+    "eyebrow": "The Rooms",
+    "index": "II · Suites",
+    "title": "Fourteen, no two alike.",
+    "lede": "Each room reworked from existing kasbah walls. Linen by Mtali, ceramics from Tameslouht.",
+    "from_night": "From / night",
+    "discover": "All Fourteen Rooms"
+  },
+  "rooms": [
+    {
+      "plate": "I",
+      "name": "Suite Agafay",
+      "brief": "Built into the eastern wall and open to the full Agafay plateau. Raw tadelakt in desert ochre, a brass four-poster, and a soaking tub positioned to catch the morning light. The terrace faces due east — the first in the maison to see the sun.",
+      "area": "45 m²",
+      "view": "Desert plateau",
+      "rate": "€580"
+    },
+    {
+      "plate": "II",
+      "name": "Suite La Khoutoubia",
+      "brief": "Named for the minaret just visible on clear mornings, this first-floor suite pairs an oversized bedroom with a private salon and a hammered-brass soaking tub. The salon doubles as a reading room and has its own west-facing window seat.",
+      "area": "52 m²",
+      "view": "Medina silhouette",
+      "rate": "€680"
+    },
+    {
+      "plate": "III",
+      "name": "Suite Sunset",
+      "brief": "Our signature corner room. Floor-to-ceiling shutters open directly onto the dunes, and a private plunge pool catches the full afternoon sun before the Atlas turns pink at dusk. The most requested room in the maison, for obvious reasons.",
+      "area": "68 m²",
+      "view": "Sunset & Atlas range",
+      "rate": "€890"
+    },
+    {
+      "plate": "IV",
+      "name": "Family Suite",
+      "brief": "Two connected rooms — each with its own bathroom — sharing a private courtyard and plunge pool. Designed for families or small groups who want complete privacy within the kasbah walls without feeling separated from the rest of the maison.",
+      "area": "105 m²",
+      "view": "Kasbah & private pool",
+      "rate": "€1,380"
+    }
+  ],
+  "cinematic": {
+    "eyebrow": "From the Notebook",
+    "quote": "The desert here does not perform. It simply lasts longer than you do, and at six o'clock it lets the light go slowly enough that even hurried guests forget where they were going.",
+    "attribution": "Condé Nast Traveller, March 2026"
+  },
+  "tables_section": {
+    "eyebrow": "The Tables",
+    "index": "III · Restaurants & Bars",
+    "title": "Three rooms to eat & drink in.",
+    "lede": "Cooking from the valley, aperitifs at six, and one private table held twice a week.",
+    "service": "Service"
+  },
+  "tables": [
+    {
+      "n": "I",
+      "name": "Le Souk",
+      "lede": "Long lunches under the pergola; dinners by candlelight when the muezzin sings.",
+      "copy": "Chef Yassine cooks entirely from what the valley and the coast provide. Slow-braised lamb on Tuesdays, seven-vegetable couscous every Friday, sea bream brought up from Essaouira on ice. The wine list is short and deliberately Moroccan-led — a few natural bottles, a house rosé, and one very good white Burgundy for those who insist.",
+      "hours": "12:30 – 15:00 · 19:30 – 23:00"
+    },
+    {
+      "n": "II",
+      "name": "Bar Arish",
+      "lede": "An old-world bar that opens at six. Aperitifs, vermouths, and the longer cocktails after dark.",
+      "copy": "A brass counter, a back-bar of Moroccan bitters and aged vermouths, and a small terrace directly facing the dunes. The aperitif hour — six to seven-thirty — is the soul of the maison, and we keep it as unhurried as possible. After eight, the cocktails lengthen and the conversation follows suit.",
+      "hours": "18:00 – Late"
+    },
+    {
+      "n": "III",
+      "name": "La Table d'Idriss",
+      "lede": "A fourteen-seat private table hosted by the founder.",
+      "copy": "Held on Wednesday and Saturday evenings on the upper terrace, around a single long farm table set for fourteen. The six-course menu is written each morning from whatever the Marrakech market provided. Idriss is present at every sitting. Reservations taken one week in advance; no printed menu, no separate wine list, very little ceremony.",
+      "hours": "By reservation, twice weekly"
+    }
+  ],
+  "experiences_section": {
+    "eyebrow": "The Hours",
+    "index": "IV · Experiences",
+    "title": "Six small things to do here.",
+    "lede": "A short list, kept short on purpose. We would rather do these well than offer twenty of them."
+  },
+  "experiences": [
+    {
+      "n": "01",
+      "name": "Sunrise on the Plateau",
+      "when": "Daily, 06:00",
+      "who": "Two riders, by horseback or 4×4",
+      "lede": "An hour out across the hammada to watch the sun first reach the Atlas."
+    },
+    {
+      "n": "02",
+      "name": "The Long Friday Lunch",
+      "when": "Fridays, 13:00",
+      "who": "Up to twelve guests",
+      "lede": "Couscous, mint tea, and three hours under the pergola — as it has always been done."
+    },
+    {
+      "n": "03",
+      "name": "Hammam, Slow",
+      "when": "By appointment",
+      "who": "Solo or in pairs",
+      "lede": "Black soap, rassoul, eucalyptus steam; ninety minutes ending with mint tea on the upper terrace."
+    },
+    {
+      "n": "04",
+      "name": "Stargazing with Said",
+      "when": "Clear nights, 21:30",
+      "who": "Up to six guests",
+      "lede": "Said brings out the small refractor; we bring out the brandy. Saturn most nights of the year."
+    },
+    {
+      "n": "05",
+      "name": "Kasbah Drawing Lesson",
+      "when": "Mondays, 10:00",
+      "who": "Up to six guests",
+      "lede": "Sketch the courtyard with the Marrakech illustrator Lina Berrada. Paper and ink provided."
+    },
+    {
+      "n": "06",
+      "name": "Aperitif on the Dunes",
+      "when": "Daily, 18:30",
+      "who": "Open to all guests",
+      "lede": "We drive a low table out to the dunes; you bring the conversation. The bar stays open until the light is gone."
+    }
+  ],
+  "hammam_section": {
+    "eyebrow": "V · Wellbeing",
+    "title_1": "Steam, tadelakt, eucalyptus.",
+    "title_script": "Ninety quiet minutes.",
+    "lede": "The hammam is built into the lower walls of the kasbah, in tadelakt the colour of clay and rose. We keep the rituals traditional and the timing leisurely.",
+    "cta": "Book the Hammam",
+    "treatments": [
+      { "name": "Ritual Sunset",     "duration": "90 min", "price": "€180" },
+      { "name": "Rassoul & Argan",   "duration": "60 min", "price": "€120" },
+      { "name": "Couples in Tandem", "duration": "120 min","price": "€420" },
+      { "name": "Just the Steam",    "duration": "30 min", "price": "€60"  }
+    ]
+  },
+  "events_section": {
+    "eyebrow": "Private Events",
+    "title": "The kasbah, entirely yours.",
+    "lede": "We host intimate gatherings of the kind that deserve a desert backdrop.",
+    "cta": "Enquire for an Event",
+    "types": [
+      {
+        "name": "Wedding",
+        "lede": "A kasbah wedding in a setting that requires no florist, no backdrop, no theme.",
+        "copy": "We celebrate weddings for twelve or for eighty, managing every detail from the florals and lighting to the table plan and the last glass of champagne. The Agafay desert does the rest — no venue in Morocco has a more natural sense of occasion.",
+        "capacity": "Up to 80 guests"
+      },
+      {
+        "name": "Private Gathering",
+        "lede": "The kind of evening that has no programme and ends only when it should.",
+        "copy": "Birthdays, anniversaries, intimate reunions, and milestone dinners. We set the long table, arrange the aperitif hour, order the flowers, and brief the kitchen. You choose the guest list and the hour; the desert provides everything else, including the light.",
+        "capacity": "Up to 40 guests"
+      },
+      {
+        "name": "Corporate Retreat",
+        "lede": "Exclusive use of the maison for the thinking that never happens in a conference room.",
+        "copy": "Full buy-out of Sunset Agafay for leadership offsites, creative workshops, editorial shoots, and strategy sessions that require a change of scene. Complete F&B, private transfers from Marrakech-Menara, and a bespoke programme on request.",
+        "capacity": "12 – 20 guests"
+      }
+    ]
+  },
+  "press_section": {
+    "eyebrow": "In the Notebook",
+    "quote": "One of those rare new openings that already feels as if it has always been there. The aperitif hour, especially, is a small masterpiece.",
+    "attribution": "Monocle, Issue 178",
+    "publications": ["Condé Nast Traveller", "T Magazine", "Le Monde", "Monocle", "Cereal", "Kinfolk", "Wallpaper*", "AD France"]
+  },
+  "practical": {
+    "locale_label": "Address",
+    "locale_h": "Sunset Agafay",
+    "locale_lines": ["Route d'Amizmiz, KM 47", "Agafay, Marrakech-Safi", "Maroc · 42150"],
+    "coords_label": "Coordinates",
+    "coords_h": "31°22′N · 08°10′W",
+    "coords_lines": ["47 km from Marrakech-Menara Airport", "65 km from Marrakech Medina", "Private transfer on request"],
+    "hours_label": "Hours",
+    "hours_h": "Open all year",
+    "hours_lines": ["Reception · 24 hours", "Bar Arish · 18:00 — late", "Le Souk · 12:30 — 23:00"],
+    "contact_label": "Contact",
+    "contact_h": "+212 524 00 00 00",
+    "contact_lines": ["bonjour@sunsetagafay.com", "Reservations · daily, 09 — 19", "Press · presse@sunsetagafay.com"]
+  },
+  "footer": {
+    "reserve_eyebrow": "Reserve a Stay",
+    "reserve_h1": "Hold a room.",
+    "reserve_script": "Begin slowly.",
+    "arrival": "Arrival",
+    "arrival_val": "Tuesday, 12 May",
+    "departure": "Departure",
+    "departure_val": "Sunday, 17 May",
+    "guests": "Guests",
+    "guests_val": "Two",
+    "room_label": "Room",
+    "room_val": "Suite Sunset",
+    "confirm": "Confirm Dates",
+    "concierge": "Speak to a Concierge",
+    "maison_label": "Maison",
+    "maison_links": [
+      { "label": "Story",              "href": "#story" },
+      { "label": "Suites",             "href": "suites" },
+      { "label": "Restaurants & Bars", "href": "restaurants" },
+      { "label": "Experiences",        "href": "experiences" },
+      { "label": "Events",             "href": "events" },
+      { "label": "Sunset Parties",     "href": "sunset-parties" },
+      { "label": "Transfers",          "href": "transfers" }
+    ],
+    "practical_label": "Practical",
+    "practical_links": [
+      { "label": "Reservations",   "href": "contact" },
+      { "label": "Private Events", "href": "events" },
+      { "label": "Concierge",      "href": "contact" },
+      { "label": "Contact",        "href": "contact" }
+    ],
+    "bulletin_label": "The Bulletin",
+    "bulletin_text": "Four letters a year, written by the maison. No marketing.",
+    "email_placeholder": "your@address.com",
+    "email_label": "Your email address",
+    "subscribe": "Subscribe",
+    "legal": "© MMXXVI · Sunset Agafay SARL · Maroc",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "instagram": "Instagram"
+  },
+  "contact": {
+    "eyebrow": "Get in Touch",
+    "title": "Reserve. Inquire. Arrive.",
+    "lede": "Whether you're planning a stay or an event, our team responds within 24 hours.",
+    "name_label": "Full Name",
+    "email_label": "Email Address",
+    "phone_label": "Phone (optional)",
+    "subject_label": "Subject",
+    "subject_reservation": "Room Reservation",
+    "subject_event": "Private Event",
+    "subject_concierge": "Concierge Request",
+    "subject_other": "Other",
+    "checkin_label": "Check-in Date",
+    "checkout_label": "Check-out Date",
+    "guests_label": "Number of Guests",
+    "message_label": "Message",
+    "submit": "Send Inquiry",
+    "direct_eyebrow": "Direct Contact",
+    "phone": "+212 524 00 00 00",
+    "email": "bonjour@sunsetagafay.com",
+    "address_label": "Address",
+    "address_lines": ["Route d'Amizmiz, KM 47", "Agafay, Marrakech-Safi", "Maroc 42150"],
+    "directions_label": "Getting Here",
+    "directions": [
+      "47 km south of Marrakech-Menara Airport",
+      "Private transfers available on request",
+      "GPS: 31°22′N, 08°10′W"
+    ]
+  },
+  "reserve": {
+    "hero_eyebrow": "Reservations",
+    "hero_title": "Reserve a Room",
+    "hero_sub": "Fourteen rooms in the Agafay desert, each one different. Select your dates and we will show you what is available.",
+    "step_dates": "Dates",
+    "step_suites": "Room",
+    "step_details": "Details",
+    "step_confirmed": "Confirmed",
+    "dates_title": "When would you like to stay?",
+    "checkin_label": "Check-in",
+    "checkout_label": "Check-out",
+    "guests_label": "Guests",
+    "guest_singular": "guest",
+    "guest_plural": "guests",
+    "search_cta": "Check Availability",
+    "searching": "Checking…",
+    "suites_title": "Available Rooms",
+    "suites_sub_one": "room available",
+    "suites_sub_many": "rooms available",
+    "no_availability": "No rooms available for these dates.",
+    "no_availability_sub": "Please try different dates or contact us directly.",
+    "change_dates": "Change Dates",
+    "night": "night",
+    "nights": "nights",
+    "from_night": "From / night",
+    "area_label": "Area",
+    "view_label": "View",
+    "select_cta": "Select This Room",
+    "details_title": "Your Details",
+    "details_sub": "We will contact you within 24 hours to confirm your reservation.",
+    "name_label": "Full Name",
+    "email_label": "Email Address",
+    "phone_label": "Phone Number",
+    "country_label": "Country",
+    "notes_label": "Special Requests",
+    "notes_placeholder": "Dietary requirements, celebration, arrival time, allergies…",
+    "summary_label": "Your Selection",
+    "total_label": "Estimated Total",
+    "confirm_cta": "Confirm Reservation",
+    "confirming": "Confirming…",
+    "change_room": "Change Room",
+    "confirmed_eyebrow": "Reservation Received",
+    "confirmed_title": "Your room is held.",
+    "confirmed_sub": "A member of our team will contact you within 24 hours to confirm all details and arrange your arrival.",
+    "ref_label": "Reference",
+    "confirmed_suite_label": "Room",
+    "confirmed_dates_label": "Dates",
+    "confirmed_guests_label": "Guests",
+    "confirmed_total_label": "Estimated Total",
+    "confirmed_cta": "Return to the Maison",
+    "error_dates": "Please select valid check-in and check-out dates.",
+    "error_name": "Please enter your name.",
+    "error_email": "Please enter a valid email address.",
+    "error_generic": "Something went wrong. Please try again or contact us directly."
+  },
+  "not_found": {
+    "heading": "This room doesn't exist.",
+    "sub": "Perhaps it was never built, or perhaps you have arrived too early.",
+    "cta": "Return to the Maison"
+  },
+  "suites_page": {
+    "hero_eyebrow": "The Rooms",
+    "hero_title": "Fourteen, no two alike.",
+    "hero_sub": "Each room reworked from existing kasbah walls. Linen by Mtali, ceramics from Tameslouht. All with a private terrace.",
+    "amenities_label": "All Rooms Include",
+    "amenities": [
+      "Private terrace or patio",
+      "Tadelakt bathroom",
+      "Handwoven Mtali linen",
+      "Ceramics from Tameslouht",
+      "Nightly turndown service",
+      "Morning mint tea service",
+      "Air conditioning & heating",
+      "In-room library"
+    ],
+    "reserve_cta": "Reserve This Room",
+    "from_night": "From / night",
+    "view_label": "View",
+    "area_label": "Area"
+  },
+  "restaurants_page": {
+    "hero_eyebrow": "The Tables",
+    "hero_title": "Three rooms to eat & drink in.",
+    "hero_sub": "Cooking from the valley, aperitifs at six, and one private table held twice a week.",
+    "reserve_cta": "Reserve a Table",
+    "reserve_cta_sub": "Speak to our team about availability"
+  },
+  "experiences_page": {
+    "hero_eyebrow": "The Hours",
+    "hero_title": "Six small things we do well.",
+    "hero_sub": "A short list, kept short on purpose. Each experience is personally hosted and limited to a small number of guests.",
+    "book_cta": "Book This Experience",
+    "inquire_cta": "Inquire"
+  },
+  "events_page": {
+    "hero_eyebrow": "Private Events",
+    "hero_title": "The kasbah, entirely yours.",
+    "hero_sub": "We host intimate gatherings — weddings, private gatherings, and corporate retreats — for groups who understand that the setting matters.",
+    "enquire_cta": "Enquire for an Event",
+    "enquire_sub": "We respond within 24 hours"
+  },
+  "transfers_page": {
+    "hero_eyebrow": "Transfers",
+    "hero_title": "From the city to the desert.",
+    "hero_sub": "Private, punctual, and arranged by the maison. Every transfer is handled personally — no third-party booking apps.",
+    "enquire_cta": "Enquire for a Transfer",
+    "enquire_sub": "We confirm within 4 hours",
+    "options": [
+      {
+        "id": "airport-day",
+        "name": "Airport Day Transfer",
+        "lede": "A seamless morning or afternoon run from Marrakech-Menara to the kasbah gates.",
+        "copy": "Our drivers meet you in arrivals with a name board. The route takes forty-five minutes on a clear day. Chilled water and wifi in the vehicle. Available 07:00 – 19:00.",
+        "duration": "~45 min",
+        "price": "€120 / vehicle"
+      },
+      {
+        "id": "airport-night",
+        "name": "Airport Night Transfer",
+        "lede": "Late arrivals and early departures, handled quietly so the maison is never disturbed.",
+        "copy": "For flights arriving or departing outside daylight hours. The same discreet service, with the added courtesy of a night-before confirmation. Available 19:00 – 07:00.",
+        "duration": "~45 min",
+        "price": "€150 / vehicle"
+      },
+      {
+        "id": "private-transfer",
+        "name": "Private Transfer",
+        "lede": "Bespoke road transfers to the medina, the coast, or wherever the day takes you.",
+        "copy": "Use the vehicle for a half-day in the Marrakech souks, a trip to Essaouira, or an onward connection. Quoted individually by distance and hours. Minimum four-hour booking.",
+        "duration": "On request",
+        "price": "From €180"
+      }
+    ]
+  },
+  "sunset_parties_page": {
+    "hero_eyebrow": "Sunset Parties",
+    "hero_title": "The hour when the desert performs.",
+    "hero_sub": "Three distinct formats, each built around the particular quality of Agafay light at dusk. A gathering, not an event.",
+    "enquire_cta": "Enquire for a Party",
+    "enquire_sub": "Minimum 10 guests · Private hire only",
+    "parties": [
+      {
+        "id": "white-sunset-party",
+        "name": "White Sunset Party",
+        "lede": "An all-white affair on the terrace as the sun drops behind the Atlas.",
+        "copy": "One request only: guests dress in white. The table is set in ivory linen and brass candleholders against the last hour of Agafay light. We open with an aperitif of Moroccan whites and cold mezze on the terrace; dinner is served by candlelight once the first stars appear. The evening runs 18:00 to midnight and is private hire only — no other guests on site.",
+        "capacity": "Up to 30 guests",
+        "season": "April – October"
+      },
+      {
+        "id": "pool-party",
+        "name": "Pool Party",
+        "lede": "A long afternoon around the pool, with the Atlas as a permanent backdrop.",
+        "copy": "From noon until the sun disappears behind the dunes: shade cushions, cold Moroccan rosé, platters of mezze, and the particular quiet that a desert afternoon in forty degrees insists upon. Music from 16:00 — a resident DJ or live oud, your choice. The pool is reserved exclusively for your group. Runs noon to 20:00.",
+        "capacity": "Up to 50 guests",
+        "season": "May – September"
+      },
+      {
+        "id": "red-sunset-party",
+        "name": "Red Sunset Party",
+        "lede": "A curated cocktail gathering when the dunes turn deep ochre.",
+        "copy": "The most intimate of our three formats — held on the desert-facing terrace at the precise hour when the Agafay turns red. Pomegranate aperitifs, aged Moroccan reds, and warm mezze passed by hand. Strictly limited to twenty guests to preserve the atmosphere. Runs 18:30 to 22:00, all year round.",
+        "capacity": "Up to 20 guests",
+        "season": "All year"
+      }
+    ]
+  },
+  "meta": {
+    "home_title": "Sunset Agafay — Boutique Kasbah · Agafay Desert",
+    "home_description": "A boutique kasbah of fourteen rooms in the Agafay desert, one hour from Marrakech. Luxury desert hotel with authentic Moroccan experience.",
+    "home_keywords": "Agafay desert hotel, boutique kasbah Marrakech, luxury desert retreat Morocco, hotel Agafay, kasbah hotel Morocco, desert getaway Marrakech",
+    "suites_title": "Suites & Rooms — Sunset Agafay",
+    "suites_description": "Four individually designed suites at Sunset Agafay kasbah — Suite Agafay, Suite La Khoutoubia, Suite Sunset, and Family Suite in the Agafay desert.",
+    "restaurants_title": "Restaurants & Bars — Sunset Agafay",
+    "restaurants_description": "Three dining venues at Sunset Agafay: Le Souk with Moroccan valley cuisine, Bar Arish aperitif bar, and La Table d'Idriss private dining.",
+    "events_title": "Private Events — Sunset Agafay",
+    "events_description": "Weddings, private gatherings, and corporate retreats at Sunset Agafay kasbah in the Agafay desert, one hour from Marrakech.",
+    "experiences_title": "Experiences — Sunset Agafay",
+    "experiences_description": "Desert experiences at Sunset Agafay: sunrise horseback rides, hammam rituals, stargazing evenings, and aperitif on the dunes near Marrakech.",
+    "contact_title": "Contact & Reservations — Sunset Agafay",
+    "contact_description": "Reserve a room at Sunset Agafay kasbah in the Agafay desert. Private transfers from Marrakech available. Contact our team for availability.",
+    "transfers_title": "Transfers — Sunset Agafay",
+    "transfers_description": "Private transfers from Marrakech-Menara airport to Sunset Agafay kasbah. Day transfers, night transfers, and bespoke private journeys across Morocco.",
+    "sunset_parties_title": "Sunset Parties — Sunset Agafay",
+    "sunset_parties_description": "Three sunset party formats at Sunset Agafay: White Sunset Party, Pool Party, and Red Sunset Party in the Agafay desert near Marrakech.",
+    "suite_agafay_title": "Suite Agafay — Sunset Agafay",
+    "suite_agafay_description": "45 m² suite facing the Agafay desert plateau. Tadelakt walls, brass four-poster, private west-facing terrace, and deep soaking tub.",
+    "wedding_title": "Wedding — Private Events · Sunset Agafay",
+    "wedding_description": "Host your wedding at Sunset Agafay kasbah in the Agafay desert. Intimate weddings for twelve to eighty guests, one hour from Marrakech.",
+    "white_party_title": "White Sunset Party — Sunset Agafay",
+    "white_party_description": "An all-white sunset party on the kasbah terrace. Moroccan wines, candlelit dinner under the stars, and the Agafay desert at dusk. Up to 30 guests.",
+    "le_souk_title": "Le Souk — Sunset Agafay",
+    "le_souk_description": "Long lunches under the pergola and candlelit dinners by Chef Yassine. Valley market cuisine at Sunset Agafay kasbah in the Agafay desert.",
+    "reserve_title": "Reserve a Room — Sunset Agafay",
+    "reserve_description": "Reserve one of fourteen rooms at Sunset Agafay kasbah in the Agafay desert. Check availability and book your stay one hour south of Marrakech.",
+    "reserve_keywords": "reserve desert hotel Morocco, book kasbah room Agafay, hotel reservation Marrakech, book Sunset Agafay",
+    "suites_keywords": "desert hotel rooms Morocco, luxury suite Agafay, boutique suite Marrakech, kasbah room Morocco, suite desert hotel",
+    "restaurants_keywords": "Moroccan restaurant Agafay desert, desert dining Morocco, Le Souk Marrakech, kasbah restaurant Morocco, Moroccan cuisine Agafay",
+    "experiences_keywords": "desert experiences Morocco, hammam Agafay, stargazing Morocco, horseback desert Morocco, kasbah experiences Marrakech",
+    "events_keywords": "wedding venue Morocco, private event Agafay, corporate retreat Marrakech, kasbah wedding desert Morocco, event venue Morocco",
+    "transfers_keywords": "airport transfer Marrakech, private transfer Agafay desert, taxi Marrakech Agafay, hotel transfer Morocco, desert transfer Marrakech",
+    "sunset_parties_keywords": "sunset party Morocco, desert party Agafay, White Sunset Party Marrakech, pool party desert Morocco, cocktail party Agafay",
+    "contact_keywords": "contact Sunset Agafay, reservations Agafay kasbah, concierge Morocco, hotel contact Marrakech desert",
+    "wedding_keywords": "kasbah wedding Morocco, wedding venue Agafay desert, intimate wedding Marrakech, desert wedding Morocco, luxury wedding venue Morocco",
+    "white_party_keywords": "White Sunset Party Agafay, sunset party Morocco, desert party Marrakech, outdoor party Morocco, aperitif desert party",
+    "le_souk_keywords": "Le Souk restaurant Agafay, Moroccan restaurant desert, valley cuisine Morocco, candlelit dinner Marrakech, Moroccan food Agafay"
+  }
+}

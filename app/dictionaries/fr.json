@@ -1,0 +1,529 @@
+{
+  "nav": {
+    "story": "Notre Histoire",
+    "suites": "Suites",
+    "suites_all": "Toutes les suites",
+    "suites_agafay": "Suite Agafay",
+    "suites_khoutoubia": "Suite La Khoutoubia",
+    "suites_sunset": "Suite Sunset",
+    "suites_family": "Suite Familiale",
+    "restaurants": "Restaurants & Bars",
+    "restaurants_all": "Toutes les tables",
+    "restaurants_souk": "Le Souk",
+    "restaurants_arish": "Bar Arish",
+    "restaurants_idriss": "La Table d'Idriss",
+    "events": "Événements",
+    "events_all": "Tous les événements",
+    "events_wedding": "Mariage",
+    "events_gathering": "Rassemblement Privé",
+    "events_corporate": "Séminaire",
+    "sunset_parties": "Soirées Coucher de Soleil",
+    "sunset_parties_all": "Toutes les soirées",
+    "sunset_parties_white": "Soirée Blanche",
+    "sunset_parties_pool": "Pool Party",
+    "sunset_parties_red": "Soirée Rouge",
+    "transfers": "Transferts",
+    "transfers_all": "Tous les transferts",
+    "transfers_day": "Transfert Aéroport de Jour",
+    "transfers_night": "Transfert Aéroport de Nuit",
+    "transfers_private": "Transfert Privé",
+    "experiences": "Expériences",
+    "experiences_all": "Toutes les expériences",
+    "contact": "Contact",
+    "reserve": "Réserver",
+    "menu_open": "Ouvrir le menu",
+    "menu_close": "Fermer le menu"
+  },
+  "hero": {
+    "eyebrow": "Bulletin No. 01 · Saison 2026",
+    "headline": "Là où la journée s'achève lentement.",
+    "subline": "Une kasbah boutique de quatorze chambres dans le désert d'Agafay, à une heure au sud de Marrakech.",
+    "cta_reserve": "Réserver un séjour",
+    "cta_story": "Notre histoire",
+    "scroll": "Défiler"
+  },
+  "marquee": {
+    "items": ["Kasbah Boutique", "Quatorze Chambres", "Ouvert Toute l'Année", "31°22′N — 08°10′W", "Apéritif à Six Heures", "Maroc"]
+  },
+  "story": {
+    "eyebrow": "Maison No. 01 · Une Lettre",
+    "headline_1": "Nous avons construit une petite maison dans le désert,",
+    "headline_script": "et l'avons laissée vivre",
+    "headline_2": "dans l'heure la plus longue du jour.",
+    "p1": "Sunset Agafay, c'est quatorze chambres enroulées autour d'une cour d'oliviers, à une heure au sud de Marrakech et à un monde de distance. Nous avons acheté ce terrain en 2019 et passé quatre ans à le reconstruire pierre par pierre avec des maçons de la vallée. La maison a ouvert, discrètement, au printemps 2025.",
+    "p2": "Il y a une piscine qui capte les derniers rayons du soleil, un bar à l'ancienne qui ouvre à six heures, et des dîners qui commencent quand le muezzin chante. Le reste, c'est l'espace et la lumière. Nous espérons que vous resterez assez longtemps pour le remarquer.",
+    "founders": "Camille & Idriss",
+    "founders_role": "Fondateurs · Marrakech",
+    "fact_locale": "Lieu",
+    "fact_locale_val": "Désert d'Agafay, Maroc",
+    "fact_distance": "Distance",
+    "fact_distance_val": "47 km de Marrakech-Ménara",
+    "fact_rooms": "Chambres",
+    "fact_rooms_val": "Quatorze, toutes avec terrasse",
+    "fact_saison": "Saison",
+    "fact_saison_val": "Toute l'année, 6h30 — 23h00"
+  },
+  "suites_section": {
+    "eyebrow": "Les Chambres",
+    "index": "II · Suites",
+    "title": "Quatorze, aucune identique.",
+    "lede": "Chaque chambre réaménagée dans les murs existants de la kasbah. Linge de maison Mtali, céramiques de Tameslouht.",
+    "from_night": "À partir de / nuit",
+    "discover": "Les Quatorze Chambres"
+  },
+  "rooms": [
+    {
+      "plate": "I",
+      "name": "Suite Agafay",
+      "brief": "Intégrée dans le mur est et ouverte sur le plateau d'Agafay dans toute son étendue. Tadelakt brut couleur ocre désertique, baldaquin en laiton, et baignoire positionnée pour capter la lumière du matin. La terrasse est orientée plein est — la première de la maison à voir le soleil.",
+      "area": "45 m²",
+      "view": "Plateau du désert",
+      "rate": "€580"
+    },
+    {
+      "plate": "II",
+      "name": "Suite La Khoutoubia",
+      "brief": "Nommée d'après le minaret visible par les matins clairs, cette suite au premier étage associe une chambre spacieuse à un salon privé et une baignoire en laiton martelé. Le salon fait également office de bibliothèque et dispose de sa propre fenêtre côté ouest.",
+      "area": "52 m²",
+      "view": "Silhouette de la médina",
+      "rate": "€680"
+    },
+    {
+      "plate": "III",
+      "name": "Suite Sunset",
+      "brief": "Notre chambre signature. Des volets du sol au plafond s'ouvrent directement sur les dunes, et une piscine à débordement privée capte tout le soleil de l'après-midi avant que l'Atlas vire au rose. La chambre la plus demandée de la maison, et l'on comprend pourquoi.",
+      "area": "68 m²",
+      "view": "Coucher de soleil & Atlas",
+      "rate": "€890"
+    },
+    {
+      "plate": "IV",
+      "name": "Suite Familiale",
+      "brief": "Deux chambres communicantes — chacune avec sa propre salle de bain — partageant une cour privée et une piscine à débordement. Conçues pour les familles ou petits groupes souhaitant une intimité totale dans les murs de la kasbah, sans se sentir isolés du reste de la maison.",
+      "area": "105 m²",
+      "view": "Kasbah & piscine privée",
+      "rate": "€1 380"
+    }
+  ],
+  "cinematic": {
+    "eyebrow": "Du Carnet de Notes",
+    "quote": "Le désert ici ne joue pas la comédie. Il dure simplement plus longtemps que vous, et à six heures, il laisse aller la lumière si doucement que même les hôtes pressés oublient où ils allaient.",
+    "attribution": "Condé Nast Traveller, mars 2026"
+  },
+  "tables_section": {
+    "eyebrow": "Les Tables",
+    "index": "III · Restaurants & Bars",
+    "title": "Trois espaces pour manger et boire.",
+    "lede": "Cuisine de la vallée, apéritifs à six heures, et une table privée deux fois par semaine.",
+    "service": "Service"
+  },
+  "tables": [
+    {
+      "n": "I",
+      "name": "Le Souk",
+      "lede": "Longs déjeuners sous la pergola ; dîners aux bougies quand le muezzin chante.",
+      "copy": "Le chef Yassine cuisine exclusivement ce que la vallée et la côte lui fournissent. Agneau longuement braisé le mardi, couscous aux sept légumes chaque vendredi, dorade remontée d'Essaouira sur la glace. La carte des vins est courte et délibérément marocaine — quelques bouteilles natures, un rosé de la maison, et un grand blanc de Bourgogne pour ceux qui insistent.",
+      "hours": "12h30 – 15h00 · 19h30 – 23h00"
+    },
+    {
+      "n": "II",
+      "name": "Bar Arish",
+      "lede": "Un bar à l'ancienne qui ouvre à six heures. Apéritifs, vermouths, et les grands cocktails après la nuit tombée.",
+      "copy": "Comptoir en laiton, un arrière-bar de bitters marocains et de vermouths vieillis, et une petite terrasse directement face aux dunes. L'heure de l'apéritif — de six heures à sept heures trente — est l'âme de la maison ; nous la gardons aussi lente que possible. Après vingt heures, les cocktails s'allongent et les conversations suivent.",
+      "hours": "18h00 – Tard"
+    },
+    {
+      "n": "III",
+      "name": "La Table d'Idriss",
+      "lede": "Une table privée de quatorze couverts animée par le fondateur.",
+      "copy": "Les mercredi et samedi soir sur la terrasse haute, autour d'une seule grande table de ferme dressée pour quatorze. Le menu de six plats est composé chaque matin d'après ce que le marché de Marrakech a fourni. Idriss est présent à chaque service. Réservation une semaine à l'avance ; pas de menu imprimé, pas de carte des vins séparée, très peu de cérémonie.",
+      "hours": "Sur réservation, deux fois par semaine"
+    }
+  ],
+  "experiences_section": {
+    "eyebrow": "Les Heures",
+    "index": "IV · Expériences",
+    "title": "Six petites choses à faire ici.",
+    "lede": "Une liste courte, intentionnellement. Nous préférons bien faire celles-ci plutôt que d'en proposer vingt."
+  },
+  "experiences": [
+    {
+      "n": "01",
+      "name": "Lever de soleil sur le plateau",
+      "when": "Quotidien, 06h00",
+      "who": "Deux cavaliers, à cheval ou en 4×4",
+      "lede": "Une heure à travers la hammada pour voir le soleil atteindre l'Atlas en premier."
+    },
+    {
+      "n": "02",
+      "name": "Le long déjeuner du vendredi",
+      "when": "Vendredis, 13h00",
+      "who": "Jusqu'à douze hôtes",
+      "lede": "Couscous, thé à la menthe et trois heures sous la pergola — comme cela a toujours été fait."
+    },
+    {
+      "n": "03",
+      "name": "Hammam, lentement",
+      "when": "Sur rendez-vous",
+      "who": "Solo ou en duo",
+      "lede": "Savon noir, rassoul, vapeur d'eucalyptus ; quatre-vingt-dix minutes suivies d'un thé à la menthe sur la terrasse."
+    },
+    {
+      "n": "04",
+      "name": "Observation des étoiles avec Saïd",
+      "when": "Nuits claires, 21h30",
+      "who": "Jusqu'à six hôtes",
+      "lede": "Saïd sort le petit réfracteur ; nous sortons le brandy. Saturne la plupart des nuits de l'année."
+    },
+    {
+      "n": "05",
+      "name": "Cours de dessin à la kasbah",
+      "when": "Lundis, 10h00",
+      "who": "Jusqu'à six hôtes",
+      "lede": "Esquissez la cour avec l'illustratrice marrakchie Lina Berrada. Papier et encre fournis."
+    },
+    {
+      "n": "06",
+      "name": "Apéritif sur les dunes",
+      "when": "Quotidien, 18h30",
+      "who": "Ouvert à tous les hôtes",
+      "lede": "Nous installons une table basse dans les dunes ; vous apportez la conversation. Le bar reste ouvert jusqu'à la disparition de la lumière."
+    }
+  ],
+  "hammam_section": {
+    "eyebrow": "V · Bien-être",
+    "title_1": "Vapeur, tadelakt, eucalyptus.",
+    "title_script": "Quatre-vingt-dix minutes de silence.",
+    "lede": "Le hammam est intégré dans les murs bas de la kasbah, en tadelakt couleur argile et rose. Nous gardons les rituels traditionnels et le rythme lent.",
+    "cta": "Réserver le hammam",
+    "treatments": [
+      { "name": "Rituel Coucher de Soleil", "duration": "90 min",  "price": "€180" },
+      { "name": "Rassoul & Argan",          "duration": "60 min",  "price": "€120" },
+      { "name": "Duo en Tandem",            "duration": "120 min", "price": "€420" },
+      { "name": "Juste la Vapeur",          "duration": "30 min",  "price": "€60"  }
+    ]
+  },
+  "events_section": {
+    "eyebrow": "Événements Privés",
+    "title": "La kasbah, entièrement à vous.",
+    "lede": "Nous accueillons des rassemblements intimes qui méritent un décor désertique.",
+    "cta": "Nous contacter pour un événement",
+    "types": [
+      {
+        "name": "Mariage",
+        "lede": "Un mariage à la kasbah dans un cadre qui ne nécessite ni fleuriste, ni décor, ni thème.",
+        "copy": "Nous célébrons des mariages pour douze ou pour quatre-vingts, en gérant chaque détail — des fleurs et de la lumière au plan de table et au dernier verre de champagne. Le désert d'Agafay fait le reste : aucun lieu au Maroc n'a un sens de l'occasion aussi naturel.",
+        "capacity": "Jusqu'à 80 invités"
+      },
+      {
+        "name": "Rassemblement Privé",
+        "lede": "Le genre de soirée sans programme qui se termine seulement quand il le faut.",
+        "copy": "Anniversaires, retrouvailles, dîners de célébration. Nous dressons la longue table, arrangeons l'heure de l'apéritif, commandons les fleurs et briefons la cuisine. Vous choisissez la liste des invités et l'heure ; le désert fournit tout le reste, y compris la lumière.",
+        "capacity": "Jusqu'à 40 invités"
+      },
+      {
+        "name": "Séminaire",
+        "lede": "Location exclusive de la maison pour la réflexion qui n'a jamais lieu en salle de conférence.",
+        "copy": "Location complète de Sunset Agafay pour des séminaires de direction, ateliers créatifs, tournages éditoriaux et sessions de stratégie nécessitant un changement de cadre. Restauration complète, transferts privés depuis Marrakech-Menara et programme sur mesure sur demande.",
+        "capacity": "12 – 20 hôtes"
+      }
+    ]
+  },
+  "press_section": {
+    "eyebrow": "Dans le Carnet",
+    "quote": "Une de ces rares nouvelles ouvertures qui donne déjà l'impression d'avoir toujours existé. L'heure de l'apéritif, surtout, est un petit chef-d'œuvre.",
+    "attribution": "Monocle, Numéro 178",
+    "publications": ["Condé Nast Traveller", "T Magazine", "Le Monde", "Monocle", "Cereal", "Kinfolk", "Wallpaper*", "AD France"]
+  },
+  "practical": {
+    "locale_label": "Adresse",
+    "locale_h": "Sunset Agafay",
+    "locale_lines": ["Route d'Amizmiz, KM 47", "Agafay, Marrakech-Safi", "Maroc · 42150"],
+    "coords_label": "Coordonnées",
+    "coords_h": "31°22′N · 08°10′W",
+    "coords_lines": ["47 km de l'aéroport de Marrakech-Ménara", "65 km de la médina de Marrakech", "Transfert privé sur demande"],
+    "hours_label": "Horaires",
+    "hours_h": "Ouvert toute l'année",
+    "hours_lines": ["Réception · 24h/24", "Bar Arish · 18h00 — tard", "Le Souk · 12h30 — 23h00"],
+    "contact_label": "Contact",
+    "contact_h": "+212 524 00 00 00",
+    "contact_lines": ["bonjour@sunsetagafay.com", "Réservations · quotidien, 09h — 19h", "Presse · presse@sunsetagafay.com"]
+  },
+  "footer": {
+    "reserve_eyebrow": "Réserver un Séjour",
+    "reserve_h1": "Retenez une chambre.",
+    "reserve_script": "Commencez lentement.",
+    "arrival": "Arrivée",
+    "arrival_val": "Mardi 12 mai",
+    "departure": "Départ",
+    "departure_val": "Dimanche 17 mai",
+    "guests": "Hôtes",
+    "guests_val": "Deux",
+    "room_label": "Chambre",
+    "room_val": "Suite Sunset",
+    "confirm": "Confirmer les dates",
+    "concierge": "Parler au concierge",
+    "maison_label": "Maison",
+    "maison_links": [
+      { "label": "Notre Histoire",              "href": "#story" },
+      { "label": "Suites",                      "href": "suites" },
+      { "label": "Restaurants & Bars",          "href": "restaurants" },
+      { "label": "Expériences",                 "href": "experiences" },
+      { "label": "Événements",                  "href": "events" },
+      { "label": "Soirées Coucher de Soleil",   "href": "sunset-parties" },
+      { "label": "Transferts",                  "href": "transfers" }
+    ],
+    "practical_label": "Pratique",
+    "practical_links": [
+      { "label": "Réservations",     "href": "contact" },
+      { "label": "Événements Privés","href": "events" },
+      { "label": "Conciergerie",     "href": "contact" },
+      { "label": "Contact",          "href": "contact" }
+    ],
+    "bulletin_label": "Le Bulletin",
+    "bulletin_text": "Quatre lettres par an, rédigées par la maison. Pas de marketing.",
+    "email_placeholder": "votre@adresse.com",
+    "email_label": "Votre adresse email",
+    "subscribe": "S'abonner",
+    "legal": "© MMXXVI · Sunset Agafay SARL · Maroc",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "instagram": "Instagram"
+  },
+  "contact": {
+    "eyebrow": "Nous Contacter",
+    "title": "Réserver. Demander. Arriver.",
+    "lede": "Que vous planifiiez un séjour ou un événement, notre équipe répond sous 24 heures.",
+    "name_label": "Nom complet",
+    "email_label": "Adresse email",
+    "phone_label": "Téléphone (optionnel)",
+    "subject_label": "Sujet",
+    "subject_reservation": "Réservation de chambre",
+    "subject_event": "Événement privé",
+    "subject_concierge": "Demande de conciergerie",
+    "subject_other": "Autre",
+    "checkin_label": "Date d'arrivée",
+    "checkout_label": "Date de départ",
+    "guests_label": "Nombre d'hôtes",
+    "message_label": "Message",
+    "submit": "Envoyer la demande",
+    "direct_eyebrow": "Contact Direct",
+    "phone": "+212 524 00 00 00",
+    "email": "bonjour@sunsetagafay.com",
+    "address_label": "Adresse",
+    "address_lines": ["Route d'Amizmiz, KM 47", "Agafay, Marrakech-Safi", "Maroc 42150"],
+    "directions_label": "Comment nous rejoindre",
+    "directions": [
+      "47 km au sud de l'aéroport de Marrakech-Ménara",
+      "Transferts privés disponibles sur demande",
+      "GPS : 31°22′N, 08°10′W"
+    ]
+  },
+  "reserve": {
+    "hero_eyebrow": "Réservations",
+    "hero_title": "Réserver une Chambre",
+    "hero_sub": "Quatorze chambres dans le désert d'Agafay, chacune différente. Choisissez vos dates et nous vous montrerons les disponibilités.",
+    "step_dates": "Dates",
+    "step_suites": "Chambre",
+    "step_details": "Détails",
+    "step_confirmed": "Confirmé",
+    "dates_title": "Quand souhaitez-vous séjourner ?",
+    "checkin_label": "Arrivée",
+    "checkout_label": "Départ",
+    "guests_label": "Hôtes",
+    "guest_singular": "hôte",
+    "guest_plural": "hôtes",
+    "search_cta": "Vérifier les disponibilités",
+    "searching": "Vérification…",
+    "suites_title": "Chambres disponibles",
+    "suites_sub_one": "chambre disponible",
+    "suites_sub_many": "chambres disponibles",
+    "no_availability": "Aucune chambre disponible pour ces dates.",
+    "no_availability_sub": "Veuillez essayer d'autres dates ou nous contacter directement.",
+    "change_dates": "Modifier les dates",
+    "night": "nuit",
+    "nights": "nuits",
+    "from_night": "À partir de / nuit",
+    "area_label": "Surface",
+    "view_label": "Vue",
+    "select_cta": "Choisir cette chambre",
+    "details_title": "Vos Coordonnées",
+    "details_sub": "Nous vous contacterons sous 24 heures pour confirmer votre réservation.",
+    "name_label": "Nom complet",
+    "email_label": "Adresse e-mail",
+    "phone_label": "Numéro de téléphone",
+    "country_label": "Pays",
+    "notes_label": "Demandes spéciales",
+    "notes_placeholder": "Régimes alimentaires, célébration, heure d'arrivée, allergies…",
+    "summary_label": "Votre sélection",
+    "total_label": "Total estimé",
+    "confirm_cta": "Confirmer la réservation",
+    "confirming": "Confirmation…",
+    "change_room": "Changer de chambre",
+    "confirmed_eyebrow": "Réservation reçue",
+    "confirmed_title": "Votre chambre est retenue.",
+    "confirmed_sub": "Un membre de notre équipe vous contactera sous 24 heures pour confirmer tous les détails et organiser votre arrivée.",
+    "ref_label": "Référence",
+    "confirmed_suite_label": "Chambre",
+    "confirmed_dates_label": "Dates",
+    "confirmed_guests_label": "Hôtes",
+    "confirmed_total_label": "Total estimé",
+    "confirmed_cta": "Retour à la Maison",
+    "error_dates": "Veuillez sélectionner des dates d'arrivée et de départ valides.",
+    "error_name": "Veuillez entrer votre nom.",
+    "error_email": "Veuillez entrer une adresse e-mail valide.",
+    "error_generic": "Une erreur s'est produite. Veuillez réessayer ou nous contacter directement."
+  },
+  "not_found": {
+    "heading": "Cette chambre n'existe pas.",
+    "sub": "Peut-être n'a-t-elle jamais été construite, ou peut-être êtes-vous arrivé trop tôt.",
+    "cta": "Retour à la Maison"
+  },
+  "suites_page": {
+    "hero_eyebrow": "Les Chambres",
+    "hero_title": "Quatorze, aucune identique.",
+    "hero_sub": "Chaque chambre réaménagée dans les murs existants de la kasbah. Linge Mtali, céramiques de Tameslouht. Toutes avec terrasse privée.",
+    "amenities_label": "Toutes les chambres comprennent",
+    "amenities": [
+      "Terrasse ou patio privé",
+      "Salle de bain en tadelakt",
+      "Linge Mtali tissé à la main",
+      "Céramiques de Tameslouht",
+      "Service de couverture en soirée",
+      "Service de thé à la menthe le matin",
+      "Climatisation & chauffage",
+      "Bibliothèque en chambre"
+    ],
+    "reserve_cta": "Réserver cette chambre",
+    "from_night": "À partir de / nuit",
+    "view_label": "Vue",
+    "area_label": "Surface"
+  },
+  "restaurants_page": {
+    "hero_eyebrow": "Les Tables",
+    "hero_title": "Trois espaces pour manger et boire.",
+    "hero_sub": "Cuisine de la vallée, apéritifs à six heures, et une table privée deux fois par semaine.",
+    "reserve_cta": "Réserver une table",
+    "reserve_cta_sub": "Parlez à notre équipe pour les disponibilités"
+  },
+  "experiences_page": {
+    "hero_eyebrow": "Les Heures",
+    "hero_title": "Six petites choses que nous faisons bien.",
+    "hero_sub": "Une liste courte, intentionnellement. Chaque expérience est animée personnellement et limitée à un petit nombre d'hôtes.",
+    "book_cta": "Réserver cette expérience",
+    "inquire_cta": "Se renseigner"
+  },
+  "events_page": {
+    "hero_eyebrow": "Événements Privés",
+    "hero_title": "La kasbah, entièrement à vous.",
+    "hero_sub": "Nous accueillons des rassemblements intimes — mariages, rassemblements privés et séminaires — pour des groupes qui comprennent que le cadre est essentiel.",
+    "enquire_cta": "Nous contacter pour un événement",
+    "enquire_sub": "Réponse sous 24 heures"
+  },
+  "transfers_page": {
+    "hero_eyebrow": "Transferts",
+    "hero_title": "De la ville au désert.",
+    "hero_sub": "Privés, ponctuels, et organisés par la maison. Chaque transfert est pris en charge personnellement — sans intermédiaire.",
+    "enquire_cta": "Demander un transfert",
+    "enquire_sub": "Confirmation sous 4 heures",
+    "options": [
+      {
+        "id": "airport-day",
+        "name": "Transfert Aéroport de Jour",
+        "lede": "Un trajet fluide matin ou après-midi depuis Marrakech-Ménara jusqu'aux portes de la kasbah.",
+        "copy": "Nos chauffeurs vous attendent aux arrivées avec un panneau à votre nom. Le trajet prend quarante-cinq minutes par temps clair. Eau fraîche et wifi à bord. Disponible 07h00 – 19h00.",
+        "duration": "~45 min",
+        "price": "€120 / véhicule"
+      },
+      {
+        "id": "airport-night",
+        "name": "Transfert Aéroport de Nuit",
+        "lede": "Arrivées tardives et départs matinaux, gérés discrètement pour ne pas perturber la maison.",
+        "copy": "Pour les vols arrivant ou partant en dehors des heures de clarté. Le même service discret, avec la courtoisie d'une confirmation la veille. Disponible 19h00 – 07h00.",
+        "duration": "~45 min",
+        "price": "€150 / véhicule"
+      },
+      {
+        "id": "private-transfer",
+        "name": "Transfert Privé",
+        "lede": "Trajets sur mesure vers la médina, la côte, ou où la journée vous mène.",
+        "copy": "Utilisez le véhicule pour une demi-journée dans les souks de Marrakech, un voyage à Essaouira, ou une correspondance. Devisé individuellement selon la distance et les heures. Minimum quatre heures.",
+        "duration": "Sur demande",
+        "price": "À partir de €180"
+      }
+    ]
+  },
+  "sunset_parties_page": {
+    "hero_eyebrow": "Soirées Coucher de Soleil",
+    "hero_title": "L'heure où le désert se révèle.",
+    "hero_sub": "Trois formats distincts, chacun conçu autour de la lumière particulière de l'Agafay au crépuscule. Un rassemblement, pas un événement.",
+    "enquire_cta": "Demander une soirée",
+    "enquire_sub": "Minimum 10 personnes · Location privée uniquement",
+    "parties": [
+      {
+        "id": "white-sunset-party",
+        "name": "Soirée Blanche",
+        "lede": "Une soirée tout en blanc sur la terrasse, au moment où le soleil disparaît derrière l'Atlas.",
+        "copy": "Une seule demande : les invités s'habillent en blanc. La table est dressée en lin ivoire et bougeoirs en laiton face à la dernière lumière de l'Agafay. L'apéritif ouvre en vins blancs marocains et mezze froid sur la terrasse ; le dîner est servi aux bougies lorsque les premières étoiles apparaissent. Location privée uniquement, de 18h00 à minuit.",
+        "capacity": "Jusqu'à 30 invités",
+        "season": "Avril – Octobre"
+      },
+      {
+        "id": "pool-party",
+        "name": "Pool Party",
+        "lede": "Un long après-midi autour de la piscine, avec l'Atlas en toile de fond permanente.",
+        "copy": "De midi jusqu'au coucher du soleil : coussins à l'ombre, rosé marocain frais, plateaux de mezze et le silence particulier que quarante degrés dans le désert imposent. Musique à partir de 16h00 — DJ résident ou oud en live selon votre choix. La piscine est réservée exclusivement à votre groupe. De midi à 20h00.",
+        "capacity": "Jusqu'à 50 invités",
+        "season": "Mai – Septembre"
+      },
+      {
+        "id": "red-sunset-party",
+        "name": "Soirée Rouge",
+        "lede": "Un rassemblement de cocktails curatés quand les dunes virent à l'ocre profond.",
+        "copy": "Le plus intime de nos trois formats — tenu sur la terrasse face au désert à l'heure précise où l'Agafay vire au rouge. Apéritifs à la grenade, rouges marocains vieillis et mezze chaud servis à la main. Strictement limité à vingt personnes pour préserver l'atmosphère. De 18h30 à 22h00, toute l'année.",
+        "capacity": "Jusqu'à 20 invités",
+        "season": "Toute l'année"
+      }
+    ]
+  },
+  "meta": {
+    "home_title": "Sunset Agafay — Kasbah Boutique · Désert d'Agafay",
+    "home_description": "Une kasbah boutique de quatorze chambres dans le désert d'Agafay, à une heure au sud de Marrakech. Hôtel de luxe dans le désert marocain.",
+    "home_keywords": "hôtel désert Agafay, kasbah boutique Marrakech, séjour luxe désert Maroc, hôtel Agafay, kasbah Maroc, escapade désert Marrakech",
+    "suites_title": "Suites & Chambres — Sunset Agafay",
+    "suites_description": "Quatre suites designées individuellement à la kasbah Sunset Agafay — Suite Agafay, Suite La Khoutoubia, Suite Sunset et Suite Familiale dans le désert d'Agafay.",
+    "restaurants_title": "Restaurants & Bars — Sunset Agafay",
+    "restaurants_description": "Trois expériences gastronomiques à Sunset Agafay : Le Souk cuisine marocaine, Bar Arish apéritifs, La Table d'Idriss dîner privé.",
+    "events_title": "Événements Privés — Sunset Agafay",
+    "events_description": "Mariages, rassemblements privés et séminaires à la kasbah Sunset Agafay dans le désert d'Agafay, à une heure de Marrakech.",
+    "experiences_title": "Expériences — Sunset Agafay",
+    "experiences_description": "Expériences désertiques à Sunset Agafay : randonnées à cheval au lever du soleil, rituels hammam, observation des étoiles et apéritif sur les dunes.",
+    "contact_title": "Contact & Réservations — Sunset Agafay",
+    "contact_description": "Réservez une chambre à la kasbah Sunset Agafay dans le désert d'Agafay. Transferts privés depuis Marrakech. Contactez notre équipe pour les disponibilités.",
+    "transfers_title": "Transferts — Sunset Agafay",
+    "transfers_description": "Transferts privés depuis l'aéroport Marrakech-Ménara jusqu'à la kasbah Sunset Agafay. Transferts de jour, de nuit, et trajets privés sur mesure.",
+    "sunset_parties_title": "Soirées Coucher de Soleil — Sunset Agafay",
+    "sunset_parties_description": "Trois formats de soirées à Sunset Agafay : Soirée Blanche, Pool Party et Soirée Rouge dans le désert d'Agafay près de Marrakech.",
+    "suite_agafay_title": "Suite Agafay — Sunset Agafay",
+    "suite_agafay_description": "Suite de 45 m² face au plateau du désert d'Agafay. Tadelakt, baldaquin en laiton, terrasse privée orientée ouest et baignoire profonde.",
+    "wedding_title": "Mariage — Événements Privés · Sunset Agafay",
+    "wedding_description": "Organisez votre mariage à la kasbah Sunset Agafay dans le désert d'Agafay. Mariages intimes de douze à quatre-vingts invités, à une heure de Marrakech.",
+    "white_party_title": "Soirée Blanche — Sunset Agafay",
+    "white_party_description": "Une soirée tout en blanc sur la terrasse de la kasbah. Vins marocains, dîner aux bougies sous les étoiles, et le désert d'Agafay au crépuscule. Jusqu'à 30 invités.",
+    "le_souk_title": "Le Souk — Sunset Agafay",
+    "le_souk_description": "Longs déjeuners sous la pergola et dîners aux bougies par le chef Yassine. Cuisine du marché local à la kasbah Sunset Agafay dans le désert d'Agafay.",
+    "reserve_title": "Réserver une Chambre — Sunset Agafay",
+    "reserve_description": "Réservez l'une des quatorze chambres de la kasbah Sunset Agafay dans le désert d'Agafay. Vérifiez les disponibilités et réservez votre séjour à une heure au sud de Marrakech.",
+    "reserve_keywords": "réserver hôtel désert Maroc, réservation kasbah Agafay, réservation hôtel Marrakech, réserver Sunset Agafay",
+    "suites_keywords": "chambre hôtel désert Maroc, suite luxe Agafay, suite boutique Marrakech, chambre kasbah Maroc, suite hôtel désert",
+    "restaurants_keywords": "restaurant marocain désert Agafay, gastronomie désert Maroc, Le Souk Marrakech, restaurant kasbah Maroc, cuisine marocaine Agafay",
+    "experiences_keywords": "expériences désert Maroc, hammam Agafay, observation étoiles Maroc, randonnée cheval désert Maroc, expériences kasbah Marrakech",
+    "events_keywords": "lieu mariage Maroc, événement privé Agafay, séminaire Marrakech, mariage kasbah désert Maroc, lieu événement Maroc",
+    "transfers_keywords": "transfert aéroport Marrakech, transfert privé désert Agafay, taxi Marrakech Agafay, navette hôtel Maroc, transfert désert Marrakech",
+    "sunset_parties_keywords": "soirée coucher soleil Maroc, soirée désert Agafay, Soirée Blanche Marrakech, pool party désert Maroc, cocktail désert Agafay",
+    "contact_keywords": "contacter Sunset Agafay, réservations kasbah Agafay, conciergerie Maroc, contact hôtel Marrakech désert",
+    "wedding_keywords": "mariage kasbah Maroc, lieu mariage désert Agafay, mariage intime Marrakech, mariage désert Maroc, lieu mariage luxe Maroc",
+    "white_party_keywords": "Soirée Blanche Agafay, soirée coucher soleil Maroc, fête désert Marrakech, soirée plein air Maroc, apéritif désert",
+    "le_souk_keywords": "Le Souk restaurant Agafay, restaurant marocain désert, cuisine vallée Maroc, dîner bougies Marrakech, gastronomie Agafay"
+  }
+}
