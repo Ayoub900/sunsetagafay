@@ -27,7 +27,7 @@ export function Experiences({ dict, experiences, lang }: { dict: ExpSectionDict;
               <span style={{ fontFamily: 'var(--serif)', fontWeight: 400, fontSize: 'clamp(22px,3vw,32px)', lineHeight: 1.05, letterSpacing: '-0.01em' }}>
                 {it.name}
               </span>
-              <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(14px,1.6vw,17px)', color: 'var(--ink-soft)', lineHeight: 1.5 }}>
+              <span className="exp-row-lede" style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(14px,1.6vw,17px)', color: 'var(--ink-soft)', lineHeight: 1.5 }}>
                 {it.lede}
               </span>
               <div className="exp-row-when" style={{ textAlign: 'right' }}>

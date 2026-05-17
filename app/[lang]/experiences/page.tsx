@@ -81,7 +81,7 @@ export default async function ExperiencesPage({ params }: { params: Promise<{ la
           <div style={{ marginBottom: 'clamp(48px,6vw,72px)' }}>
             <div className="eyebrow no-lead" style={{ color: 'var(--sienna)', marginBottom: 20 }}>{es.eyebrow}</div>
             <h2 style={{ fontFamily: 'var(--serif)', fontWeight: 400, fontSize: 'clamp(36px,5vw,64px)', lineHeight: 1, letterSpacing: '-0.018em', margin: 0, color: 'var(--ink)' }}>
-              {es.title}
+              {isFr ? 'Nos expériences' : 'Our experiences'}
             </h2>
             <p style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(16px,1.8vw,20px)', color: 'var(--sienna)', margin: 'clamp(14px,2vw,22px) 0 0', maxWidth: 600 }}>
               {es.lede}

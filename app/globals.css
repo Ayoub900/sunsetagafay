@@ -734,7 +734,7 @@ img, video { max-width: 100%; display: block; }
 @media (max-width: 767px) {
   .table-entry.left,
   .table-entry.right { grid-template-columns: 1fr; }
-  .table-entry.right .table-photo { order: -1; }
+  .table-photo { display: none; }
 }
 
 /* ── Experiences list ─────────────────────────────── */
@@ -748,7 +748,7 @@ img, video { max-width: 100%; display: block; }
 }
 @media (max-width: 900px) {
   .exp-row { grid-template-columns: 50px 1fr 40px; gap: 16px 24px; }
-  .exp-row-who, .exp-row-when { display: none; }
+  .exp-row-who, .exp-row-when, .exp-row-lede { display: none; }
 }
 @media (max-width: 480px) {
   .exp-row { grid-template-columns: 1fr 40px; gap: 8px; }
