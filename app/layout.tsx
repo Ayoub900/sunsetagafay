@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Bodoni_Moda, Italianno, Work_Sans } from 'next/font/google'
+import { Bodoni_Moda, Cormorant_Garamond, Work_Sans } from 'next/font/google'
 import { headers } from 'next/headers'
 import './globals.css'
 
@@ -11,10 +11,11 @@ const bodoniModa = Bodoni_Moda({
   display: 'swap',
 })
 
-const italianno = Italianno({
+const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  weight: '400',
-  variable: '--font-italianno',
+  weight: ['400', '500'],
+  style: ['italic'],
+  variable: '--font-script',
   display: 'swap',
 })
 
@@ -37,7 +38,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html
       lang={lang}
-      className={`${bodoniModa.variable} ${italianno.variable} ${workSans.variable}`}
+      className={`${bodoniModa.variable} ${cormorant.variable} ${workSans.variable}`}
     >
       <body>{children}</body>
     </html>

@@ -22,6 +22,9 @@
     "sunset_parties_white": "White Sunset Party",
     "sunset_parties_pool": "Pool Party",
     "sunset_parties_red": "Red Sunset Party",
+    "day_pass": "Day Pass",
+    "day_pass_all": "All Day Passes",
+    "day_pass_hot": "Hot",
     "transfers": "Transfers",
     "transfers_all": "All Transfers",
     "transfers_day": "Airport Day Transfer",
@@ -143,7 +146,7 @@
   "experiences_section": {
     "eyebrow": "The Hours",
     "index": "IV · Experiences",
-    "title": "Six small things to do here.",
+    "title": "Seven small things to do here.",
     "lede": "A short list, kept short on purpose. We would rather do these well than offer twenty of them."
   },
   "experiences": [
@@ -163,31 +166,38 @@
     },
     {
       "n": "03",
-      "name": "Hammam, Slow",
-      "when": "By appointment",
-      "who": "Solo or in pairs",
-      "lede": "Black soap, rassoul, eucalyptus steam; ninety minutes ending with mint tea on the upper terrace."
-    },
-    {
-      "n": "04",
       "name": "Stargazing with Said",
       "when": "Clear nights, 21:30",
       "who": "Up to six guests",
       "lede": "Said brings out the small refractor; we bring out the brandy. Saturn most nights of the year."
     },
     {
-      "n": "05",
-      "name": "Kasbah Drawing Lesson",
-      "when": "Mondays, 10:00",
-      "who": "Up to six guests",
-      "lede": "Sketch the courtyard with the Marrakech illustrator Lina Berrada. Paper and ink provided."
-    },
-    {
-      "n": "06",
+      "n": "04",
       "name": "Aperitif on the Dunes",
       "when": "Daily, 18:30",
       "who": "Open to all guests",
       "lede": "We drive a low table out to the dunes; you bring the conversation. The bar stays open until the light is gone."
+    },
+    {
+      "n": "05",
+      "name": "Sunset Camel Tour",
+      "when": "Daily, 17:30",
+      "who": "Up to four riders",
+      "lede": "An hour on camelback through the dunes as the light turns rose and gold over the Atlas."
+    },
+    {
+      "n": "06",
+      "name": "Desert Quad Experience",
+      "when": "Daily, 10:00 & 15:00",
+      "who": "Solo or in pairs",
+      "lede": "Two hours across the hammada and the dune line — guided, briefed, and back in time for tea."
+    },
+    {
+      "n": "07",
+      "name": "Luxury Buggy Tour",
+      "when": "Daily, on request",
+      "who": "Up to four guests",
+      "lede": "Two-seater buggies along the desert tracks of Agafay, with a stop for mint tea among the bergères."
     }
   ],
   "hammam_section": {
@@ -326,7 +336,7 @@
     "step_dates": "Dates",
     "step_suites": "Room",
     "step_details": "Details",
-    "step_confirmed": "Confirmed",
+    "step_confirmed": "Payment",
     "dates_title": "When would you like to stay?",
     "checkin_label": "Check-in",
     "checkout_label": "Check-out",
@@ -360,9 +370,9 @@
     "confirm_cta": "Confirm Reservation",
     "confirming": "Confirming…",
     "change_room": "Change Room",
-    "confirmed_eyebrow": "Reservation Received",
+    "confirmed_eyebrow": "Awaiting Payment",
     "confirmed_title": "Your room is held.",
-    "confirmed_sub": "A member of our team will contact you within 24 hours to confirm all details and arrange your arrival.",
+    "confirmed_sub": "A member of our team will contact you within 24 hours to confirm payment and arrange your arrival. No charge has been made yet.",
     "ref_label": "Reference",
     "confirmed_suite_label": "Room",
     "confirmed_dates_label": "Dates",
@@ -486,6 +496,31 @@
       }
     ]
   },
+  "day_pass_page": {
+    "breadcrumb_home": "Home",
+    "breadcrumb_day_pass": "Day Pass",
+    "intro_eyebrow": "Day Pass",
+    "intro_title": "Spend the day at White Camel.",
+    "form_title": "Book your day pass",
+    "field_start_date": "Start Date",
+    "field_start_time": "Start Time",
+    "field_adults": "Adults",
+    "field_children": "Children",
+    "submit": "Book now",
+    "submit_sending": "Sending…",
+    "submit_done": "Request sent — we'll be in touch shortly.",
+    "submit_error": "Something went wrong. Please try again.",
+    "from": "from",
+    "welcome_line": "The White Camel Agafay welcomes you every day.",
+    "hero_eyebrow": "Day Pass",
+    "hero_title": "Spend the day in the Agafay.",
+    "hero_sub": "Pool, lunch and dinner day passes at the White Camel — to taste the kasbah without staying the night.",
+    "hours_label": "Hours",
+    "price_label": "From",
+    "discover_cta": "Discover & Book",
+    "reserve_cta": "Reserve your day",
+    "reserve_cta_sub": "Limited availability each day"
+  },
   "meta": {
     "home_title": "Sunset Agafay — Boutique Kasbah · Agafay Desert",
     "home_description": "A boutique kasbah of fourteen rooms in the Agafay desert, one hour from Marrakech. Luxury desert hotel with authentic Moroccan experience.",
@@ -521,6 +556,9 @@
     "events_keywords": "wedding venue Morocco, private event Agafay, corporate retreat Marrakech, kasbah wedding desert Morocco, event venue Morocco",
     "transfers_keywords": "airport transfer Marrakech, private transfer Agafay desert, taxi Marrakech Agafay, hotel transfer Morocco, desert transfer Marrakech",
     "sunset_parties_keywords": "sunset party Morocco, desert party Agafay, White Sunset Party Marrakech, pool party desert Morocco, cocktail party Agafay",
+    "day_pass_title": "Day Pass — Sunset Agafay",
+    "day_pass_description": "Spend a day at Sunset Agafay — swimming pool, lunch, and dinner day passes in the Agafay desert near Marrakech.",
+    "day_pass_keywords": "day pass Agafay, pool day pass Morocco, lunch day pass Marrakech, dinner day pass Agafay, day pass desert Morocco",
     "contact_keywords": "contact Sunset Agafay, reservations Agafay kasbah, concierge Morocco, hotel contact Marrakech desert",
     "wedding_keywords": "kasbah wedding Morocco, wedding venue Agafay desert, intimate wedding Marrakech, desert wedding Morocco, luxury wedding venue Morocco",
     "white_party_keywords": "White Sunset Party Agafay, sunset party Morocco, desert party Marrakech, outdoor party Morocco, aperitif desert party",

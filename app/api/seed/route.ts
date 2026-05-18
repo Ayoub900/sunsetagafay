@@ -21,6 +21,7 @@ export async function POST(req: Request) {
     prisma.experience.deleteMany({}),
     prisma.event.deleteMany({}),
     prisma.sunsetParty.deleteMany({}),
+    prisma.dayPass.deleteMany({}),
     prisma.transfer.deleteMany({}),
     prisma.treatment.deleteMany({}),
   ])
@@ -129,6 +130,49 @@ export async function POST(req: Request) {
     })
   }))
 
+  // ── Day Passes ────────────────────────────────────────────────────────────
+  const dayPasses = [
+    {
+      slug: 'swimming-pool-dinner',
+      nameEn: 'Day Pass Swimming Pool & Dinner',
+      nameFr: 'Day Pass Piscine & Dîner',
+      ledeEn: 'Sunset by the pool followed by dinner under the stars.',
+      ledeFr: 'Coucher de soleil au bord de la piscine suivi d\'un dîner sous les étoiles.',
+      copyEn: '<p>Join us at the White Camel Agafay for an extraordinary evening of relaxation, natural beauty, and gastronomic delight. Book your <strong>Day Pass Swimming Pool &amp; Dinner</strong> now and experience the magic of Agafay’s sunset while enjoying our luxurious swimming pool and savoring a memorable dinner.</p>',
+      copyFr: '<p>Rejoignez-nous au White Camel Agafay pour une soirée extraordinaire de détente, de beauté naturelle et de délices gastronomiques. Réservez votre <strong>Day Pass Piscine &amp; Dîner</strong> et vivez la magie du coucher de soleil d\'Agafay en profitant de notre piscine et d\'un dîner mémorable.</p>',
+      hours: '16:00 — 19:00',
+      price: '55,00',
+      currency: '€',
+    },
+    {
+      slug: 'swimming-pool-lunch',
+      nameEn: 'Day Pass Swimming Pool & Lunch',
+      nameFr: 'Day Pass Piscine & Déjeuner',
+      ledeEn: 'A long lunch by the pool with the Atlas as a backdrop.',
+      ledeFr: 'Un long déjeuner au bord de la piscine avec l\'Atlas en toile de fond.',
+      copyEn: '<p>Spend an afternoon at the White Camel Agafay with a <strong>Day Pass Swimming Pool &amp; Lunch</strong>. Lounge by the pool and enjoy a Moroccan lunch prepared by our chef.</p>',
+      copyFr: '<p>Passez un après-midi au White Camel Agafay avec un <strong>Day Pass Piscine &amp; Déjeuner</strong>. Détendez-vous au bord de la piscine et savourez un déjeuner marocain préparé par notre chef.</p>',
+      hours: '12:00 — 17:00',
+      price: '55,00',
+      currency: '€',
+    },
+    {
+      slug: 'full-day-pass',
+      nameEn: 'Full Day Pass (Lunch & Dinner)',
+      nameFr: 'Day Pass Journée (Déjeuner & Dîner)',
+      ledeEn: 'A complete day at the kasbah — pool, lunch, sunset, and dinner.',
+      ledeFr: 'Une journée complète à la kasbah — piscine, déjeuner, coucher de soleil et dîner.',
+      copyEn: '<p>Take in the entire day with our <strong>Full Day Pass</strong>. Includes pool access, lunch, sunset aperitif, and dinner under the stars.</p>',
+      copyFr: '<p>Profitez de toute la journée avec notre <strong>Day Pass Journée</strong>. Comprend l\'accès à la piscine, le déjeuner, l\'apéritif au coucher du soleil et le dîner sous les étoiles.</p>',
+      hours: '12:00 — 22:00',
+      price: '95,00',
+      currency: '€',
+    },
+  ]
+  await Promise.all(dayPasses.map((d, i) =>
+    prisma.dayPass.create({ data: { ...d, active: true, order: i } })
+  ))
+
   // ── Transfers ─────────────────────────────────────────────────────────────
   const enTransfers = enDict.transfers_page.options
   const frTransfers = frDict.transfers_page.options
@@ -174,6 +218,7 @@ export async function POST(req: Request) {
       experiences: enDict.experiences.length,
       events:      enDict.events_section.types.length,
       parties:     enParties.length,
+      dayPasses:   dayPasses.length,
       transfers:   enTransfers.length,
       treatments:  enDict.hammam_section.treatments.length,
     },

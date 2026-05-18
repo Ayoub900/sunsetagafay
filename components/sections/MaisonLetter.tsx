@@ -37,11 +37,9 @@ export function MaisonLetter({ dict }: { dict: StoryDict }) {
             {dict.headline_1}
             <span style={{
               fontFamily: 'var(--script)', fontStyle: 'italic',
-              fontSize: '1.4em', lineHeight: 0.6,
-              color: 'var(--brass)', padding: '0 0.05em',
-              display: 'inline-block', transform: 'translateY(0.06em)',
+              color: 'var(--brass)',
             }}>
-              &nbsp;{dict.headline_script}&nbsp;
+              {' '}{dict.headline_script}{' '}
             </span>
             {dict.headline_2}
           </h2>

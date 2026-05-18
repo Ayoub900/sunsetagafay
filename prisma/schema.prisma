@@ -109,6 +109,26 @@ model SunsetParty {
   updatedAt DateTime @updatedAt
 }
 
+model DayPass {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug      String   @unique
+  nameEn    String
+  nameFr    String
+  ledeEn    String   @default("")
+  ledeFr    String   @default("")
+  copyEn    String   @default("")
+  copyFr    String   @default("")
+  hours     String   @default("")
+  price     String   @default("")
+  currency  String   @default("€")
+  imageUrl  String   @default("")
+  images    String[] @default([])
+  active    Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Transfer {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   slug      String   @unique
@@ -179,4 +199,12 @@ model Guest {
   notes     String   @default("")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model SiteSettings {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  key             String   @unique @default("default")
+  partiesEnabled  Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

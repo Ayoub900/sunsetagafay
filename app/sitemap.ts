@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { getActiveSuites, getActiveRestaurants, getActiveEvents, getActiveSunsetParties, getActiveTransfers } from '@/lib/db'
+import { getActiveSuites, getActiveRestaurants, getActiveEvents, getActiveSunsetParties, getActiveDayPasses, getActiveTransfers, arePartiesEnabled } from '@/lib/db'
 
 const BASE = 'https://sunsetagafay.com'
 const LOCALES = ['en', 'fr'] as const
@@ -14,12 +14,14 @@ function localeUrls(path: string, priority: number, changeFrequency: MetadataRou
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [suites, restaurants, events, parties, transfers] = await Promise.all([
+  const [suites, restaurants, events, parties, dayPasses, transfers, partiesOn] = await Promise.all([
     getActiveSuites(),
     getActiveRestaurants(),
     getActiveEvents(),
     getActiveSunsetParties(),
+    getActiveDayPasses(),
     getActiveTransfers(),
+    arePartiesEnabled(),
   ])
 
   const staticPages = [
@@ -28,7 +30,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...localeUrls('/restaurants', 0.8, 'monthly'),
     ...localeUrls('/experiences', 0.7, 'monthly'),
     ...localeUrls('/events', 0.7, 'monthly'),
-    ...localeUrls('/sunset-parties', 0.7, 'monthly'),
+    ...(partiesOn ? localeUrls('/sunset-parties', 0.7, 'monthly') : []),
+    ...localeUrls('/day-pass', 0.8, 'weekly'),
     ...localeUrls('/transfers', 0.7, 'monthly'),
     ...localeUrls('/contact', 0.6, 'monthly'),
     ...localeUrls('/reserve', 0.6, 'monthly'),
@@ -46,8 +49,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     localeUrls(`/events/${e.slug}`, 0.7, 'monthly', (e as { updatedAt?: Date }).updatedAt)
   )
 
-  const partyPages = parties.flatMap(p =>
-    localeUrls(`/sunset-parties/${p.slug}`, 0.7, 'monthly', (p as { updatedAt?: Date }).updatedAt)
+  const partyPages = partiesOn
+    ? parties.flatMap(p =>
+        localeUrls(`/sunset-parties/${p.slug}`, 0.7, 'monthly', (p as { updatedAt?: Date }).updatedAt)
+      )
+    : []
+
+  const dayPassPages = dayPasses.flatMap(d =>
+    localeUrls(`/day-pass/${d.slug}`, 0.7, 'weekly', (d as { updatedAt?: Date }).updatedAt)
   )
 
   const transferPages = transfers.flatMap(t =>
@@ -60,6 +69,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...restaurantPages,
     ...eventPages,
     ...partyPages,
+    ...dayPassPages,
     ...transferPages,
   ]
 }

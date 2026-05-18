@@ -1,78 +1,78 @@
 import Link from 'next/link'
-import { getSunsetParties, getSunsetPartyById, getSiteSettings } from '@/lib/db'
-import { createParty, updateParty, deleteParty, togglePartiesEnabled } from './actions'
+import { getDayPasses, getDayPassById } from '@/lib/db'
+import { createDayPass, updateDayPass, deleteDayPass } from './actions'
 import { AdminTopbar } from '@/components/admin/AdminTopbar'
 import { PageHead } from '@/components/admin/PageHead'
-import { SunsetPartiesTable } from './SunsetPartiesTable'
+import { DayPassesTable } from './DayPassesTable'
 import { GalleryUpload } from '@/components/admin/GalleryUpload'
 import { RichTextEditor } from '@/components/admin/RichTextEditor'
 import { Field, FormSection, TextInput, TextArea, CheckboxField } from '@/components/admin/FormAtoms'
 import { T } from '@/components/admin/tokens'
 
-export default async function SunsetPartiesPage({ searchParams }: { searchParams: Promise<{ new?: string; edit?: string }> }) {
+export default async function DayPassesPage({ searchParams }: { searchParams: Promise<{ new?: string; edit?: string }> }) {
   const params = await searchParams
-  const [items, settings] = await Promise.all([getSunsetParties(), getSiteSettings()])
-  const editing = params.edit ? await getSunsetPartyById(params.edit) : null
+  const items = await getDayPasses()
+  const editing = params.edit ? await getDayPassById(params.edit) : null
   const showForm = params.new === '1' || !!editing
-  const updateWithId = editing ? updateParty.bind(null, editing.id) : null
-  const partiesEnabled = settings.partiesEnabled
+  const updateWithId = editing ? updateDayPass.bind(null, editing.id) : null
 
   return (
     <>
-      <AdminTopbar crumbs={['Programming', 'Sunset Parties']}
+      <AdminTopbar crumbs={['Programming', 'Day Passes']}
         action={!showForm ? (
-          <Link href="/admin/sunset-parties?new=1" style={newBtnStyle}>+ New party</Link>
+          <Link href="/admin/day-passes?new=1" style={newBtnStyle}>+ New day pass</Link>
         ) : undefined}
       />
 
       {showForm ? (
         <>
           <div style={backBarStyle}>
-            <Link href="/admin/sunset-parties" style={backLinkStyle}>← Back to sunset parties</Link>
+            <Link href="/admin/day-passes" style={backLinkStyle}>← Back to day passes</Link>
             <div style={{ display: 'flex', gap: 10 }}>
-              <Link href="/admin/sunset-parties" style={cancelBtnStyle}>Cancel</Link>
-              <button form="party-form" type="submit" style={saveBtnStyle}>{editing ? 'Save changes' : 'Create party'}</button>
+              <Link href="/admin/day-passes" style={cancelBtnStyle}>Cancel</Link>
+              <button form="daypass-form" type="submit" style={saveBtnStyle}>{editing ? 'Save changes' : 'Create day pass'}</button>
             </div>
           </div>
           <PageHead
-            title={editing ? editing.nameEn : 'New sunset party'}
+            title={editing ? editing.nameEn : 'New day pass'}
             lede={editing
-              ? `${editing.season} · capacity ${editing.capacity}. Changes go live on save.`
-              : 'Add a new sunset party. Drafts stay hidden until set to Active.'}
+              ? `${editing.currency || '€'} ${editing.price || '—'}${editing.hours ? ` · ${editing.hours}` : ''}. Changes go live on save.`
+              : 'Add a new day pass option. Drafts stay hidden until set to Active.'}
           />
           <div style={{ padding: '8px 32px 48px' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 20, alignItems: 'start' }}>
               <div style={{ background: T.surface, border: `1px solid ${T.line}`, borderRadius: T.radius, boxShadow: T.shadow, padding: 28 }}>
-                <form id="party-form" action={editing ? updateWithId! : createParty}>
+                <form id="daypass-form" action={editing ? updateWithId! : createDayPass}>
                   <FormSection title="Identity">
-                    <Field label="Slug (URL)" w="calc(50% - 8px)"><TextInput name="slug" defaultValue={editing?.slug} required /></Field>
+                    <Field label="Slug (URL)" w="calc(50% - 8px)" hint="e.g. swimming-pool-dinner"><TextInput name="slug" defaultValue={editing?.slug} required /></Field>
                     <Field label="Name (EN)" w="calc(50% - 8px)"><TextInput name="nameEn" defaultValue={editing?.nameEn} required /></Field>
                     <Field label="Name (FR)" w="calc(50% - 8px)"><TextInput name="nameFr" defaultValue={editing?.nameFr} required /></Field>
-                    <Field label="Season" w="calc(50% - 8px)"><TextInput name="season" defaultValue={editing?.season} required /></Field>
-                    <Field label="Capacity" w="calc(50% - 8px)"><TextInput name="capacity" defaultValue={editing?.capacity} required /></Field>
+                    <Field label="Hours" w="calc(50% - 8px)" hint="e.g. 16:00 — 19:00"><TextInput name="hours" defaultValue={editing?.hours ?? ''} /></Field>
+                    <Field label="Price" w="calc(50% - 8px)"><TextInput name="price" defaultValue={editing?.price ?? ''} placeholder="55,00" /></Field>
+                    <Field label="Currency" w="calc(50% - 8px)"><TextInput name="currency" defaultValue={editing?.currency ?? '€'} /></Field>
                   </FormSection>
 
                   <FormSection title="Short Description (EN)">
-                    <Field label="Summary shown on listing & home — English" full>
-                      <TextArea name="ledeEn" rows={2} defaultValue={editing?.ledeEn ?? ''} required />
+                    <Field label="Summary shown in nav and on top of the page — English" full>
+                      <TextArea name="ledeEn" rows={2} defaultValue={editing?.ledeEn ?? ''} />
                     </Field>
                   </FormSection>
 
                   <FormSection title="Short Description (FR)">
-                    <Field label="Summary shown on listing & home — French" full>
-                      <TextArea name="ledeFr" rows={2} defaultValue={editing?.ledeFr ?? ''} required />
+                    <Field label="Summary shown in nav and on top of the page — French" full>
+                      <TextArea name="ledeFr" rows={2} defaultValue={editing?.ledeFr ?? ''} />
                     </Field>
                   </FormSection>
 
                   <FormSection title="Full Description (EN)">
-                    <Field label="Rich text shown only on the party detail page — English" full>
-                      <RichTextEditor name="copyEn" formId="party-form" defaultValue={editing?.copyEn ?? ''} />
+                    <Field label="Rich text shown on the day pass page — English" full>
+                      <RichTextEditor name="copyEn" formId="daypass-form" defaultValue={editing?.copyEn ?? ''} />
                     </Field>
                   </FormSection>
 
                   <FormSection title="Full Description (FR)">
-                    <Field label="Rich text shown only on the party detail page — French" full>
-                      <RichTextEditor name="copyFr" formId="party-form" defaultValue={editing?.copyFr ?? ''} />
+                    <Field label="Rich text shown on the day pass page — French" full>
+                      <RichTextEditor name="copyFr" formId="daypass-form" defaultValue={editing?.copyFr ?? ''} />
                     </Field>
                   </FormSection>
 
@@ -95,7 +95,7 @@ export default async function SunsetPartiesPage({ searchParams }: { searchParams
                   </div>
                   <GalleryUpload
                     currentImages={editing?.images?.length ? editing.images : (editing?.imageUrl ? [editing.imageUrl] : [])}
-                    formId="party-form"
+                    formId="daypass-form"
                   />
                 </div>
 
@@ -105,8 +105,8 @@ export default async function SunsetPartiesPage({ searchParams }: { searchParams
                   </h3>
                   {editing ? (
                     <div style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 13, color: T.ink2, lineHeight: 1.7 }}>
-                      <div><strong>Season:</strong> {editing.season}</div>
-                      <div><strong>Capacity:</strong> {editing.capacity}</div>
+                      <div><strong>Price:</strong> {editing.currency || '€'} {editing.price || '—'}</div>
+                      <div><strong>Hours:</strong> {editing.hours || '—'}</div>
                       <div><strong>Slug:</strong> {editing.slug}</div>
                       <div><strong>Photos:</strong> {(editing.images?.length || (editing.imageUrl ? 1 : 0))} uploaded</div>
                       <div style={{ marginTop: 8 }}>
@@ -124,7 +124,7 @@ export default async function SunsetPartiesPage({ searchParams }: { searchParams
                     </div>
                   ) : (
                     <p style={{ margin: 0, fontFamily: 'var(--sans, system-ui)', fontSize: 13, color: T.ink3 }}>
-                      Fill in the form to create a new party.
+                      Fill in the form to create a new day pass.
                     </p>
                   )}
                 </div>
@@ -134,70 +134,9 @@ export default async function SunsetPartiesPage({ searchParams }: { searchParams
         </>
       ) : (
         <>
-          <PageHead title="Sunset Parties" lede="Seasonal gatherings at golden hour." />
+          <PageHead title="Day Passes" lede="Pool, lunch and dinner day pass variants." />
           <div style={{ padding: '8px 32px 48px' }}>
-            <div style={{
-              background: T.surface,
-              border: `1px solid ${partiesEnabled ? T.line : 'rgba(192, 86, 64, 0.4)'}`,
-              borderLeft: `3px solid ${partiesEnabled ? T.ok : T.sienna}`,
-              borderRadius: T.radius,
-              boxShadow: T.shadow,
-              padding: '16px 20px',
-              marginBottom: 20,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: 16,
-              flexWrap: 'wrap',
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14, minWidth: 0 }}>
-                <span style={{
-                  display: 'inline-flex', alignItems: 'center', gap: 6,
-                  padding: '4px 12px', borderRadius: 999,
-                  background: partiesEnabled ? T.okSoft : 'rgba(192, 86, 64, 0.12)',
-                  color: partiesEnabled ? '#3F6238' : T.sienna,
-                  fontFamily: 'var(--sans, system-ui)', fontSize: 12, fontWeight: 600,
-                  letterSpacing: '0.04em',
-                  whiteSpace: 'nowrap',
-                }}>
-                  <span style={{
-                    width: 7, height: 7, borderRadius: 4,
-                    background: partiesEnabled ? T.ok : T.sienna,
-                  }} />
-                  {partiesEnabled ? 'PUBLIC' : 'HIDDEN'}
-                </span>
-                <div style={{ minWidth: 0 }}>
-                  <div style={{
-                    fontFamily: 'var(--sans, system-ui)', fontWeight: 600, fontSize: 14,
-                    color: T.ink, marginBottom: 2,
-                  }}>
-                    {partiesEnabled ? 'Parties are live on the website' : 'Parties are hidden from the website'}
-                  </div>
-                  <div style={{
-                    fontFamily: 'var(--sans, system-ui)', fontSize: 12.5, color: T.ink3,
-                  }}>
-                    {partiesEnabled
-                      ? 'The /sunset-parties section and all party detail pages are visible to visitors.'
-                      : 'No party is visible anywhere on the public site, including nav, listing, and detail pages.'}
-                  </div>
-                </div>
-              </div>
-              <form action={togglePartiesEnabled}>
-                <input type="hidden" name="enabled" value={partiesEnabled ? '0' : '1'} />
-                <button type="submit" style={{
-                  padding: '8px 18px',
-                  background: partiesEnabled ? T.surface : T.sienna,
-                  color: partiesEnabled ? T.ink : '#FFF8EE',
-                  border: `1px solid ${partiesEnabled ? T.line2 : T.sienna}`,
-                  borderRadius: T.radiusSm,
-                  fontFamily: 'var(--sans, system-ui)', fontSize: 13.5, fontWeight: 500,
-                  cursor: 'pointer', whiteSpace: 'nowrap',
-                }}>
-                  {partiesEnabled ? 'Disable parties' : 'Enable parties'}
-                </button>
-              </form>
-            </div>
-            <SunsetPartiesTable rows={items} deleteAction={deleteParty} />
+            <DayPassesTable rows={items} deleteAction={deleteDayPass} />
           </div>
         </>
       )}

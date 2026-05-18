@@ -3,10 +3,11 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getDictionary, hasLocale, type Locale } from '../../dictionaries'
 import { Photo, GrainOverlay } from '@/components/shared'
-import { getActiveSunsetParties, getSunsetPartyBySlug } from '@/lib/db'
+import { getActiveSunsetParties, getSunsetPartyBySlug, arePartiesEnabled } from '@/lib/db'
 import { buildAlternates } from '@/lib/seo'
 
 export async function generateStaticParams() {
+  if (!(await arePartiesEnabled())) return []
   const items = await getActiveSunsetParties()
   return items.map(p => ({ party: p.slug }))
 }
@@ -47,6 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export default async function PartyDetailPage({ params }: { params: Promise<{ lang: string; party: string }> }) {
   const { lang, party } = await params
   if (!hasLocale(lang)) notFound()
+  if (!(await arePartiesEnabled())) notFound()
 
   const [dict, item] = await Promise.all([
     getDictionary(lang as Locale),

@@ -22,6 +22,9 @@
     "sunset_parties_white": "Soirée Blanche",
     "sunset_parties_pool": "Pool Party",
     "sunset_parties_red": "Soirée Rouge",
+    "day_pass": "Day Pass",
+    "day_pass_all": "Tous les Day Pass",
+    "day_pass_hot": "Hot",
     "transfers": "Transferts",
     "transfers_all": "Tous les transferts",
     "transfers_day": "Transfert Aéroport de Jour",
@@ -143,7 +146,7 @@
   "experiences_section": {
     "eyebrow": "Les Heures",
     "index": "IV · Expériences",
-    "title": "Six petites choses à faire ici.",
+    "title": "Sept petites choses à faire ici.",
     "lede": "Une liste courte, intentionnellement. Nous préférons bien faire celles-ci plutôt que d'en proposer vingt."
   },
   "experiences": [
@@ -163,31 +166,38 @@
     },
     {
       "n": "03",
-      "name": "Hammam, lentement",
-      "when": "Sur rendez-vous",
-      "who": "Solo ou en duo",
-      "lede": "Savon noir, rassoul, vapeur d'eucalyptus ; quatre-vingt-dix minutes suivies d'un thé à la menthe sur la terrasse."
-    },
-    {
-      "n": "04",
       "name": "Observation des étoiles avec Saïd",
       "when": "Nuits claires, 21h30",
       "who": "Jusqu'à six hôtes",
       "lede": "Saïd sort le petit réfracteur ; nous sortons le brandy. Saturne la plupart des nuits de l'année."
     },
     {
-      "n": "05",
-      "name": "Cours de dessin à la kasbah",
-      "when": "Lundis, 10h00",
-      "who": "Jusqu'à six hôtes",
-      "lede": "Esquissez la cour avec l'illustratrice marrakchie Lina Berrada. Papier et encre fournis."
-    },
-    {
-      "n": "06",
+      "n": "04",
       "name": "Apéritif sur les dunes",
       "when": "Quotidien, 18h30",
       "who": "Ouvert à tous les hôtes",
       "lede": "Nous installons une table basse dans les dunes ; vous apportez la conversation. Le bar reste ouvert jusqu'à la disparition de la lumière."
+    },
+    {
+      "n": "05",
+      "name": "Balade en chameau au coucher du soleil",
+      "when": "Quotidien, 17h30",
+      "who": "Jusqu'à quatre cavaliers",
+      "lede": "Une heure à dos de chameau à travers les dunes, à l'heure où la lumière vire au rose et à l'or sur l'Atlas."
+    },
+    {
+      "n": "06",
+      "name": "Expérience Quad dans le désert",
+      "when": "Quotidien, 10h00 & 15h00",
+      "who": "Solo ou en duo",
+      "lede": "Deux heures sur la hammada et le long des dunes — accompagné, briefé, et de retour pour le thé."
+    },
+    {
+      "n": "07",
+      "name": "Tour en buggy de luxe",
+      "when": "Quotidien, sur demande",
+      "who": "Jusqu'à quatre hôtes",
+      "lede": "Buggys deux places sur les pistes du désert d'Agafay, avec une halte au thé à la menthe parmi les bergères."
     }
   ],
   "hammam_section": {
@@ -326,7 +336,7 @@
     "step_dates": "Dates",
     "step_suites": "Chambre",
     "step_details": "Détails",
-    "step_confirmed": "Confirmé",
+    "step_confirmed": "Paiement",
     "dates_title": "Quand souhaitez-vous séjourner ?",
     "checkin_label": "Arrivée",
     "checkout_label": "Départ",
@@ -360,9 +370,9 @@
     "confirm_cta": "Confirmer la réservation",
     "confirming": "Confirmation…",
     "change_room": "Changer de chambre",
-    "confirmed_eyebrow": "Réservation reçue",
+    "confirmed_eyebrow": "Paiement en attente",
     "confirmed_title": "Votre chambre est retenue.",
-    "confirmed_sub": "Un membre de notre équipe vous contactera sous 24 heures pour confirmer tous les détails et organiser votre arrivée.",
+    "confirmed_sub": "Un membre de notre équipe vous contactera sous 24 heures pour confirmer le paiement et organiser votre arrivée. Aucun débit n'a encore été effectué.",
     "ref_label": "Référence",
     "confirmed_suite_label": "Chambre",
     "confirmed_dates_label": "Dates",
@@ -486,6 +496,31 @@
       }
     ]
   },
+  "day_pass_page": {
+    "breadcrumb_home": "Accueil",
+    "breadcrumb_day_pass": "Day Pass",
+    "intro_eyebrow": "Day Pass",
+    "intro_title": "Passez la journée au White Camel.",
+    "form_title": "Réservez votre day pass",
+    "field_start_date": "Date d'arrivée",
+    "field_start_time": "Heure d'arrivée",
+    "field_adults": "Adultes",
+    "field_children": "Enfants",
+    "submit": "Réserver",
+    "submit_sending": "Envoi…",
+    "submit_done": "Demande envoyée — nous vous recontactons rapidement.",
+    "submit_error": "Une erreur est survenue. Merci de réessayer.",
+    "from": "à partir de",
+    "welcome_line": "The White Camel Agafay vous accueille tous les jours.",
+    "hero_eyebrow": "Day Pass",
+    "hero_title": "Une journée dans l'Agafay.",
+    "hero_sub": "Day Pass piscine, déjeuner et dîner au White Camel — pour goûter à la kasbah sans y passer la nuit.",
+    "hours_label": "Horaires",
+    "price_label": "À partir de",
+    "discover_cta": "Découvrir & Réserver",
+    "reserve_cta": "Réservez votre journée",
+    "reserve_cta_sub": "Places limitées chaque jour"
+  },
   "meta": {
     "home_title": "Sunset Agafay — Kasbah Boutique · Désert d'Agafay",
     "home_description": "Une kasbah boutique de quatorze chambres dans le désert d'Agafay, à une heure au sud de Marrakech. Hôtel de luxe dans le désert marocain.",
@@ -521,6 +556,9 @@
     "events_keywords": "lieu mariage Maroc, événement privé Agafay, séminaire Marrakech, mariage kasbah désert Maroc, lieu événement Maroc",
     "transfers_keywords": "transfert aéroport Marrakech, transfert privé désert Agafay, taxi Marrakech Agafay, navette hôtel Maroc, transfert désert Marrakech",
     "sunset_parties_keywords": "soirée coucher soleil Maroc, soirée désert Agafay, Soirée Blanche Marrakech, pool party désert Maroc, cocktail désert Agafay",
+    "day_pass_title": "Day Pass — Sunset Agafay",
+    "day_pass_description": "Passez une journée à Sunset Agafay — Day Pass piscine, déjeuner et dîner dans le désert d'Agafay près de Marrakech.",
+    "day_pass_keywords": "day pass Agafay, day pass piscine Maroc, day pass déjeuner Marrakech, day pass dîner Agafay, day pass désert Maroc",
     "contact_keywords": "contacter Sunset Agafay, réservations kasbah Agafay, conciergerie Maroc, contact hôtel Marrakech désert",
     "wedding_keywords": "mariage kasbah Maroc, lieu mariage désert Agafay, mariage intime Marrakech, mariage désert Maroc, lieu mariage luxe Maroc",
     "white_party_keywords": "Soirée Blanche Agafay, soirée coucher soleil Maroc, fête désert Marrakech, soirée plein air Maroc, apéritif désert",

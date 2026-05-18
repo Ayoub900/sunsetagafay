@@ -28,6 +28,7 @@ const groups: NavGroup[] = [
       ['/admin/experiences',    'Experiences',    'star'],
       ['/admin/events',         'Events',         'calendar'],
       ['/admin/sunset-parties', 'Sunset Parties', 'sun'],
+      ['/admin/day-passes',     'Day Passes',     'eye'],
     ],
   },
   {

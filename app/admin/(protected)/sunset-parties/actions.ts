@@ -69,3 +69,16 @@ export async function deleteParty(id: string) {
   revalidatePath('/admin/sunset-parties')
   revalidatePath('/[lang]', 'layout')
 }
+
+export async function togglePartiesEnabled(formData: FormData) {
+  await guard()
+  const enabled = formData.get('enabled') === '1'
+  await prisma.siteSettings.upsert({
+    where:  { key: 'default' },
+    update: { partiesEnabled: enabled },
+    create: { key: 'default', partiesEnabled: enabled },
+  })
+  revalidatePath('/admin/sunset-parties')
+  revalidatePath('/[lang]', 'layout')
+  revalidatePath('/sitemap.xml')
+}

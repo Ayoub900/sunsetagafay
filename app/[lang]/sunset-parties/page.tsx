@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getDictionary, hasLocale, type Locale } from '../dictionaries'
 import { Photo, GrainOverlay } from '@/components/shared'
-import { getActiveSunsetParties } from '@/lib/db'
+import { getActiveSunsetParties, arePartiesEnabled } from '@/lib/db'
 import { buildAlternates } from '@/lib/seo'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
@@ -35,6 +35,7 @@ const kindMap = ['sunset', 'pool', 'aperitif'] as const
 export default async function SunsetPartiesPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
   if (!hasLocale(lang)) notFound()
+  if (!(await arePartiesEnabled())) notFound()
   const isFr = lang === 'fr'
   const [dict, dbParties] = await Promise.all([
     getDictionary(lang as Locale),

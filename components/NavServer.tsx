@@ -3,7 +3,9 @@ import {
   getActiveRestaurants,
   getActiveEvents,
   getActiveSunsetParties,
+  getActiveDayPasses,
   getActiveTransfers,
+  arePartiesEnabled,
 } from '@/lib/db'
 import { Nav, type NavDict, type NavDropdownItem } from './Nav'
 
@@ -18,12 +20,14 @@ const pick = (arr: Localized[], lang: 'en' | 'fr'): NavDropdownItem[] =>
   }))
 
 export async function NavServer({ lang, dict }: { lang: 'en' | 'fr'; dict: NavDict }) {
-  const [suites, restaurants, events, parties, transfers] = await Promise.all([
+  const [suites, restaurants, events, parties, dayPasses, transfers, partiesOn] = await Promise.all([
     getActiveSuites(),
     getActiveRestaurants(),
     getActiveEvents(),
     getActiveSunsetParties(),
+    getActiveDayPasses(),
     getActiveTransfers(),
+    arePartiesEnabled(),
   ])
   return (
     <Nav
@@ -33,7 +37,9 @@ export async function NavServer({ lang, dict }: { lang: 'en' | 'fr'; dict: NavDi
         suites: pick(suites, lang),
         restaurants: pick(restaurants, lang),
         events: pick(events, lang),
-        parties: pick(parties, lang),
+        parties: partiesOn ? pick(parties, lang) : [],
+        partiesEnabled: partiesOn,
+        dayPasses: pick(dayPasses, lang),
         transfers: pick(transfers, lang),
       }}
     />

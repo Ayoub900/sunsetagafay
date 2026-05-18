@@ -82,6 +82,23 @@ export const getSunsetPartyBySlug = (slug: string) =>
 export const getSunsetPartyById = (id: string) =>
   prisma.sunsetParty.findUnique({ where: { id } })
 
+// ─── Day Passes ────────────────────────────────────────────────────────────
+
+export const getDayPasses = () =>
+  prisma.dayPass.findMany({ orderBy: [{ order: 'asc' }, { createdAt: 'asc' }] })
+
+export const getActiveDayPasses = () =>
+  prisma.dayPass.findMany({
+    where: { active: true },
+    orderBy: [{ order: 'asc' }, { createdAt: 'asc' }],
+  })
+
+export const getDayPassBySlug = (slug: string) =>
+  prisma.dayPass.findUnique({ where: { slug } })
+
+export const getDayPassById = (id: string) =>
+  prisma.dayPass.findUnique({ where: { id } })
+
 // ─── Transfers ─────────────────────────────────────────────────────────────
 
 export const getTransfers = () =>
@@ -155,20 +172,34 @@ export const getGuests = () =>
 export const getGuestById = (id: string) =>
   prisma.guest.findUnique({ where: { id } })
 
+// ─── Site Settings ─────────────────────────────────────────────────────────
+
+export async function getSiteSettings() {
+  const existing = await prisma.siteSettings.findUnique({ where: { key: 'default' } })
+  if (existing) return existing
+  return prisma.siteSettings.create({ data: { key: 'default' } })
+}
+
+export async function arePartiesEnabled() {
+  const s = await getSiteSettings()
+  return s.partiesEnabled
+}
+
 // ─── Dashboard counts ──────────────────────────────────────────────────────
 
 export async function getDashboardCounts() {
-  const [suites, restaurants, experiences, events, parties, transfers, treatments, reservations, guests] =
+  const [suites, restaurants, experiences, events, parties, dayPasses, transfers, treatments, reservations, guests] =
     await Promise.all([
       prisma.suite.count(),
       prisma.restaurant.count(),
       prisma.experience.count(),
       prisma.event.count(),
       prisma.sunsetParty.count(),
+      prisma.dayPass.count(),
       prisma.transfer.count(),
       prisma.treatment.count(),
       prisma.reservation.count(),
       prisma.guest.count(),
     ])
-  return { suites, restaurants, experiences, events, parties, transfers, treatments, reservations, guests }
+  return { suites, restaurants, experiences, events, parties, dayPasses, transfers, treatments, reservations, guests }
 }
