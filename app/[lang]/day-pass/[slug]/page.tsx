@@ -9,7 +9,7 @@ import { DayPassBookingForm } from '../DayPassBookingForm'
 
 export async function generateStaticParams() {
   const items = await getActiveDayPasses()
-  return items.map(p => ({ slug: p.slug }))
+  return items.map((p: { slug: string }) => ({ slug: p.slug }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string; slug: string }> }): Promise<Metadata> {
