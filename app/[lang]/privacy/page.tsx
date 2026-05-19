@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { hasLocale } from '../dictionaries'
 import { buildAlternates } from '@/lib/seo'
+import { CONTACT_EMAIL } from '@/lib/contact'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
@@ -43,8 +44,8 @@ export default async function PrivacyPage({ params }: { params: Promise<{ lang: 
             </p>
             <p>
               {isFr
-                ? 'Vos données ne sont jamais vendues ni partagées avec des tiers à des fins commerciales. Pour toute question relative à vos données personnelles, contactez-nous à bonjour@sunsetagafay.com.'
-                : 'Your data is never sold or shared with third parties for commercial purposes. For any questions regarding your personal data, please contact us at bonjour@sunsetagafay.com.'}
+                ? `Vos données ne sont jamais vendues ni partagées avec des tiers à des fins commerciales. Pour toute question relative à vos données personnelles, ${CONTACT_EMAIL ? `contactez-nous à ${CONTACT_EMAIL}` : 'contactez-nous via le formulaire de contact'}.`
+                : `Your data is never sold or shared with third parties for commercial purposes. For any questions regarding your personal data, please ${CONTACT_EMAIL ? `contact us at ${CONTACT_EMAIL}` : 'reach us via the contact form'}.`}
             </p>
             <p>
               {isFr

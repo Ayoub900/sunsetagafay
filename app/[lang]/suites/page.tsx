@@ -22,7 +22,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       siteName: 'Sunset Agafay',
       locale: lang === 'fr' ? 'fr_FR' : 'en_US',
       type: 'website',
-      images: [{ url: '/og/suites.jpg', width: 1200, height: 630, alt: 'Suites — Sunset Agafay' }],
     },
     other: {
       'og:locale:alternate': lang === 'en' ? 'fr_FR' : 'en_US',

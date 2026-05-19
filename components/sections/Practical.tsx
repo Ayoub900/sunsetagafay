@@ -1,3 +1,5 @@
+import { CONTACT_PHONE, CONTACT_EMAIL, PRESS_EMAIL } from '@/lib/contact'
+
 interface PracticalDict {
   locale_label: string; locale_h: string; locale_lines: string[]
   coords_label: string; coords_h: string; coords_lines: string[]
@@ -6,11 +8,20 @@ interface PracticalDict {
 }
 
 export function Practical({ dict }: { dict: PracticalDict }) {
+  const contactExtras = dict.contact_lines.filter(Boolean)
+  const contactLines = [
+    CONTACT_EMAIL,
+    ...contactExtras,
+    PRESS_EMAIL && `Press · ${PRESS_EMAIL}`,
+  ].filter((l): l is string => Boolean(l))
+
   const cols = [
-    { label: dict.locale_label,  h: dict.locale_h,  lines: dict.locale_lines  },
-    { label: dict.coords_label,  h: dict.coords_h,  lines: dict.coords_lines  },
-    { label: dict.hours_label,   h: dict.hours_h,   lines: dict.hours_lines   },
-    { label: dict.contact_label, h: dict.contact_h, lines: dict.contact_lines },
+    { label: dict.locale_label,  h: dict.locale_h, lines: dict.locale_lines },
+    { label: dict.coords_label,  h: dict.coords_h, lines: dict.coords_lines },
+    { label: dict.hours_label,   h: dict.hours_h,  lines: dict.hours_lines  },
+    ...((CONTACT_PHONE || CONTACT_EMAIL)
+      ? [{ label: dict.contact_label, h: CONTACT_PHONE, lines: contactLines }]
+      : []),
   ]
 
   return (

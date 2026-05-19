@@ -4,6 +4,7 @@ import { NavServer } from '@/components/NavServer'
 import { Footer } from '@/components/Footer'
 import { getDictionary, hasLocale, type Locale } from './dictionaries'
 import { buildAlternates } from '@/lib/seo'
+import { CONTACT_PHONE, CONTACT_EMAIL } from '@/lib/contact'
 
 export async function generateStaticParams() {
   return [{ lang: 'en' }, { lang: 'fr' }]
@@ -21,7 +22,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       siteName:    'Sunset Agafay',
       locale:      lang === 'fr' ? 'fr_FR' : 'en_US',
       type:        'website',
-      images: [{ url: '/og/home.jpg', width: 1200, height: 630, alt: 'Sunset Agafay — Boutique Kasbah' }],
     },
     twitter: { card: 'summary_large_image', site: '@sunsetagafay', creator: '@sunsetagafay' },
     alternates: buildAlternates(lang, ''),
@@ -31,15 +31,22 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 const schemaOrg = {
   '@context': 'https://schema.org',
   '@type': 'LodgingBusiness',
+  '@id': 'https://sunsetagafay.com/#lodging',
   name: 'Sunset Agafay',
   description: 'A boutique kasbah of fourteen rooms in the Agafay desert, one hour from Marrakech.',
   url: 'https://sunsetagafay.com',
   logo: 'https://sunsetagafay.com/logo_gold.webp',
-  image: 'https://sunsetagafay.com/og/home.jpg',
+  image: 'https://sunsetagafay.com/opengraph-image',
   priceRange: '€€€€',
   numberOfRooms: 14,
-  telephone: '+212524000000',
-  email: 'bonjour@sunsetagafay.com',
+  ...(CONTACT_PHONE ? { telephone: CONTACT_PHONE } : {}),
+  ...(CONTACT_EMAIL ? { email: CONTACT_EMAIL } : {}),
+  checkinTime: '15:00',
+  checkoutTime: '11:00',
+  currenciesAccepted: 'EUR, MAD, USD',
+  paymentAccepted: 'Cash, Credit Card, Bank Transfer',
+  petsAllowed: false,
+  smokingAllowed: false,
   address: {
     '@type': 'PostalAddress',
     streetAddress: "Route d'Amizmiz, KM 47",
@@ -49,12 +56,22 @@ const schemaOrg = {
     addressCountry: 'MA',
   },
   geo: { '@type': 'GeoCoordinates', latitude: 31.3667, longitude: -8.1667 },
+  hasMap: 'https://www.google.com/maps?q=31.3667,-8.1667',
+  containedInPlace: {
+    '@type': 'Place',
+    name: 'Agafay Desert',
+    sameAs: 'https://en.wikipedia.org/wiki/Agafay_Desert',
+  },
   amenityFeature: [
-    { '@type': 'LocationFeatureSpecification', name: 'Pool',         value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Restaurant',   value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Bar',          value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Hammam',       value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Free Parking', value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Swimming Pool', value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Restaurant',    value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Bar',           value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Hammam',        value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Free Parking',  value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Free Wi-Fi',    value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Airport Shuttle', value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Garden',        value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Library',       value: true },
   ],
   starRating: { '@type': 'Rating', ratingValue: 5 },
 }

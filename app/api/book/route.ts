@@ -1,51 +1,69 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { getClientIp, rateLimit, tooManyRequestsResponse } from '@/lib/rate-limit'
+import {
+  email,
+  intInRange,
+  isoDate,
+  phone,
+  readJsonBody,
+  str,
+  ValidationError,
+} from '@/lib/validation'
 
 export async function POST(req: NextRequest) {
+  const ip = getClientIp(req.headers)
+  const rl = rateLimit(`book:${ip}`, 10, 10 * 60_000)
+  if (!rl.allowed) return tooManyRequestsResponse(rl)
+
   try {
-    const body = await req.json()
-    const { suiteName, checkIn, checkOut, nights, guests, total, guestName, email, phone, country, notes } = body
+    const body = await readJsonBody(req)
 
-    if (!suiteName || !checkIn || !checkOut || !guestName || !email) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
-    }
+    const suiteName = str(body.suiteName, { field: 'suiteName', required: true, min: 1, max: 200 })
+    const checkIn   = isoDate(body.checkIn,  'checkIn')
+    const checkOut  = isoDate(body.checkOut, 'checkOut')
+    if (checkIn >= checkOut) throw new ValidationError('checkOut must be after checkIn')
 
-    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRe.test(email)) {
-      return NextResponse.json({ error: 'Invalid email' }, { status: 400 })
-    }
+    const nights    = intInRange(body.nights, { field: 'nights', min: 1, max: 365, default: 1 })
+    const guests    = intInRange(body.guests, { field: 'guests', min: 1, max: 20,  default: 1 })
+    const total     = str(body.total,     { field: 'total',     max: 64 })
+    const guestName = str(body.guestName, { field: 'guestName', required: true, min: 1, max: 100 })
+    const mail      = email(body.email)
+    const phoneNum  = phone(body.phone)
+    const country   = str(body.country, { field: 'country', max: 100 })
+    const notes     = str(body.notes,   { field: 'notes',   max: 2000 })
 
     const reservation = await prisma.reservation.create({
       data: {
-        guestName: String(guestName).trim(),
-        suite:     String(suiteName).trim(),
-        checkIn:   String(checkIn).trim(),
-        checkOut:  String(checkOut).trim(),
-        nights:    Number(nights) || 1,
-        guests:    Number(guests) || 1,
-        total:     String(total ?? '').trim(),
-        status:    'Pending',
-        notes:     [
+        guestName,
+        suite:    suiteName,
+        checkIn,
+        checkOut,
+        nights,
+        guests,
+        total,
+        status:   'Pending',
+        notes:    [
           country ? `Country: ${country}` : '',
-          notes ? notes : '',
+          notes,
         ].filter(Boolean).join('\n'),
       },
     })
 
     // Upsert guest record (match by email)
-    const existingGuest = await prisma.guest.findFirst({ where: { email: String(email).toLowerCase().trim() } })
+    const existingGuest = await prisma.guest.findFirst({ where: { email: mail } })
     if (existingGuest) {
       await prisma.guest.update({
         where: { id: existingGuest.id },
-        data: { stays: existingGuest.stays + 1 },
+        data:  { stays: existingGuest.stays + 1 },
       })
     } else {
       await prisma.guest.create({
         data: {
-          name:    String(guestName).trim(),
-          email:   String(email).toLowerCase().trim(),
-          phone:   String(phone ?? '').trim(),
-          country: String(country ?? '').trim(),
+          name:    guestName,
+          email:   mail,
+          phone:   phoneNum,
+          country,
           stays:   1,
         },
       })
@@ -55,7 +73,10 @@ export async function POST(req: NextRequest) {
     const ref = `SA-${reservation.id.slice(-6).toUpperCase()}`
 
     return NextResponse.json({ ref, id: reservation.id })
-  } catch {
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      return NextResponse.json({ error: err.message }, { status: err.status })
+    }
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }
 }

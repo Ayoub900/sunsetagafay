@@ -10,6 +10,8 @@ import { CinematicBreak } from '@/components/sections/CinematicBreak'
 import { Tables }         from '@/components/sections/Tables'
 import { Experiences }    from '@/components/sections/Experiences'
 import { Hammam }         from '@/components/sections/Hammam'
+import { Reviews }        from '@/components/sections/Reviews'
+import { FAQ }            from '@/components/sections/FAQ'
 import { Practical }      from '@/components/sections/Practical'
 import { getActiveSuites, getActiveRestaurants, getActiveExperiences, getActiveTreatments } from '@/lib/db'
 
@@ -29,7 +31,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       siteName: 'Sunset Agafay',
       locale: lang === 'fr' ? 'fr_FR' : 'en_US',
       type: 'website',
-      images: [{ url: '/og/home.jpg', width: 1200, height: 630, alt: 'Sunset Agafay — Boutique Kasbah in the Agafay Desert' }],
     },
     other: {
       'og:locale:alternate': lang === 'en' ? 'fr_FR' : 'en_US',
@@ -108,6 +109,8 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <Tables          dict={dict.tables_section}      tables={tables}      lang={lang} />
       <Experiences     dict={dict.experiences_section} experiences={experiences} lang={lang} />
       <Hammam          dict={hammamDict}                lang={lang} />
+      <Reviews         dict={dict.reviews_section} />
+      <FAQ             dict={dict.faq_section}          lang={lang} />
       <Practical       dict={dict.practical} />
     </div>
   )

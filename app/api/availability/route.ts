@@ -1,18 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAvailableSuites } from '@/lib/db'
+import { getClientIp, rateLimit, tooManyRequestsResponse } from '@/lib/rate-limit'
+import { isoDate, readJsonBody, ValidationError } from '@/lib/validation'
 
 export async function POST(req: NextRequest) {
+  const ip = getClientIp(req.headers)
+  const rl = rateLimit(`avail:${ip}`, 30, 60_000)
+  if (!rl.allowed) return tooManyRequestsResponse(rl)
+
   try {
-    const { checkIn, checkOut } = await req.json()
+    const body     = await readJsonBody(req)
+    const checkIn  = isoDate(body.checkIn,  'checkIn')
+    const checkOut = isoDate(body.checkOut, 'checkOut')
 
-    if (!checkIn || !checkOut || checkIn >= checkOut) {
-      return NextResponse.json({ error: 'Invalid dates' }, { status: 400 })
-    }
+    if (checkIn >= checkOut) throw new ValidationError('checkOut must be after checkIn')
 
-    const today = new Date().toISOString().split('T')[0]
-    if (checkIn < today) {
-      return NextResponse.json({ error: 'Check-in cannot be in the past' }, { status: 400 })
-    }
+    const today = new Date().toISOString().slice(0, 10)
+    if (checkIn < today) throw new ValidationError('Check-in cannot be in the past')
 
     const suites = await getAvailableSuites(checkIn, checkOut)
 
@@ -40,7 +44,10 @@ export async function POST(req: NextRequest) {
     })
 
     return NextResponse.json({ suites: result, nights })
-  } catch {
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      return NextResponse.json({ error: err.message }, { status: err.status })
+    }
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }
 }

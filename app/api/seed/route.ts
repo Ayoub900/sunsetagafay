@@ -2,12 +2,17 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import enDict from '@/app/dictionaries/en.json'
 import frDict from '@/app/dictionaries/fr.json'
+import { getClientIp, rateLimit, tooManyRequestsResponse } from '@/lib/rate-limit'
 
 // Reseed endpoint — wipes all content collections and repopulates from dictionaries.
 // AdminUser, Reservation, Guest, and ContactMessage are never touched.
 // POST /api/seed  with  Authorization: Bearer <ADMIN_TOKEN>
 
 export async function POST(req: Request) {
+  const ip = getClientIp(req.headers)
+  const rl = rateLimit(`seed:${ip}`, 5, 60 * 60_000)
+  if (!rl.allowed) return tooManyRequestsResponse(rl)
+
   const auth = req.headers.get('authorization') ?? ''
   const token = auth.replace('Bearer ', '')
   if (!process.env.ADMIN_TOKEN || token !== process.env.ADMIN_TOKEN) {

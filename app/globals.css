@@ -1016,3 +1016,40 @@ img, video { max-width: 100%; display: block; }
   color: var(--brass);
   text-decoration-color: var(--brass);
 }
+
+/* ── FAQ layout ──────────────────────────────────── */
+@media (max-width: 860px) {
+  .faq-grid { grid-template-columns: 1fr !important; }
+  .faq-grid > div:first-child { position: static !important; }
+}
+.faq-icon::before,
+.faq-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: currentColor;
+  transition: transform 220ms ease, opacity 220ms ease;
+}
+.faq-icon::before {
+  width: 14px;
+  height: 1px;
+  transform: translate(-50%, -50%);
+}
+.faq-icon::after {
+  width: 1px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+}
+details[open] .faq-icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  opacity: 0;
+}
+details > summary::-webkit-details-marker { display: none; }
+details > summary { outline: none; }
+details > summary:focus-visible { outline: 1px dashed var(--sienna); outline-offset: 4px; }
+
+/* ── Reviews grid ───────────────────────────────── */
+@media (max-width: 640px) {
+  .reviews-grid { grid-template-columns: 1fr !important; }
+}

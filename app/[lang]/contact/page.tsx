@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getDictionary, hasLocale, type Locale } from '../dictionaries'
 import { buildAlternates } from '@/lib/seo'
+import { CONTACT_PHONE, CONTACT_EMAIL } from '@/lib/contact'
 import ContactForm from '@/components/ContactForm'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
@@ -20,7 +21,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       siteName: 'Sunset Agafay',
       locale: lang === 'fr' ? 'fr_FR' : 'en_US',
       type: 'website',
-      images: [{ url: '/og/contact.jpg', width: 1200, height: 630, alt: 'Contact Sunset Agafay' }],
     },
     other: {
       'og:locale:alternate': lang === 'en' ? 'fr_FR' : 'en_US',
@@ -60,8 +60,8 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
     directions_label:    c.directions_label,
     directions:          c.directions,
     address_lines:       c.address_lines,
-    phone:               c.phone,
-    email:               c.email,
+    phone:               CONTACT_PHONE,
+    email:               CONTACT_EMAIL,
     phone_label_direct:  isFr ? 'Téléphone' : 'Phone',
     email_label_direct:  isFr ? 'E-mail' : 'Email',
   }

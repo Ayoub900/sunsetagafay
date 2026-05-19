@@ -196,22 +196,26 @@ export default function ContactForm({ labels }: { labels: ContactLabels }) {
           <aside>
             <div className="eyebrow no-lead" style={{ color: 'var(--sienna)', marginBottom: 32 }}>{labels.direct_eyebrow}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 36 }}>
-              <address style={{ fontStyle: 'normal' }}>
-                <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 10 }}>
-                  {labels.phone_label_direct}
-                </div>
-                <a href={`tel:${labels.phone.replace(/\s/g, '')}`} style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(22px,2.8vw,32px)', color: 'var(--ink)', textDecoration: 'none' }}>
-                  {labels.phone}
-                </a>
-              </address>
-              <address style={{ fontStyle: 'normal' }}>
-                <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 10 }}>
-                  {labels.email_label_direct}
-                </div>
-                <a href={`mailto:${labels.email}`} style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(17px,2vw,22px)', color: 'var(--brass)', textDecoration: 'none' }}>
-                  {labels.email}
-                </a>
-              </address>
+              {labels.phone && (
+                <address style={{ fontStyle: 'normal' }}>
+                  <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 10 }}>
+                    {labels.phone_label_direct}
+                  </div>
+                  <a href={`tel:${labels.phone.replace(/[^\d+]/g, '')}`} style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(22px,2.8vw,32px)', color: 'var(--ink)', textDecoration: 'none' }}>
+                    {labels.phone}
+                  </a>
+                </address>
+              )}
+              {labels.email && (
+                <address style={{ fontStyle: 'normal' }}>
+                  <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 10 }}>
+                    {labels.email_label_direct}
+                  </div>
+                  <a href={`mailto:${labels.email}`} style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(17px,2vw,22px)', color: 'var(--brass)', textDecoration: 'none' }}>
+                    {labels.email}
+                  </a>
+                </address>
+              )}
               <address style={{ fontStyle: 'normal' }}>
                 <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 10 }}>
                   {labels.address_label}

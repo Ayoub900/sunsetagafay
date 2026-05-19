@@ -23,7 +23,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const name = isFr ? suite.nameFr : suite.nameEn
   const brief = isFr ? suite.briefFr : suite.briefEn
   const plainBrief = brief.replace(/<[^>]+>/g, '').slice(0, 160)
-  const ogImage = suite.imageUrl ? suite.imageUrl : '/og/suites.jpg'
   return {
     title: `${name} — Sunset Agafay`,
     description: plainBrief,
@@ -36,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       siteName: 'Sunset Agafay',
       locale: lang === 'fr' ? 'fr_FR' : 'en_US',
       type: 'article',
-      images: [{ url: ogImage, width: 1200, height: 630, alt: name }],
+      ...(suite.imageUrl ? { images: [{ url: suite.imageUrl, width: 1200, height: 630, alt: name }] } : {}),
     },
     other: {
       'og:locale:alternate': lang === 'en' ? 'fr_FR' : 'en_US',
@@ -74,7 +73,7 @@ export default async function SuiteDetailPage({ params }: { params: Promise<{ la
     name,
     description: plainBrief,
     url: `https://sunsetagafay.com/${lang}/suites/${suiteSlug}`,
-    image: suite.imageUrl ? `https://sunsetagafay.com${suite.imageUrl.startsWith('/') ? '' : '/'}${suite.imageUrl}` : 'https://sunsetagafay.com/og/suites.jpg',
+    image: suite.imageUrl ? `https://sunsetagafay.com${suite.imageUrl.startsWith('/') ? '' : '/'}${suite.imageUrl}` : 'https://sunsetagafay.com/logo_gold.png',
     floorSize: { '@type': 'QuantitativeValue', value: suite.area?.replace(/[^\d]/g, ''), unitCode: 'MTK' },
     containedInPlace: { '@type': 'Hotel', name: 'Sunset Agafay', url: 'https://sunsetagafay.com' },
   }

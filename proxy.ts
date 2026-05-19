@@ -1,9 +1,14 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { getClientIp, rateLimit, rateLimitHeaders } from '@/lib/rate-limit'
 
 const locales = ['en', 'fr'] as const
 const defaultLocale = 'en'
 const ADMIN_COOKIE = 'sa_admin'
+
+// Global per-IP request budget for page navigation.
+const GLOBAL_LIMIT      = 120
+const GLOBAL_WINDOW_MS  = 60_000
 
 function getLocale(request: NextRequest): string {
   const acceptLang = request.headers.get('accept-language') ?? ''
@@ -13,6 +18,31 @@ function getLocale(request: NextRequest): string {
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
+
+  // Pass through static files in /public that shouldn't be locale-prefixed
+  // (robots.txt, llms.txt, sitemap.xml, opengraph images, etc.)
+  if (
+    pathname === '/llms.txt' ||
+    pathname === '/llms-full.txt' ||
+    pathname === '/robots.txt' ||
+    pathname === '/sitemap.xml' ||
+    pathname === '/favicon.ico'
+  ) {
+    return NextResponse.next()
+  }
+
+  // Global rate limit on every matched request.
+  const ip      = getClientIp(request.headers)
+  const limited = rateLimit(`page:${ip}`, GLOBAL_LIMIT, GLOBAL_WINDOW_MS)
+  if (!limited.allowed) {
+    return new NextResponse('Too many requests', {
+      status: 429,
+      headers: {
+        'Retry-After': String(limited.retryAfter),
+        ...rateLimitHeaders(limited),
+      },
+    })
+  }
 
   // Admin route protection — runs before locale logic
   if (pathname.startsWith('/admin')) {
@@ -45,5 +75,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next|favicon\\.ico|images|fonts|icons|og|sitemap|robots|api|uploads|.*\\.(?:webp|png|jpg|jpeg|gif|svg|ico|woff2?|ttf|eot)).*)'],
+  matcher: ['/((?!_next|favicon\\.ico|images|fonts|icons|og|sitemap|robots|llms|api|uploads|opengraph-image|.*\\.(?:webp|png|jpg|jpeg|gif|svg|ico|woff2?|ttf|eot|txt)).*)'],
 }

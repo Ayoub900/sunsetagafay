@@ -212,11 +212,6 @@ export default async function DashboardPage() {
               </div>
             )}
 
-            {!isEmpty && (
-              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <SeedButton label="Re-seed (wipe & reload)" />
-              </div>
-            )}
           </div>
         </div>
       </div>

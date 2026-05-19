@@ -23,7 +23,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const name = isFr ? item.nameFr : item.nameEn
   const lede = isFr ? item.ledeFr : item.ledeEn
   const plainLede = lede.replace(/<[^>]+>/g, '').slice(0, 160)
-  const ogImage = item.imageUrl || '/og/restaurants.jpg'
   return {
     title: `${name} — Sunset Agafay`,
     description: plainLede,
@@ -36,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       siteName: 'Sunset Agafay',
       locale: lang === 'fr' ? 'fr_FR' : 'en_US',
       type: 'article',
-      images: [{ url: ogImage, width: 1200, height: 630, alt: name }],
+      ...(item.imageUrl ? { images: [{ url: item.imageUrl, width: 1200, height: 630, alt: name }] } : {}),
     },
     other: {
       'og:locale:alternate': lang === 'en' ? 'fr_FR' : 'en_US',
@@ -75,7 +74,7 @@ export default async function RestaurantDetailPage({ params }: { params: Promise
     servesCuisine: 'Moroccan',
     openingHours: item.hours,
     priceRange: '€€€',
-    image: coverImage ? `https://sunsetagafay.com${coverImage.startsWith('/') ? '' : '/'}${coverImage}` : 'https://sunsetagafay.com/og/restaurants.jpg',
+    image: coverImage ? `https://sunsetagafay.com${coverImage.startsWith('/') ? '' : '/'}${coverImage}` : 'https://sunsetagafay.com/logo_gold.png',
     containedInPlace: { '@type': 'Hotel', name: 'Sunset Agafay', url: 'https://sunsetagafay.com' },
   }
 

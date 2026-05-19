@@ -245,6 +245,81 @@
     "attribution": "Monocle, Numéro 178",
     "publications": ["Condé Nast Traveller", "T Magazine", "Le Monde", "Monocle", "Cereal", "Kinfolk", "Wallpaper*", "AD France"]
   },
+  "reviews_section": {
+    "eyebrow": "VI · Lettres d'Hôtes",
+    "index": "VI · Avis",
+    "title_1": "Des voix",
+    "title_script": "de la maison.",
+    "lede": "Quelques mots laissés par nos hôtes. Nous en sommes discrètement reconnaissants.",
+    "items": [
+      {
+        "quote": "La lumière à six heures du soir est quelque chose dont nous parlons encore. Camille et Idriss ont créé un lieu qui semble plus ancien qu'il ne l'est — au meilleur sens du terme. Nous sommes restés trois nuits et avons réservé à nouveau depuis l'aéroport.",
+        "name": "Hélène & Mathieu",
+        "stay": "Suite Sunset · Avril 2026",
+        "source": "Direct"
+      },
+      {
+        "quote": "Le dîner au Souk sous la pergola fut le meilleur repas de notre séjour au Maroc, et nous avons bien mangé à Marrakech. La cuisine envoie de petites choses que l'on n'a pas commandées. Le bar ouvre à six heures et l'équipe sait précisément quand vous laisser tranquille.",
+        "name": "Sofia Marchetti",
+        "stay": "Suite La Khoutoubia · Mars 2026",
+        "source": "Google"
+      },
+      {
+        "quote": "Nous sommes venus avec nos deux enfants, vite adoptés par la cour comme des chats résidents. Le rituel du hammam la veille du départ fut extraordinaire — quatre-vingt-dix minutes de silence comme je n'en avais pas connu depuis des années.",
+        "name": "Famille Whitlock",
+        "stay": "Suite Familiale · Février 2026",
+        "source": "Tripadvisor"
+      },
+      {
+        "quote": "Réservé pour deux nuits afin de voir le coucher de soleil, nous avons prolongé deux fois. La piscine attrape les dernières heures de l'après-midi, l'Atlas vire au rose, et quelqu'un vous apporte un apéritif sans qu'on le demande. Un petit miracle.",
+        "name": "James & Rohan",
+        "stay": "Suite Agafay · Mai 2026",
+        "source": "Booking.com"
+      }
+    ]
+  },
+  "faq_section": {
+    "eyebrow": "VII · Bon à Savoir",
+    "index": "VII · Questions",
+    "title_1": "Questions pratiques,",
+    "title_script": "réponses claires.",
+    "lede": "Une courte liste des questions les plus fréquentes. Pour tout le reste, notre équipe répond sous vingt-quatre heures.",
+    "contact_cta": "Écrire à la maison",
+    "items": [
+      {
+        "q": "Comment se rendre à Sunset Agafay depuis Marrakech ?",
+        "a": "Nous sommes à 47 km au sud de l'aéroport Marrakech-Menara, environ cinquante minutes par la route. Nous organisons des transferts privés en véhicule climatisé — de jour, de nuit, ou à la journée pour des excursions. La plupart de nos hôtes réservent un transfert depuis l'aéroport avec leur séjour ; la route à travers la vallée fait partie de l'arrivée."
+      },
+      {
+        "q": "Que comprend le tarif de la chambre ?",
+        "a": "Un long petit-déjeuner sous la pergola, toutes les boissons sans alcool de la journée, le thé à la menthe et les pâtisseries de six heures, ainsi que l'usage de la piscine, de la bibliothèque et des cours. Le wifi est inclus. Les soins au hammam, les dîners au Souk et les excursions sont facturés séparément."
+      },
+      {
+        "q": "Quelle est la meilleure période pour venir ?",
+        "a": "Nous sommes ouverts toute l'année. De mars à mai et de septembre à novembre, le climat est le plus tempéré. Les étés sont chauds en milieu de journée mais se rafraîchissent magnifiquement au coucher du soleil — la piscine est très fréquentée en juillet et août. Les hivers sont lumineux et frais la nuit, avec du feu dans les salons."
+      },
+      {
+        "q": "Acceptez-vous les enfants ?",
+        "a": "Oui — nous accueillons les familles, et la Suite Familiale est conçue pour deux adultes et deux enfants. Les enfants dînent au Souk sur un menu adapté et trouvent dans les cours de l'espace pour jouer. Nous organisons volontiers une nounou à la demande pour les parents qui souhaitent un dîner au calme."
+      },
+      {
+        "q": "Pouvez-vous répondre à des régimes alimentaires particuliers ?",
+        "a": "Bien sûr. Le chef Yassine adapte ses menus pour les régimes végétariens, végans, sans gluten et la plupart des allergies, avec un préavis de vingt-quatre heures. Merci de nous prévenir au moment de la réservation, puis à votre arrivée — mieux vaut deux fois qu'aucune."
+      },
+      {
+        "q": "Quelle est votre politique d'annulation ?",
+        "a": "Les réservations sont entièrement remboursables jusqu'à quatorze jours avant l'arrivée. À moins de quatorze jours, la première nuit n'est pas remboursable. Pour les dates de haute saison (Noël, Nouvel An, Pâques) et les événements privés, des conditions particulières s'appliquent et vous sont communiquées au moment de la réservation."
+      },
+      {
+        "q": "Organisez-vous des mariages ou des événements privés ?",
+        "a": "Oui. Nous accueillons des mariages intimes de douze à quatre-vingts convives, des dîners d'anniversaire, des séminaires d'entreprise et des privatisations complètes de la maison. La kasbah se prête naturellement à ces occasions. Merci de nous contacter via le formulaire pour un échange privé."
+      },
+      {
+        "q": "Y a-t-il un parking et du wifi sur place ?",
+        "a": "Un parking privé est disponible dans l'enceinte de la kasbah, sans supplément. Le wifi couvre toutes les chambres et la plupart des jardins — nous vous encourageons à en faire un usage mesuré. Le désert est un bon endroit pour perdre le signal volontairement."
+      }
+    ]
+  },
   "practical": {
     "locale_label": "Adresse",
     "locale_h": "Sunset Agafay",
@@ -256,8 +331,8 @@
     "hours_h": "Ouvert toute l'année",
     "hours_lines": ["Réception · 24h/24", "Bar Arish · 18h00 — tard", "Le Souk · 12h30 — 23h00"],
     "contact_label": "Contact",
-    "contact_h": "+212 524 00 00 00",
-    "contact_lines": ["bonjour@sunsetagafay.com", "Réservations · quotidien, 09h — 19h", "Presse · presse@sunsetagafay.com"]
+    "contact_h": "",
+    "contact_lines": ["Réservations · quotidien, 09h — 19h"]
   },
   "footer": {
     "reserve_eyebrow": "Réserver un Séjour",
@@ -318,8 +393,8 @@
     "message_label": "Message",
     "submit": "Envoyer la demande",
     "direct_eyebrow": "Contact Direct",
-    "phone": "+212 524 00 00 00",
-    "email": "bonjour@sunsetagafay.com",
+    "phone": "",
+    "email": "",
     "address_label": "Adresse",
     "address_lines": ["Route d'Amizmiz, KM 47", "Agafay, Marrakech-Safi", "Maroc 42150"],
     "directions_label": "Comment nous rejoindre",
