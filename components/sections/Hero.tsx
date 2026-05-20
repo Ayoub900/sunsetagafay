@@ -84,7 +84,7 @@ export function HeroCourtyard({ dict, lang }: { dict: HeroDict; lang: string }) 
                 <span className="cta-label">{dict.cta_reserve}</span>
                 <span className="cta-arrow" aria-hidden="true">→</span>
               </Link>
-              <Link href={`/${lang}#story`} className="cta" style={{ opacity: 0.8 }}>
+              <Link href={`/${lang}/experiences`} className="cta" style={{ opacity: 0.8 }}>
                 <span className="cta-label">{dict.cta_story}</span>
               </Link>
             </div>

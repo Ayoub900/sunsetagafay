@@ -60,14 +60,11 @@ export function Suites({ dict, rooms, lang }: { dict: SuitesSectionDict; rooms: 
                 {r.slug && (
                   <Link
                     href={`/${lang}/suites/${r.slug}`}
-                    style={{
-                      flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-                      padding: '11px 16px',
-                      fontFamily: 'var(--sans)', fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase',
-                      color: 'var(--ink)', border: '1px solid rgba(31,26,20,0.3)', textDecoration: 'none',
-                    }}
+                    className="cta"
+                    style={{ flex: 1, justifyContent: 'center' }}
                   >
-                    {dict.details ?? 'Details'}
+                    <span className="cta-label">{dict.details ?? 'Details'}</span>
+                    <span className="cta-arrow" aria-hidden="true">→</span>
                   </Link>
                 )}
               </div>
