@@ -54,7 +54,6 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   // Map DB data to component interfaces, fall back to dict if DB is empty
   const rooms = dbSuites.length > 0
     ? dbSuites.map(s => ({
-        plate:     s.plate,
         slug:      s.slug,
         name:      isFr ? s.nameFr : s.nameEn,
         brief:     isFr ? s.briefFr : s.briefEn,
@@ -68,7 +67,6 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   const tables = dbRestaurants.length > 0
     ? dbRestaurants.map(r => ({
-        n:        r.plate,
         name:     isFr ? r.nameFr : r.nameEn,
         lede:     isFr ? r.ledeFr : r.ledeEn,
         hours:    r.hours,

@@ -32,7 +32,7 @@ export async function seedDatabase(): Promise<{ ok: boolean; seeded?: Record<str
       const fr = frDict.rooms[i]
       const slug = en.name.toLowerCase().replace(/\s+/g, '-').replace(/[éèê]/g, 'e').replace(/[àâ]/g, 'a').replace(/[^a-z0-9-]/g, '')
       return prisma.suite.create({
-        data: { slug, plate: en.plate, nameEn: en.name, nameFr: fr?.name ?? en.name, briefEn: en.brief, briefFr: fr?.brief ?? en.brief, area: en.area, view: en.view, rate: en.rate, imageKind: imageKinds[i % imageKinds.length], active: true, order: i },
+        data: { slug, nameEn: en.name, nameFr: fr?.name ?? en.name, briefEn: en.brief, briefFr: fr?.brief ?? en.brief, area: en.area, view: en.view, rate: en.rate, imageKind: imageKinds[i % imageKinds.length], active: true, order: i },
       })
     }))
 
@@ -41,7 +41,7 @@ export async function seedDatabase(): Promise<{ ok: boolean; seeded?: Record<str
       const fr = frDict.tables[i]
       const slug = en.name.toLowerCase().replace(/[\s']/g, '-').replace(/[éèê]/g, 'e').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '')
       return prisma.restaurant.create({
-        data: { slug, plate: en.n, nameEn: en.name, nameFr: fr?.name ?? en.name, ledeEn: en.lede, ledeFr: fr?.lede ?? en.lede, copyEn: en.copy, copyFr: fr?.copy ?? en.copy, hours: en.hours, active: true, order: i },
+        data: { slug, nameEn: en.name, nameFr: fr?.name ?? en.name, ledeEn: en.lede, ledeFr: fr?.lede ?? en.lede, copyEn: en.copy, copyFr: fr?.copy ?? en.copy, hours: en.hours, active: true, order: i },
       })
     }))
 

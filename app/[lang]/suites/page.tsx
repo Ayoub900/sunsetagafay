@@ -43,7 +43,6 @@ export default async function SuitesPage({ params }: { params: Promise<{ lang: s
   const p = dict.suites_page
 
   type Room = {
-    plate: string
     slug: string
     name: string
     brief: string
@@ -57,7 +56,6 @@ export default async function SuitesPage({ params }: { params: Promise<{ lang: s
 
   const rooms: Room[] = dbSuites.length > 0
     ? dbSuites.map(s => ({
-        plate:    s.plate,
         slug:     s.slug,
         name:     isFr ? s.nameFr : s.nameEn,
         brief:    isFr ? s.briefFr : s.briefEn,
@@ -68,7 +66,7 @@ export default async function SuitesPage({ params }: { params: Promise<{ lang: s
         images:   (s as { images?: string[] }).images ?? [],
         isHtml:   true,
       }))
-    : (dict.rooms as { plate: string; name: string; brief: string; area: string; view: string; rate: string }[]).map(r => ({
+    : (dict.rooms as { name: string; brief: string; area: string; view: string; rate: string }[]).map(r => ({
         ...r,
         slug: r.name.toLowerCase().replace(/\s+/g, '-').replace(/[éèê]/g, 'e'),
         imageUrl: '',
@@ -174,7 +172,7 @@ export default async function SuitesPage({ params }: { params: Promise<{ lang: s
   )
 }
 
-function SuiteImage({ r, kind }: { r: { plate: string; name: string; imageUrl: string }; kind: string }) {
+function SuiteImage({ r, kind }: { r: { name: string; imageUrl: string }; kind: string }) {
   const src = r.imageUrl || undefined
   return (
     <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5' }}>
@@ -184,9 +182,6 @@ function SuiteImage({ r, kind }: { r: { plate: string; name: string; imageUrl: s
         alt={r.name}
         style={{ position: 'absolute', inset: 0 }}
       />
-      <div aria-hidden="true" style={{ position: 'absolute', top: 14, left: 14, fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.22em', color: 'var(--paper)', opacity: 0.85, zIndex: 4 }}>
-        PLATE {r.plate}
-      </div>
     </div>
   )
 }

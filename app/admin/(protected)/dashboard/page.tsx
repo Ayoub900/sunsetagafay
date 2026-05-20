@@ -128,15 +128,16 @@ export default async function DashboardPage() {
                 </div>
               ) : recentReservations.map((r, i) => (
                 <div key={r.id} className="dash-res-row" style={{
-                  display: 'grid', gridTemplateColumns: '1fr 140px 120px 130px',
+                  display: 'grid', gridTemplateColumns: 'minmax(0,1fr) auto auto auto',
+                  columnGap: 20,
                   padding: '14px 20px', alignItems: 'center',
                   borderBottom: i < recentReservations.length - 1 ? `1px solid ${T.line}` : 'none',
                 }}>
-                  <div>
-                    <div style={{ fontFamily: 'var(--sans, system-ui)', fontWeight: 600, fontSize: 13.5, color: T.ink }}>{r.guestName}</div>
-                    <div style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 12.5, color: T.ink3, marginTop: 2 }}>{r.suite}</div>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontFamily: 'var(--sans, system-ui)', fontWeight: 600, fontSize: 13.5, color: T.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.guestName}</div>
+                    <div style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 12.5, color: T.ink3, marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.suite}</div>
                   </div>
-                  <div className="dash-res-date" style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 13, color: T.ink2 }}>
+                  <div className="dash-res-date" style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 13, color: T.ink2, whiteSpace: 'nowrap' }}>
                     {r.checkIn} → {r.checkOut}
                   </div>
                   <div className="dash-res-total" style={{ fontFamily: 'var(--sans, system-ui)', fontWeight: 600, fontSize: 13.5, color: T.ink }}>

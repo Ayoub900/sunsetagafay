@@ -98,9 +98,6 @@ export default async function RestaurantDetailPage({ params }: { params: Promise
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 2, background: 'linear-gradient(to bottom, rgba(20,12,8,0.55) 0%, rgba(20,12,8,0.4) 60%, rgba(20,12,8,0.8) 100%)' }} />
         <GrainOverlay opacity={0.4} blend="overlay" style={{ zIndex: 3 }} />
         <div className="page-hero-content" style={{ zIndex: 4 }}>
-          <div className="eyebrow no-lead" style={{ color: 'var(--rose)', marginBottom: 24 }}>
-            {isFr ? `Table No. ${item.plate}` : `Table No. ${item.plate}`}
-          </div>
           <h1 className="page-hero-title">{name}</h1>
           <p className="page-hero-sub" dangerouslySetInnerHTML={{ __html: lede }} />
         </div>
@@ -109,9 +106,6 @@ export default async function RestaurantDetailPage({ params }: { params: Promise
       <section style={{ padding: 'clamp(64px,9vw,120px) var(--gutter)' }}>
         <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: 'clamp(40px,6vw,96px)', alignItems: 'start' }} className="table-article">
           <div>
-            <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--sienna)', marginBottom: 20 }}>
-              № {item.plate}
-            </div>
             <h2 style={{ fontFamily: 'var(--serif)', fontWeight: 400, fontSize: 'clamp(28px,3.5vw,44px)', lineHeight: 1, letterSpacing: '-0.018em', margin: '0 0 clamp(20px,2.5vw,32px)', color: 'var(--ink)' }}>
               {name}
             </h2>
@@ -121,16 +115,9 @@ export default async function RestaurantDetailPage({ params }: { params: Promise
               dangerouslySetInnerHTML={{ __html: copy || lede }}
             />
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginTop: 36, paddingTop: 28, borderTop: '1px solid rgba(31,26,20,0.18)' }}>
-              {[
-                [ts.service, item.hours],
-                [isFr ? 'Plate' : 'Plate', item.plate],
-              ].map(([k, v]) => (
-                <div key={k}>
-                  <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 8 }}>{k}</div>
-                  <div style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 17, color: 'var(--ink)' }}>{v}</div>
-                </div>
-              ))}
+            <div style={{ marginTop: 36, paddingTop: 28, borderTop: '1px solid rgba(31,26,20,0.18)' }}>
+              <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 8 }}>{ts.service}</div>
+              <div style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 17, color: 'var(--ink)' }}>{item.hours}</div>
             </div>
 
             <div style={{ marginTop: 36 }}>
@@ -144,7 +131,6 @@ export default async function RestaurantDetailPage({ params }: { params: Promise
           <div style={{ position: 'sticky', top: 'calc(var(--nav-h) + 24px)', display: 'flex', flexDirection: 'column', gap: 2 }}>
             <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5' }}>
               <Photo kind="palms" src={coverImage} alt={name} style={{ position: 'absolute', inset: 0 }} />
-              <div aria-hidden="true" style={{ position: 'absolute', top: 14, left: 14, fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.22em', color: 'var(--paper)', opacity: 0.85, zIndex: 4 }}>PLATE {item.plate}</div>
             </div>
             {(thumb1 || thumb2) && (
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>

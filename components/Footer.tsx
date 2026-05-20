@@ -1,10 +1,12 @@
 import Link from 'next/link'
 import { GrainOverlay } from './shared'
 import { NewsletterForm } from './NewsletterForm'
+import { CONTACT_PHONE, CONTACT_EMAIL, CONTACT_WEB, contactPhoneHref, hasPhone, hasEmail, hasWeb } from '@/lib/contact'
 
 interface FooterLink { label: string; href: string }
 
 interface FooterDict {
+  tagline?: string; closing?: string
   reserve_eyebrow: string; reserve_h1: string; reserve_script: string
   arrival: string; arrival_val: string
   departure: string; departure_val: string
@@ -123,6 +125,67 @@ export function Footer({ dict, lang }: FooterProps) {
             </div>
           </div>
         </div>
+
+        {/* Contact strip */}
+        {(hasPhone || hasEmail || hasWeb) && (
+          <div style={{
+            marginTop: 'clamp(48px,7vw,80px)',
+            paddingTop: 32,
+            borderTop: '1px solid rgba(242,232,213,0.18)',
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 'clamp(20px,3vw,48px)',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            fontFamily: 'var(--sans)',
+            fontSize: 13,
+            color: 'rgba(242,232,213,0.85)',
+          }}>
+            {hasPhone && (
+              <a href={`tel:${contactPhoneHref}`} className="footer-link" style={{ letterSpacing: '0.04em' }}>
+                {CONTACT_PHONE}
+              </a>
+            )}
+            {hasEmail && (
+              <a href={`mailto:${CONTACT_EMAIL}`} className="footer-link" style={{ letterSpacing: '0.04em' }}>
+                {CONTACT_EMAIL}
+              </a>
+            )}
+            {hasWeb && (
+              <a href={`https://${CONTACT_WEB}`} target="_blank" rel="noopener noreferrer" className="footer-link" style={{ letterSpacing: '0.04em' }}>
+                {CONTACT_WEB}
+              </a>
+            )}
+          </div>
+        )}
+
+        {dict.tagline && (
+          <div style={{
+            marginTop: 'clamp(32px,4vw,48px)',
+            fontFamily: 'var(--sans)',
+            fontSize: 11,
+            letterSpacing: '0.32em',
+            textTransform: 'uppercase',
+            color: 'rgba(242,232,213,0.7)',
+            textAlign: 'center',
+          }}>
+            {dict.tagline}
+          </div>
+        )}
+
+        {dict.closing && (
+          <div style={{
+            marginTop: 14,
+            fontFamily: 'var(--script)',
+            fontStyle: 'italic',
+            fontSize: 'clamp(20px,2.4vw,28px)',
+            color: 'var(--brass)',
+            textAlign: 'center',
+            lineHeight: 1.3,
+          }}>
+            {dict.closing}
+          </div>
+        )}
 
         {/* Legal row */}
         <div className="footer-legal" style={{ marginTop: 'clamp(48px,7vw,96px)', paddingTop: 28, borderTop: '1px solid rgba(242,232,213,0.18)' }}>

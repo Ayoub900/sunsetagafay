@@ -15,7 +15,6 @@ const columns: Column<Restaurant>[] = [
       </div>
     ),
   },
-  { key: 'plate', label: 'Plate', w: '80px', render: r => <span style={{ fontFamily: 'var(--mono, monospace)', fontSize: 12.5, color: T.ink3 }}>{r.plate}</span> },
   { key: 'active', label: 'Status', w: '120px', render: r => <StatusPill v={r.active ? 'Active' : 'Draft'} /> },
 ]
 
@@ -29,7 +28,7 @@ export function RestaurantsTable({ rows, deleteAction }: Props) {
     <AdminTable
       rows={rows as unknown as Record<string, unknown>[]}
       columns={columns as Column<Record<string, unknown>>[]}
-      searchKeys={['nameEn', 'nameFr', 'plate']}
+      searchKeys={['nameEn', 'nameFr']}
       editBasePath="/admin/restaurants"
       deleteAction={deleteAction}
       emptyText="No restaurants yet."

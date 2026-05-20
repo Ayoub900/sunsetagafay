@@ -59,7 +59,7 @@ export function MaisonLetter({ dict }: { dict: StoryDict }) {
           </div>
         </div>
 
-        {/* Right — framed plate + facts */}
+        {/* Right — framed image + facts */}
         <div>
           <div style={{ width: '100%', aspectRatio: '4 / 5', position: 'relative', overflow: 'hidden' }}>
             <Photo
@@ -67,9 +67,6 @@ export function MaisonLetter({ dict }: { dict: StoryDict }) {
               alt="The Olive Court — Sunset Agafay"
               style={{ position: 'absolute', inset: 0 }}
             />
-            <div aria-hidden="true" style={{ position: 'absolute', left: 18, bottom: 14, color: 'var(--paper)', fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.18em', opacity: 0.85, zIndex: 4 }}>
-              PLATE I · THE OLIVE COURT
-            </div>
           </div>
 
           <ul style={{ listStyle: 'none', margin: '28px 0 0', padding: 0, borderTop: '1px solid rgba(31,26,20,0.18)', color: 'var(--ink-soft)', fontFamily: 'var(--sans)', fontSize: 12.5 }}>

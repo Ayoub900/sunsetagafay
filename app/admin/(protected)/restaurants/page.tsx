@@ -39,7 +39,7 @@ export default async function RestaurantsPage({ searchParams }: { searchParams: 
           <PageHead
             title={editing ? editing.nameEn : 'New restaurant'}
             lede={editing
-              ? `Plate ${editing.plate} · ${editing.hours}. Changes go live on save.`
+              ? `${editing.hours}. Changes go live on save.`
               : 'Add a new dining venue. Drafts stay hidden until set to Active.'}
           />
 
@@ -52,7 +52,6 @@ export default async function RestaurantsPage({ searchParams }: { searchParams: 
                     <Field label="Name (EN)" w="calc(50% - 8px)"><TextInput name="nameEn" defaultValue={editing?.nameEn} required /></Field>
                     <Field label="Name (FR)" w="calc(50% - 8px)"><TextInput name="nameFr" defaultValue={editing?.nameFr} required /></Field>
                     <Field label="Slug (URL)" w="calc(50% - 8px)"><TextInput name="slug" defaultValue={editing?.slug} placeholder="le-souk" required /></Field>
-                    <Field label="Plate" w="calc(50% - 8px)"><TextInput name="plate" defaultValue={editing?.plate} required /></Field>
                     <Field label="Hours" full><TextInput name="hours" defaultValue={editing?.hours} placeholder="Daily · 7pm – 11pm" required /></Field>
                   </FormSection>
 
@@ -109,7 +108,6 @@ export default async function RestaurantsPage({ searchParams }: { searchParams: 
                   </h3>
                   {editing ? (
                     <div style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 13, color: T.ink2, lineHeight: 1.7 }}>
-                      <div><strong>Plate:</strong> {editing.plate}</div>
                       <div><strong>Hours:</strong> {editing.hours}</div>
                       <div><strong>Slug:</strong> {editing.slug}</div>
                       <div><strong>Photos:</strong> {(editing.images?.length || (editing.imageUrl ? 1 : 0))} uploaded</div>

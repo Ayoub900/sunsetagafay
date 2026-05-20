@@ -38,23 +38,24 @@
     "menu_close": "Close navigation menu"
   },
   "hero": {
-    "eyebrow": "Bulletin No. 01 · Saison 2026",
-    "headline": "Where the day ends slowly.",
-    "subline": "A boutique kasbah of fourteen rooms in the Agafay desert, an hour south of Marrakech.",
-    "cta_reserve": "Reserve a Stay",
-    "cta_story": "Our Story",
+    "eyebrow": "Luxury Boutique Resort · Agafay Desert",
+    "headline": "Sunset Agafay",
+    "headline_2": "Luxury Boutique Resort in Agafay Desert",
+    "subline": "Pool, accommodation, restaurant and exclusive experiences at the heart of Agafay Boutique Resort, only a few kilometres from Marrakech.",
+    "cta_reserve": "Book Now",
+    "cta_story": "Discover the Experience",
     "scroll": "Scroll"
   },
   "marquee": {
-    "items": ["Boutique Kasbah", "Fourteen Rooms", "Open All Year", "31°22′N — 08°10′W", "Aperitif at Six", "Maroc"]
+    "items": ["Luxury Boutique Resort", "Agafay Desert", "Open All Year", "31°22′N — 08°10′W", "Sunset Hour", "Maroc"]
   },
   "story": {
-    "eyebrow": "Maison No. 01 · A Letter",
-    "headline_1": "We built a small house in the desert,",
-    "headline_script": "and let it sit",
-    "headline_2": "inside the longest hour of the day.",
-    "p1": "Sunset Agafay is fourteen rooms wrapped around a courtyard of olive trees, an hour south of Marrakech and a world away from it. We bought the land in 2019 and spent four years rebuilding it stone by stone with masons from the valley. It opened, quietly, in the spring of 2025.",
-    "p2": "There is a pool that catches the last of the sun, an old-world bar that opens at six, and dinners that begin when the muezzin sings. The rest is space, and the light. We hope you will stay long enough to notice it.",
+    "eyebrow": "Maison No. 01 · Welcome",
+    "headline_1": "A luxury oasis",
+    "headline_script": "at the heart",
+    "headline_2": "of Agafay.",
+    "p1": "Sunset Agafay is a Luxury Boutique Resort in Agafay Desert designed to offer a unique experience between desert, light and Moroccan hospitality. Nestled in the mineral landscapes of Agafay, our Agafay Boutique Resort invites you to slow down, reconnect, and live unforgettable moments around the pool, the sunset and exclusive desert experiences.",
+    "p2": "Only minutes from Marrakech, Sunset Agafay blends contemporary elegance, nature and the Moroccan art of living in a refined, soothing atmosphere.",
     "founders": "Camille & Idriss",
     "founders_role": "Founders · Marrakech",
     "fact_locale": "Locale",
@@ -67,42 +68,38 @@
     "fact_saison_val": "All year, 6:30 — 23:00"
   },
   "suites_section": {
-    "eyebrow": "The Rooms",
-    "index": "II · Suites",
-    "title": "Fourteen, no two alike.",
-    "lede": "Each room reworked from existing kasbah walls. Linen by Mtali, ceramics from Tameslouht.",
+    "eyebrow": "Accommodation",
+    "index": "II · Suites & Accommodation",
+    "title": "Suites & Accommodation",
+    "lede": "Suites designed for comfort, calm and escape, inspired by the natural textures and the light of the Agafay desert.",
     "from_night": "From / night",
-    "discover": "All Fourteen Rooms"
+    "discover": "Discover the Suites"
   },
   "rooms": [
     {
-      "plate": "I",
       "name": "Suite Agafay",
-      "brief": "Built into the eastern wall and open to the full Agafay plateau. Raw tadelakt in desert ochre, a brass four-poster, and a soaking tub positioned to catch the morning light. The terrace faces due east — the first in the maison to see the sun.",
+      "brief": "A warm suite opening onto the desert landscapes, with a private terrace and an ambience inspired by contemporary Berber style.",
       "area": "45 m²",
       "view": "Desert plateau",
       "rate": "€580"
     },
     {
-      "plate": "II",
-      "name": "Suite La Khoutoubia",
-      "brief": "Named for the minaret just visible on clear mornings, this first-floor suite pairs an oversized bedroom with a private salon and a hammered-brass soaking tub. The salon doubles as a reading room and has its own west-facing window seat.",
-      "area": "52 m²",
-      "view": "Medina silhouette",
-      "rate": "€680"
-    },
-    {
-      "plate": "III",
       "name": "Suite Sunset",
-      "brief": "Our signature corner room. Floor-to-ceiling shutters open directly onto the dunes, and a private plunge pool catches the full afternoon sun before the Atlas turns pink at dusk. The most requested room in the maison, for obvious reasons.",
+      "brief": "Our signature suite, designed to enjoy the last rays of the sun in an intimate and refined atmosphere.",
       "area": "68 m²",
       "view": "Sunset & Atlas range",
       "rate": "€890"
     },
     {
-      "plate": "IV",
+      "name": "Suite Koutoubia",
+      "brief": "An elegant suite combining Moroccan craftsmanship, natural light and modern comfort.",
+      "area": "52 m²",
+      "view": "Medina silhouette",
+      "rate": "€680"
+    },
+    {
       "name": "Family Suite",
-      "brief": "Two connected rooms — each with its own bathroom — sharing a private courtyard and plunge pool. Designed for families or small groups who want complete privacy within the kasbah walls without feeling separated from the rest of the maison.",
+      "brief": "A spacious setting designed to welcome families and groups wishing to share the Sunset Agafay experience together.",
       "area": "105 m²",
       "view": "Kasbah & private pool",
       "rate": "€1,380"
@@ -114,98 +111,81 @@
     "attribution": "Condé Nast Traveller, March 2026"
   },
   "tables_section": {
-    "eyebrow": "The Tables",
-    "index": "III · Restaurants & Bars",
-    "title": "Three rooms to eat & drink in.",
-    "lede": "Cooking from the valley, aperitifs at six, and one private table held twice a week.",
+    "eyebrow": "Restaurant",
+    "index": "III · Restaurant & Bars",
+    "title": "Moroccan flavours & desert light",
+    "lede": "A refined culinary experience inspired by Moroccan and Mediterranean traditions, served in an elegant atmosphere at the heart of Agafay Boutique Resort.",
     "service": "Service"
   },
   "tables": [
     {
-      "n": "I",
-      "name": "Le Souk",
-      "lede": "Long lunches under the pergola; dinners by candlelight when the muezzin sings.",
-      "copy": "Chef Yassine cooks entirely from what the valley and the coast provide. Slow-braised lamb on Tuesdays, seven-vegetable couscous every Friday, sea bream brought up from Essaouira on ice. The wine list is short and deliberately Moroccan-led — a few natural bottles, a house rosé, and one very good white Burgundy for those who insist.",
+      "name": "Le Souk Restaurant",
+      "lede": "Moroccan and Mediterranean cuisine, fresh produce and a warm ambience facing the sunset.",
+      "copy": "Moroccan and Mediterranean cuisine, fresh produce and a warm ambience facing the sunset. A menu that celebrates the flavours of Morocco and the Mediterranean, to be savoured on the terrace facing the Agafay dunes.",
       "hours": "12:30 – 15:00 · 19:30 – 23:00"
     },
     {
-      "n": "II",
-      "name": "Bar Arish",
-      "lede": "An old-world bar that opens at six. Aperitifs, vermouths, and the longer cocktails after dark.",
-      "copy": "A brass counter, a back-bar of Moroccan bitters and aged vermouths, and a small terrace directly facing the dunes. The aperitif hour — six to seven-thirty — is the soul of the maison, and we keep it as unhurried as possible. After eight, the cocktails lengthen and the conversation follows suit.",
+      "name": "Arish Bar",
+      "lede": "Signature cocktails, lounge music and a desert atmosphere under the stars.",
+      "copy": "Signature cocktails, lounge music and a desert atmosphere under the stars. The place for sunsets and long evenings, at the counter or out on the terrace.",
       "hours": "18:00 – Late"
     },
     {
-      "n": "III",
-      "name": "La Table d'Idriss",
-      "lede": "A fourteen-seat private table hosted by the founder.",
-      "copy": "Held on Wednesday and Saturday evenings on the upper terrace, around a single long farm table set for fourteen. The six-course menu is written each morning from whatever the Marrakech market provided. Idriss is present at every sitting. Reservations taken one week in advance; no printed menu, no separate wine list, very little ceremony.",
-      "hours": "By reservation, twice weekly"
+      "name": "Private Dining",
+      "lede": "An intimate and exclusive gastronomic experience, ideal for special occasions and romantic dinners.",
+      "copy": "An intimate and exclusive gastronomic experience, ideal for special occasions and romantic dinners. Our team designs a bespoke menu and dedicated service, in a private setting for you and your guests.",
+      "hours": "By reservation"
     }
   ],
   "experiences_section": {
-    "eyebrow": "The Hours",
-    "index": "IV · Experiences",
-    "title": "Seven small things to do here.",
-    "lede": "A short list, kept short on purpose. We would rather do these well than offer twenty of them."
+    "eyebrow": "Experiences",
+    "index": "IV · Signature Experiences",
+    "title": "Signature Experiences",
+    "lede": "Live the desert differently through experiences designed for adventure, relaxation and emotion."
   },
   "experiences": [
     {
       "n": "01",
-      "name": "Sunrise on the Plateau",
-      "when": "Daily, 06:00",
-      "who": "Two riders, by horseback or 4×4",
-      "lede": "An hour out across the hammada to watch the sun first reach the Atlas."
+      "name": "Camel Ride",
+      "when": "Daily, 17:30",
+      "who": "Up to four riders",
+      "lede": "A camel ride through the unique landscapes of the Agafay desert at sunset."
     },
     {
       "n": "02",
-      "name": "The Long Friday Lunch",
-      "when": "Fridays, 13:00",
-      "who": "Up to twelve guests",
-      "lede": "Couscous, mint tea, and three hours under the pergola — as it has always been done."
+      "name": "Quad Experience",
+      "when": "Daily, 10:00 & 15:00",
+      "who": "Solo or in pairs",
+      "lede": "Explore the desert trails with our guides for an unforgettable adventure."
     },
     {
       "n": "03",
-      "name": "Stargazing with Said",
-      "when": "Clear nights, 21:30",
-      "who": "Up to six guests",
-      "lede": "Said brings out the small refractor; we bring out the brandy. Saturn most nights of the year."
+      "name": "Buggy Adventure",
+      "when": "Daily, on request",
+      "who": "Up to four guests",
+      "lede": "Thrilling sensations and exceptional panoramas at the heart of the Agafay reliefs."
     },
     {
       "n": "04",
-      "name": "Aperitif on the Dunes",
-      "when": "Daily, 18:30",
-      "who": "Open to all guests",
-      "lede": "We drive a low table out to the dunes; you bring the conversation. The bar stays open until the light is gone."
+      "name": "Sunset Dinner",
+      "when": "Every evening, 19:30",
+      "who": "By reservation",
+      "lede": "Dinner under the stars with live music, candles and refined Moroccan gastronomy."
     },
     {
       "n": "05",
-      "name": "Sunset Camel Tour",
-      "when": "Daily, 17:30",
-      "who": "Up to four riders",
-      "lede": "An hour on camelback through the dunes as the light turns rose and gold over the Atlas."
-    },
-    {
-      "n": "06",
-      "name": "Desert Quad Experience",
-      "when": "Daily, 10:00 & 15:00",
-      "who": "Solo or in pairs",
-      "lede": "Two hours across the hammada and the dune line — guided, briefed, and back in time for tea."
-    },
-    {
-      "n": "07",
-      "name": "Luxury Buggy Tour",
-      "when": "Daily, on request",
-      "who": "Up to four guests",
-      "lede": "Two-seater buggies along the desert tracks of Agafay, with a stop for mint tea among the bergères."
+      "name": "Pool Day Pass",
+      "when": "Daily, 11:00 – 19:00",
+      "who": "Adults & children",
+      "lede": "Enjoy our pool and lounge areas for an exclusive day in the desert."
     }
   ],
   "hammam_section": {
-    "eyebrow": "V · Wellbeing",
-    "title_1": "Steam, tadelakt, eucalyptus.",
-    "title_script": "Ninety quiet minutes.",
-    "lede": "The hammam is built into the lower walls of the kasbah, in tadelakt the colour of clay and rose. We keep the rituals traditional and the timing leisurely.",
-    "cta": "Book the Hammam",
+    "eyebrow": "V · Spa & Wellbeing",
+    "title_1": "Wellbeing inspired",
+    "title_script": "by Moroccan rituals",
+    "lede": "Traditional hammam, relaxing massages and argan-oil treatments in a calm, soothing atmosphere inspired by the Agafay desert.",
+    "cta": "Book a Treatment",
     "treatments": [
       { "name": "Ritual Sunset",     "duration": "90 min", "price": "€180" },
       { "name": "Rassoul & Argan",   "duration": "60 min", "price": "€120" },
@@ -214,9 +194,9 @@
     ]
   },
   "events_section": {
-    "eyebrow": "Private Events",
-    "title": "The kasbah, entirely yours.",
-    "lede": "We host intimate gatherings of the kind that deserve a desert backdrop.",
+    "eyebrow": "Events & Celebrations",
+    "title": "Events & Celebrations",
+    "lede": "Weddings, birthdays, private parties or corporate events — Sunset Agafay welcomes your most precious moments in the exclusive setting of a Luxury Boutique Resort in Agafay Desert.",
     "cta": "Enquire for an Event",
     "types": [
       {
@@ -335,8 +315,10 @@
     "contact_lines": ["Reservations · daily, 09 — 19"]
   },
   "footer": {
+    "tagline": "Sunset Agafay — Luxury Boutique Resort in Agafay Desert",
+    "closing": "More than a destination. A sunset experience.",
     "reserve_eyebrow": "Reserve a Stay",
-    "reserve_h1": "Hold a room.",
+    "reserve_h1": "Hold a suite.",
     "reserve_script": "Begin slowly.",
     "arrival": "Arrival",
     "arrival_val": "Tuesday, 12 May",
@@ -393,8 +375,9 @@
     "message_label": "Message",
     "submit": "Send Inquiry",
     "direct_eyebrow": "Direct Contact",
-    "phone": "",
-    "email": "",
+    "phone": "+212 662 361 819",
+    "email": "info@sunsetagafay.com",
+    "web": "www.sunsetagafay.com",
     "address_label": "Address",
     "address_lines": ["Route d'Amizmiz, KM 47", "Agafay, Marrakech-Safi", "Maroc 42150"],
     "directions_label": "Getting Here",
@@ -493,7 +476,7 @@
   },
   "experiences_page": {
     "hero_eyebrow": "The Hours",
-    "hero_title": "Seven small things we do well.",
+    "hero_title": "Small things, done well.",
     "hero_sub": "A short list, kept short on purpose. Each experience is personally hosted and limited to a small number of guests.",
     "book_cta": "Book This Experience",
     "inquire_cta": "Inquire"
@@ -597,9 +580,9 @@
     "reserve_cta_sub": "Limited availability each day"
   },
   "meta": {
-    "home_title": "Sunset Agafay — Boutique Kasbah · Agafay Desert",
-    "home_description": "A boutique kasbah of fourteen rooms in the Agafay desert, one hour from Marrakech. Luxury desert hotel with authentic Moroccan experience.",
-    "home_keywords": "Agafay desert hotel, boutique kasbah Marrakech, luxury desert retreat Morocco, hotel Agafay, kasbah hotel Morocco, desert getaway Marrakech",
+    "home_title": "Sunset Agafay — Luxury Boutique Resort in Agafay Desert",
+    "home_description": "Sunset Agafay — Luxury Boutique Resort in Agafay Desert. Pool, accommodation, restaurant and exclusive experiences at the heart of Agafay, only minutes from Marrakech.",
+    "home_keywords": "Luxury Boutique Resort Agafay, Sunset Agafay, Agafay desert hotel, desert resort Marrakech, boutique resort Morocco, Agafay pool, Agafay restaurant",
     "suites_title": "Suites & Rooms — Sunset Agafay",
     "suites_description": "Four individually designed suites at Sunset Agafay kasbah — Suite Agafay, Suite La Khoutoubia, Suite Sunset, and Family Suite in the Agafay desert.",
     "restaurants_title": "Restaurants & Bars — Sunset Agafay",

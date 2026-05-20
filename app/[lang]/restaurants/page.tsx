@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
 const kindMap = ['palms', 'aperitif', 'courtyard', 'sunset'] as const
 
-type TableRow = { n: string; slug?: string; name: string; lede: string; hours: string; imageUrl?: string }
+type TableRow = { slug?: string; name: string; lede: string; hours: string; imageUrl?: string }
 
 export default async function RestaurantsPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -44,14 +44,13 @@ export default async function RestaurantsPage({ params }: { params: Promise<{ la
   const p = dict.restaurants_page
   const tables: TableRow[] = dbRestaurants.length > 0
     ? dbRestaurants.map(r => ({
-        n:     r.plate,
         slug:  r.slug,
         name:  isFr ? r.nameFr : r.nameEn,
         lede:  isFr ? r.ledeFr : r.ledeEn,
         hours: r.hours,
         imageUrl: r.imageUrl,
       }))
-    : dict.tables.map((t: { n: string; name: string; lede: string; copy: string; hours: string }) => ({ ...t }))
+    : dict.tables.map((t: { name: string; lede: string; copy: string; hours: string }) => ({ ...t }))
   const ts = dict.tables_section
 
   return (
@@ -71,7 +70,7 @@ export default async function RestaurantsPage({ params }: { params: Promise<{ la
         <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'clamp(80px,10vw,140px)' }}>
           {tables.map((t, i) => (
             <article
-              key={t.slug ?? t.n}
+              key={t.slug ?? t.name}
               id={t.slug}
               style={{
                 scrollMarginTop: 'var(--nav-h)',
@@ -121,7 +120,6 @@ function TablePhoto({ t, i }: { t: TableRow; i: number }) {
   return (
     <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5' }}>
       <Photo kind={kindMap[i % kindMap.length]} src={t.imageUrl || undefined} alt={t.name} style={{ position: 'absolute', inset: 0 }} />
-      <div aria-hidden="true" style={{ position: 'absolute', top: 14, left: 14, fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.22em', color: 'var(--paper)', opacity: 0.85, zIndex: 4 }}>PLATE {t.n}</div>
     </div>
   )
 }
@@ -134,9 +132,6 @@ function TableText({ t, ts, p, lang }: {
 }) {
   return (
     <div>
-      <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--sienna)', marginBottom: 18 }}>
-        № {t.n}
-      </div>
       <h2 style={{ fontFamily: 'var(--serif)', fontWeight: 400, fontSize: 'clamp(32px,4vw,52px)', lineHeight: 1, letterSpacing: '-0.018em', margin: 0, color: 'var(--ink)' }}>
         {t.name}
       </h2>

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Photo, SectionHead } from '../shared'
 
-interface TableEntry { n: string; name: string; lede: string; hours: string; imageUrl?: string }
+interface TableEntry { name: string; lede: string; hours: string; imageUrl?: string }
 interface TablesSectionDict { eyebrow: string; index: string; title: string; lede: string; service: string }
 
 const kinds = ['courtyard', 'aperitif', 'palms'] as const
@@ -49,9 +49,6 @@ export function Tables({ dict, tables, lang }: { dict: TablesSectionDict; tables
 function TableText({ t, service, lang, anchor }: { t: TableEntry; service: string; lang: string; anchor: string }) {
   return (
     <div>
-      <div style={{ fontFamily: 'var(--sans)', fontSize: 10, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--sienna)', marginBottom: 18 }}>
-        Table No. {t.n}
-      </div>
       <h3 style={{ fontFamily: 'var(--serif)', fontWeight: 400, fontSize: 'clamp(36px,5vw,56px)', lineHeight: 1, letterSpacing: '-0.018em', margin: 0, color: 'var(--ink)' }}>
         {t.name}
       </h3>

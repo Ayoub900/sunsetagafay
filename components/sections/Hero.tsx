@@ -2,7 +2,7 @@ import { GrainOverlay } from '../shared'
 import Link from 'next/link'
 
 interface HeroDict {
-  eyebrow: string; headline: string; subline: string
+  eyebrow: string; headline: string; headline_2?: string; subline: string
   cta_reserve: string; cta_story: string; scroll: string
 }
 
@@ -52,6 +52,20 @@ export function HeroCourtyard({ dict, lang }: { dict: HeroDict; lang: string }) 
             }}>
               {dict.headline}
             </h1>
+            {dict.headline_2 && (
+              <div style={{
+                fontFamily: 'var(--script)',
+                fontStyle: 'italic',
+                fontSize: 'clamp(20px,2.4vw,30px)',
+                lineHeight: 1.15,
+                letterSpacing: '0',
+                marginTop: 'clamp(10px,1.4vw,18px)',
+                color: 'var(--brass)',
+                opacity: 0.95,
+              }}>
+                {dict.headline_2}
+              </div>
+            )}
           </div>
           <div className="hero-right-col" style={{ paddingBottom: 6, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', textAlign: 'right' }}>
             <p style={{
@@ -66,7 +80,7 @@ export function HeroCourtyard({ dict, lang }: { dict: HeroDict; lang: string }) 
               {dict.subline}
             </p>
             <div style={{ display: 'flex', gap: 'clamp(20px,3vw,36px)', alignItems: 'center', marginTop: 'clamp(20px,3vw,28px)', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-              <Link href={`/${lang}/contact`} className="cta">
+              <Link href={`/${lang}/reserve`} className="cta">
                 <span className="cta-label">{dict.cta_reserve}</span>
                 <span className="cta-arrow" aria-hidden="true">→</span>
               </Link>

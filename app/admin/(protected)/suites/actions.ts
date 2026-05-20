@@ -17,7 +17,6 @@ export async function createSuite(formData: FormData) {
   await prisma.suite.create({
     data: {
       slug:      String(formData.get('slug')).trim(),
-      plate:     String(formData.get('plate') ?? '').trim(),
       nameEn:    String(formData.get('nameEn')).trim(),
       nameFr:    String(formData.get('nameFr')).trim(),
       briefEn:          String(formData.get('briefEn')).trim(),
@@ -47,7 +46,6 @@ export async function updateSuite(id: string, formData: FormData) {
     where: { id },
     data: {
       slug:      String(formData.get('slug')).trim(),
-      plate:     String(formData.get('plate') ?? '').trim(),
       nameEn:    String(formData.get('nameEn')).trim(),
       nameFr:    String(formData.get('nameFr')).trim(),
       briefEn:          String(formData.get('briefEn')).trim(),

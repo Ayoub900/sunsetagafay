@@ -29,7 +29,6 @@ export async function POST(req: NextRequest) {
       return {
         id:        s.id,
         slug:      s.slug,
-        plate:     s.plate,
         nameEn:    s.nameEn,
         nameFr:    s.nameFr,
         briefEn:   s.briefEn,

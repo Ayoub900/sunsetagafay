@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Photo, SectionHead } from '../shared'
 
-interface Room { plate: string; slug?: string; name: string; brief: string; area: string; view: string; rate: string; imageUrl?: string; imageKind?: string }
+interface Room { slug?: string; name: string; brief: string; area: string; view: string; rate: string; imageUrl?: string; imageKind?: string }
 interface SuitesSectionDict {
   eyebrow: string; index: string; title: string; lede: string; from_night: string; discover: string; reserve?: string; details?: string
 }
@@ -28,9 +28,6 @@ export function Suites({ dict, rooms, lang }: { dict: SuitesSectionDict; rooms: 
                   alt={r.name}
                   style={{ position: 'absolute', inset: 0 }}
                 />
-                <div aria-hidden="true" style={{ position: 'absolute', top: 14, left: 14, fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.22em', color: 'var(--paper)', opacity: 0.85, zIndex: 4 }}>
-                  PLATE {r.plate}
-                </div>
               </div>
               <div style={{ marginTop: 18, display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10 }}>
                 <h3 style={{ fontFamily: 'var(--serif)', fontWeight: 400, fontSize: 'clamp(20px,2vw,26px)', lineHeight: 1.05, letterSpacing: '-0.01em', margin: 0, color: 'var(--ink)' }}>

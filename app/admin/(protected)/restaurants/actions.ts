@@ -17,7 +17,6 @@ export async function createRestaurant(formData: FormData) {
   await prisma.restaurant.create({
     data: {
       slug:     String(formData.get('slug')).trim(),
-      plate:    String(formData.get('plate')).trim(),
       nameEn:   String(formData.get('nameEn')).trim(),
       nameFr:   String(formData.get('nameFr')).trim(),
       ledeEn:   String(formData.get('ledeEn')).trim(),
@@ -44,7 +43,6 @@ export async function updateRestaurant(id: string, formData: FormData) {
     where: { id },
     data: {
       slug:     String(formData.get('slug')).trim(),
-      plate:    String(formData.get('plate')).trim(),
       nameEn:   String(formData.get('nameEn')).trim(),
       nameFr:   String(formData.get('nameFr')).trim(),
       ledeEn:   String(formData.get('ledeEn')).trim(),

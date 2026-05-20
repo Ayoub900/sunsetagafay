@@ -39,7 +39,6 @@ export async function POST(req: Request) {
     return prisma.suite.create({
       data: {
         slug,
-        plate:     en.plate,
         nameEn:    en.name,
         nameFr:    fr?.name ?? en.name,
         briefEn:   en.brief,
@@ -61,7 +60,6 @@ export async function POST(req: Request) {
     return prisma.restaurant.create({
       data: {
         slug,
-        plate:  en.n,
         nameEn: en.name,
         nameFr: fr?.name ?? en.name,
         ledeEn: en.lede,

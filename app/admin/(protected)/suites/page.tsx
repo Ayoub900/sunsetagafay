@@ -74,7 +74,7 @@ export default async function SuitesPage({
           <PageHead
             title={editing ? editing.nameEn : 'New suite'}
             lede={editing
-              ? `Plate ${editing.plate} · ${editing.area} · ${editing.view}. Changes go live on save.`
+              ? `${editing.area} · ${editing.view}. Changes go live on save.`
               : 'Add a new room. Drafts stay hidden until set to Active.'}
           />
 
@@ -197,7 +197,6 @@ export default async function SuitesPage({
                   </h3>
                   {editing ? (
                     <div style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 13, color: T.ink2, lineHeight: 1.7 }}>
-                      <div><strong>Plate:</strong> {editing.plate}</div>
                       <div><strong>Area:</strong> {editing.area}</div>
                       <div><strong>View:</strong> {editing.view}</div>
                       <div><strong>Rate:</strong> {editing.rate}</div>

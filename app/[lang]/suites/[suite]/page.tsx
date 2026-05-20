@@ -106,9 +106,6 @@ export default async function SuiteDetailPage({ params }: { params: Promise<{ la
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 2, background: 'linear-gradient(to bottom, rgba(20,12,8,0.6) 0%, rgba(20,12,8,0.45) 60%, rgba(20,12,8,0.75) 100%)' }} />
         <GrainOverlay opacity={0.4} blend="overlay" style={{ zIndex: 3 }} />
         <div className="page-hero-content" style={{ zIndex: 4 }}>
-          <div className="eyebrow no-lead" style={{ color: 'var(--rose)', marginBottom: 24 }}>
-            {isFr ? `Suite No. ${suite.plate}` : `Suite No. ${suite.plate}`}
-          </div>
           <h1 className="page-hero-title">{name}</h1>
           <p
             className="page-hero-sub"
@@ -129,9 +126,6 @@ export default async function SuiteDetailPage({ params }: { params: Promise<{ la
                 alt={name}
                 style={{ position: 'absolute', inset: 0 }}
               />
-              <div aria-hidden="true" style={{ position: 'absolute', top: 14, left: 14, fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.22em', color: 'var(--paper)', opacity: 0.85, zIndex: 4 }}>
-                PLATE {suite.plate}
-              </div>
             </div>
             {(thumb1 || thumb2) && (
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, marginTop: 2 }}>

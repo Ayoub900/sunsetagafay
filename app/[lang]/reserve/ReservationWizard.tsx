@@ -61,7 +61,6 @@ interface ReserveDict {
 interface AvailableSuite {
   id: string
   slug: string
-  plate: string
   nameEn: string
   nameFr: string
   briefEn: string
@@ -352,14 +351,6 @@ function SuiteCard({
       }}>
         {/* Grain */}
         <div className="grain" style={{ opacity: 0.45, mixBlendMode: 'overlay' }} aria-hidden="true" />
-        {/* Plate */}
-        <div aria-hidden="true" style={{
-          position: 'absolute', top: 14, left: 14,
-          fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.28em',
-          textTransform: 'uppercase', color: 'rgba(242,232,213,0.9)',
-        }}>
-          PLATE {suite.plate}
-        </div>
       </div>
 
       {/* Content */}
