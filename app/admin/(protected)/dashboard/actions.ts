@@ -83,8 +83,11 @@ export async function seedDatabase(): Promise<{ ok: boolean; seeded?: Record<str
     }))
 
     // Treatments
-    await Promise.all(enDict.hammam_section.treatments.map((en, i) => {
-      const fr = frDict.hammam_section.treatments[i]
+    type TreatmentDict = { name: string; duration: string; price: string }
+    const enTreatments = enDict.hammam_section.treatments as TreatmentDict[]
+    const frTreatments = frDict.hammam_section.treatments as TreatmentDict[]
+    await Promise.all(enTreatments.map((en, i) => {
+      const fr = frTreatments[i]
       return prisma.treatment.create({
         data: { nameEn: en.name, nameFr: fr?.name ?? en.name, duration: en.duration, price: en.price, active: true, order: i },
       })
