@@ -5,6 +5,7 @@ import { getDictionary, hasLocale, type Locale } from '../dictionaries'
 import { Photo, GrainOverlay } from '@/components/shared'
 import { getActiveEvents } from '@/lib/db'
 import { buildAlternates } from '@/lib/seo'
+import EventRequestForm from '@/components/EventRequestForm'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params
@@ -125,12 +126,6 @@ export default async function EventsPage({ params }: { params: Promise<{ lang: s
             <div style={{ borderTop: '1px solid rgba(31,26,20,0.14)' }} />
           </div>
 
-          <div style={{ marginTop: 'clamp(48px,6vw,72px)' }}>
-            <Link href={`/${lang}/contact`} className="cta">
-              <span className="cta-label">{es.cta}</span>
-              <span className="cta-arrow" aria-hidden="true">→</span>
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -150,22 +145,26 @@ export default async function EventsPage({ params }: { params: Promise<{ lang: s
         </div>
       </section>
 
-      {/* Enquire CTA */}
-      <section style={{ background: 'var(--ink)', color: 'var(--paper)', padding: 'clamp(64px,9vw,100px) var(--gutter)', textAlign: 'center' }}>
-        <GrainOverlay opacity={0.16} blend="overlay" />
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: 680, margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'var(--serif)', fontWeight: 400, fontSize: 'clamp(36px,5vw,64px)', lineHeight: 0.97, letterSpacing: '-0.018em', margin: '0 0 12px' }}>
-            {p.enquire_cta}
-          </h2>
-          <p style={{ fontFamily: 'var(--sans)', fontSize: 11, letterSpacing: '0.18em', color: 'rgba(242,232,213,0.55)', margin: '0 0 40px', textTransform: 'uppercase' }}>
-            {p.enquire_sub}
-          </p>
-          <Link href={`/${lang}/contact`} className="cta">
-            <span className="cta-label">{p.enquire_cta}</span>
-            <span className="cta-arrow" aria-hidden="true">→</span>
-          </Link>
-        </div>
-      </section>
+      {/* Event request form */}
+      <EventRequestForm
+        labels={{
+          eyebrow:    p.form_eyebrow,
+          title:      p.form_title,
+          lede:       p.form_lede,
+          name:       p.form_name,
+          email:      p.form_email,
+          phone:      p.form_phone,
+          event_type: p.form_event_type,
+          event_date: p.form_event_date,
+          guests:     p.form_guests,
+          message:    p.form_message,
+          submit:     p.form_submit,
+          sending:    p.form_sending,
+          submitted:  p.form_submitted,
+          error_generic: isFr ? 'Une erreur est survenue. Veuillez réessayer.' : 'Something went wrong. Please try again.',
+          event_type_options: eventTypes.map(t => t.name),
+        }}
+      />
     </div>
   )
 }

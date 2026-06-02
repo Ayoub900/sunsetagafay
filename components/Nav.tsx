@@ -24,7 +24,6 @@ export interface NavDropdownItem { slug: string; label: string }
 export interface NavItems {
   suites: NavDropdownItem[]
   restaurants: NavDropdownItem[]
-  events: NavDropdownItem[]
   parties: NavDropdownItem[]
   partiesEnabled: boolean
   dayPasses: NavDropdownItem[]
@@ -76,8 +75,8 @@ export function Nav({ dict, lang, items }: NavProps) {
   const renderDesktopDropdown = (
     key: string,
     label: string,
-    section: 'suites' | 'restaurants' | 'events' | 'sunset-parties' | 'day-pass' | 'transfers',
-    allLabel: string,
+    section: 'suites' | 'restaurants' | 'sunset-parties' | 'day-pass' | 'transfers',
+    allLabel: string | undefined,
     list: NavDropdownItem[],
     badge?: string,
   ) => (
@@ -94,10 +93,12 @@ export function Nav({ dict, lang, items }: NavProps) {
         <span className="chevron" aria-hidden="true" />
       </button>
       <ul className="nav-dropdown" id={`dropdown-${key}`} role="menu" aria-label={label}>
-        <li role="none">
-          <Link href={`${base(lang)}/${section}`} role="menuitem">{allLabel}</Link>
-        </li>
-        {list.length > 0 && (
+        {allLabel && (
+          <li role="none">
+            <Link href={`${base(lang)}/${section}`} role="menuitem">{allLabel}</Link>
+          </li>
+        )}
+        {allLabel && list.length > 0 && (
           <li role="none" aria-hidden="true"><div className="nav-dropdown-sep" /></li>
         )}
         {list.map(item => (
@@ -114,8 +115,8 @@ export function Nav({ dict, lang, items }: NavProps) {
   const renderMobileDropdown = (
     key: string,
     label: string,
-    section: 'suites' | 'restaurants' | 'events' | 'sunset-parties' | 'day-pass' | 'transfers',
-    allLabel: string,
+    section: 'suites' | 'restaurants' | 'sunset-parties' | 'day-pass' | 'transfers',
+    allLabel: string | undefined,
     list: NavDropdownItem[],
     badge?: string,
   ) => (
@@ -132,7 +133,9 @@ export function Nav({ dict, lang, items }: NavProps) {
         <span aria-hidden="true">{mobileExpanded === key ? '−' : '+'}</span>
       </button>
       <ul className={`nav-mobile-sub${mobileExpanded === key ? ' open' : ''}`}>
-        <li><Link href={`${base(lang)}/${section}`} onClick={() => setMobileOpen(false)}>{allLabel}</Link></li>
+        {allLabel && (
+          <li><Link href={`${base(lang)}/${section}`} onClick={() => setMobileOpen(false)}>{allLabel}</Link></li>
+        )}
         {list.map(item => (
           <li key={item.slug}>
             <Link href={`${base(lang)}/${section}/${item.slug}`} onClick={() => setMobileOpen(false)}>
@@ -210,8 +213,14 @@ export function Nav({ dict, lang, items }: NavProps) {
             </li>
 
             {renderDesktopDropdown('suites', dict.suites, 'suites', dict.suites_all, items.suites)}
-            {renderDesktopDropdown('restaurants', dict.restaurants, 'restaurants', dict.restaurants_all, items.restaurants)}
-            {renderDesktopDropdown('events', dict.events, 'events', dict.events_all, items.events)}
+            {renderDesktopDropdown('restaurants', dict.restaurants, 'restaurants', undefined, items.restaurants)}
+
+            <li className="nav-item" role="none">
+              <Link href={`${base(lang)}/events`} className="nav-link" role="menuitem">
+                {dict.events}
+              </Link>
+            </li>
+
             {items.partiesEnabled && renderDesktopDropdown('sunset-parties', dict.sunset_parties, 'sunset-parties', dict.sunset_parties_all, items.parties)}
             {items.dayPasses.length > 0 && renderDesktopDropdown('day-pass', dict.day_pass, 'day-pass', dict.day_pass_all, items.dayPasses, dict.day_pass_hot)}
             {renderDesktopDropdown('transfers', dict.transfers, 'transfers', dict.transfers_all, items.transfers)}
@@ -249,8 +258,14 @@ export function Nav({ dict, lang, items }: NavProps) {
             </li>
 
             {renderMobileDropdown('suites', dict.suites, 'suites', dict.suites_all, items.suites)}
-            {renderMobileDropdown('restaurants', dict.restaurants, 'restaurants', dict.restaurants_all, items.restaurants)}
-            {renderMobileDropdown('events', dict.events, 'events', dict.events_all, items.events)}
+            {renderMobileDropdown('restaurants', dict.restaurants, 'restaurants', undefined, items.restaurants)}
+
+            <li className="nav-mobile-item">
+              <Link href={`${base(lang)}/events`} className="nav-mobile-link" onClick={() => setMobileOpen(false)}>
+                {dict.events}
+              </Link>
+            </li>
+
             {items.partiesEnabled && renderMobileDropdown('sunset-parties', dict.sunset_parties, 'sunset-parties', dict.sunset_parties_all, items.parties)}
             {items.dayPasses.length > 0 && renderMobileDropdown('day-pass', dict.day_pass, 'day-pass', dict.day_pass_all, items.dayPasses, dict.day_pass_hot)}
             {renderMobileDropdown('transfers', dict.transfers, 'transfers', dict.transfers_all, items.transfers)}

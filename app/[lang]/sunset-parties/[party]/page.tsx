@@ -77,9 +77,10 @@ export default async function PartyDetailPage({ params }: { params: Promise<{ la
       name: 'Sunset Agafay',
       address: {
         '@type': 'PostalAddress',
+        streetAddress: 'Lot Chaabat Ssi Laaroussi, Douar Lamlih, Commune et Caïdat Agafay, Cercle Loudaya',
         addressLocality: 'Agafay',
         addressRegion: 'Marrakech-Safi',
-        postalCode: '42150',
+        postalCode: '40000',
         addressCountry: 'MA',
       },
     },

@@ -8,8 +8,8 @@ interface FooterLink { label: string; href: string }
 interface FooterDict {
   tagline?: string; closing?: string
   reserve_eyebrow: string; reserve_h1: string; reserve_script: string
-  arrival: string; arrival_val: string
-  departure: string; departure_val: string
+  arrival: string
+  departure: string
   guests: string; guests_val: string
   room_label: string; room_val: string
   confirm: string; concierge: string
@@ -24,7 +24,31 @@ interface FooterProps { dict: FooterDict; lang: string }
 
 const base = (lang: string) => `/${lang}`
 
+function computeStayDates(lang: string): { arrival: string; departure: string } {
+  const now = new Date()
+  const arrival = new Date(now)
+  arrival.setDate(arrival.getDate() + 14)
+  while (arrival.getDay() !== 5) arrival.setDate(arrival.getDate() + 1)
+  const departure = new Date(arrival)
+  departure.setDate(departure.getDate() + 2)
+
+  const locale = lang === 'fr' ? 'fr-FR' : 'en-GB'
+  const fmt = (d: Date) => {
+    const parts = new Intl.DateTimeFormat(locale, {
+      weekday: 'long', day: 'numeric', month: 'long',
+    }).formatToParts(d)
+    const weekday = parts.find(p => p.type === 'weekday')?.value ?? ''
+    const day = parts.find(p => p.type === 'day')?.value ?? ''
+    const month = parts.find(p => p.type === 'month')?.value ?? ''
+    const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+    return lang === 'fr' ? `${cap(weekday)} ${day} ${month}` : `${cap(weekday)}, ${day} ${month}`
+  }
+
+  return { arrival: fmt(arrival), departure: fmt(departure) }
+}
+
 export function Footer({ dict, lang }: FooterProps) {
+  const { arrival: arrivalVal, departure: departureVal } = computeStayDates(lang)
   return (
     <footer style={{ background: 'var(--ink)', color: 'var(--paper)', padding: 'clamp(80px,10vw,120px) var(--gutter) clamp(48px,6vw,56px)', position: 'relative' }}>
       <GrainOverlay opacity={0.18} blend="overlay" style={{ zIndex: 1 }} />
@@ -47,8 +71,8 @@ export function Footer({ dict, lang }: FooterProps) {
             {/* Booking strip */}
             <div className="footer-booking" style={{ marginTop: 48, border: '1px solid rgba(242,232,213,0.22)', padding: 'clamp(16px,2vw,28px)' }}>
               {([
-                [dict.arrival,    dict.arrival_val],
-                [dict.departure,  dict.departure_val],
+                [dict.arrival,    arrivalVal],
+                [dict.departure,  departureVal],
                 [dict.guests,     dict.guests_val],
                 [dict.room_label, dict.room_val],
               ] as [string, string][]).map(([k, v], i, a) => (

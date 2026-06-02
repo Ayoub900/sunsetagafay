@@ -49,14 +49,14 @@ const schemaOrg = {
   smokingAllowed: false,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: "Route d'Amizmiz, KM 47",
+    streetAddress: 'Lot Chaabat Ssi Laaroussi, Douar Lamlih, Commune et Caïdat Agafay, Cercle Loudaya',
     addressLocality: 'Agafay',
     addressRegion: 'Marrakech-Safi',
-    postalCode: '42150',
+    postalCode: '40000',
     addressCountry: 'MA',
   },
-  geo: { '@type': 'GeoCoordinates', latitude: 31.3667, longitude: -8.1667 },
-  hasMap: 'https://www.google.com/maps?q=31.3667,-8.1667',
+  geo: { '@type': 'GeoCoordinates', latitude: 31.444294, longitude: -8.193362 },
+  hasMap: 'https://www.google.com/maps?q=31.444294,-8.193362',
   containedInPlace: {
     '@type': 'Place',
     name: 'Agafay Desert',

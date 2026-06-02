@@ -47,7 +47,7 @@
     "scroll": "Scroll"
   },
   "marquee": {
-    "items": ["Luxury Boutique Resort", "Agafay Desert", "Open All Year", "31°22′N — 08°10′W", "Sunset Hour", "Maroc"]
+    "items": ["Luxury Boutique Resort", "Agafay Desert", "Open All Year", "31°26′39″N — 08°11′36″W", "Sunset Hour", "Maroc"]
   },
   "story": {
     "eyebrow": "Maison No. 01 · Welcome",
@@ -56,21 +56,21 @@
     "headline_2": "of Agafay.",
     "p1": "Sunset Agafay is a Luxury Boutique Resort in Agafay Desert designed to offer a unique experience between desert, light and Moroccan hospitality. Nestled in the mineral landscapes of Agafay, our Agafay Boutique Resort invites you to slow down, reconnect, and live unforgettable moments around the pool, the sunset and exclusive desert experiences.",
     "p2": "Only minutes from Marrakech, Sunset Agafay blends contemporary elegance, nature and the Moroccan art of living in a refined, soothing atmosphere.",
-    "founders": "Camille & Idriss",
+    "founders": "ABDE EL HAKIM",
     "founders_role": "Founders · Marrakech",
     "fact_locale": "Locale",
     "fact_locale_val": "Agafay Desert, Maroc",
     "fact_distance": "Distance",
-    "fact_distance_val": "47 km from Marrakech-Menara",
+    "fact_distance_val": "~30 km from Marrakech-Menara",
     "fact_rooms": "Rooms",
-    "fact_rooms_val": "Fourteen, all with terrace",
+    "fact_rooms_val": "Four, all with terrace",
     "fact_saison": "Season",
-    "fact_saison_val": "All year, 6:30 — 23:00"
+    "fact_saison_val": "All year, 24/24 7/7"
   },
   "suites_section": {
     "eyebrow": "Accommodation",
     "index": "II · Suites & Accommodation",
-    "title": "Suites & Accommodation",
+    "title": "Signature Suites",
     "lede": "Suites designed for comfort, calm and escape, inspired by the natural textures and the light of the Agafay desert.",
     "from_night": "From / night",
     "discover": "Discover the Suites"
@@ -181,17 +181,12 @@
     }
   ],
   "hammam_section": {
-    "eyebrow": "V · Spa & Wellbeing",
-    "title_1": "Wellbeing inspired",
-    "title_script": "by Moroccan rituals",
-    "lede": "Traditional hammam, relaxing massages and argan-oil treatments in a calm, soothing atmosphere inspired by the Agafay desert.",
-    "cta": "Book a Treatment",
-    "treatments": [
-      { "name": "Ritual Sunset",     "duration": "90 min", "price": "€180" },
-      { "name": "Rassoul & Argan",   "duration": "60 min", "price": "€120" },
-      { "name": "Couples in Tandem", "duration": "120 min","price": "€420" },
-      { "name": "Just the Steam",    "duration": "30 min", "price": "€60"  }
-    ]
+    "eyebrow": "V · Stillness",
+    "title_1": "Quiet hours",
+    "title_script": "under the desert sky",
+    "lede": "A calm, soothing atmosphere inspired by the Agafay desert — space to slow down, breathe, and let the day settle.",
+    "cta": "Explore Experiences",
+    "treatments": []
   },
   "events_section": {
     "eyebrow": "Events & Celebrations",
@@ -268,7 +263,7 @@
     "items": [
       {
         "q": "How do I get to Sunset Agafay from Marrakech?",
-        "a": "We are 47 km south of Marrakech-Menara airport, roughly fifty minutes by road. We arrange private transfers in air-conditioned vehicles — day, night, or by the day for excursions. Most guests book a one-way airport transfer with their reservation; the road through the valley is part of the arrival."
+        "a": "We are roughly 30 km south-west of Marrakech-Menara airport, about forty-five minutes by road. We arrange private transfers in air-conditioned vehicles — day, night, or by the day for excursions. Most guests book a one-way airport transfer with their reservation; the road through the valley is part of the arrival."
       },
       {
         "q": "What is included in the room rate?",
@@ -303,10 +298,10 @@
   "practical": {
     "locale_label": "Address",
     "locale_h": "Sunset Agafay",
-    "locale_lines": ["Route d'Amizmiz, KM 47", "Agafay, Marrakech-Safi", "Maroc · 42150"],
+    "locale_lines": ["Lot Chaabat Ssi Laaroussi", "Douar Lamlih, Commune Agafay", "Cercle Loudaya, Marrakech-Safi", "Morocco · 40000"],
     "coords_label": "Coordinates",
-    "coords_h": "31°22′N · 08°10′W",
-    "coords_lines": ["47 km from Marrakech-Menara Airport", "65 km from Marrakech Medina", "Private transfer on request"],
+    "coords_h": "31°26′39″N · 08°11′36″W",
+    "coords_lines": ["~30 km from Marrakech-Menara Airport", "~40 km from Marrakech Medina", "Private transfer on request"],
     "hours_label": "Hours",
     "hours_h": "Open all year",
     "hours_lines": ["Reception · 24 hours", "Bar Arish · 18:00 — late", "Le Souk · 12:30 — 23:00"],
@@ -321,9 +316,7 @@
     "reserve_h1": "Hold a suite.",
     "reserve_script": "Begin slowly.",
     "arrival": "Arrival",
-    "arrival_val": "Tuesday, 12 May",
     "departure": "Departure",
-    "departure_val": "Sunday, 17 May",
     "guests": "Guests",
     "guests_val": "Two",
     "room_label": "Room",
@@ -379,12 +372,12 @@
     "email": "info@sunsetagafay.com",
     "web": "www.sunsetagafay.com",
     "address_label": "Address",
-    "address_lines": ["Route d'Amizmiz, KM 47", "Agafay, Marrakech-Safi", "Maroc 42150"],
+    "address_lines": ["Lot Chaabat Ssi Laaroussi", "Douar Lamlih, Commune Agafay", "Cercle Loudaya, Marrakech-Safi", "Morocco 40000"],
     "directions_label": "Getting Here",
     "directions": [
-      "47 km south of Marrakech-Menara Airport",
+      "~30 km south-west of Marrakech-Menara Airport",
       "Private transfers available on request",
-      "GPS: 31°22′N, 08°10′W"
+      "GPS: 31°26′39″N, 08°11′36″W"
     ]
   },
   "reserve": {
@@ -449,7 +442,7 @@
   },
   "suites_page": {
     "hero_eyebrow": "The Rooms",
-    "hero_title": "Fourteen, no two alike.",
+    "hero_title": "Suites & Accommodation",
     "hero_sub": "Each room reworked from existing kasbah walls. Linen by Mtali, ceramics from Tameslouht. All with a private terrace.",
     "amenities_label": "All Rooms Include",
     "amenities": [
@@ -485,8 +478,19 @@
     "hero_eyebrow": "Private Events",
     "hero_title": "The kasbah, entirely yours.",
     "hero_sub": "We host intimate gatherings — weddings, private gatherings, and corporate retreats — for groups who understand that the setting matters.",
-    "enquire_cta": "Enquire for an Event",
-    "enquire_sub": "We respond within 24 hours"
+    "form_eyebrow": "Request an Event",
+    "form_title": "Tell us about your event.",
+    "form_lede": "Share a few details and we will reply within 24 hours.",
+    "form_name": "Full Name",
+    "form_email": "Email Address",
+    "form_phone": "Phone (optional)",
+    "form_event_type": "Type of Event",
+    "form_event_date": "Preferred Date",
+    "form_guests": "Approximate Guests",
+    "form_message": "Tell us more",
+    "form_submit": "Send Request",
+    "form_sending": "Sending…",
+    "form_submitted": "Request received. We'll be in touch within 24 hours."
   },
   "transfers_page": {
     "hero_eyebrow": "Transfers",

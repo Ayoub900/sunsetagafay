@@ -47,7 +47,7 @@
     "scroll": "Défiler"
   },
   "marquee": {
-    "items": ["Luxury Boutique Resort", "Agafay Desert", "Ouvert Toute l'Année", "31°22′N — 08°10′W", "Coucher de Soleil", "Maroc"]
+    "items": ["Luxury Boutique Resort", "Agafay Desert", "Ouvert Toute l'Année", "31°26′39″N — 08°11′36″W", "Coucher de Soleil", "Maroc"]
   },
   "story": {
     "eyebrow": "Maison No. 01 · Bienvenue",
@@ -56,21 +56,21 @@
     "headline_2": "d'Agafay.",
     "p1": "Sunset Agafay est un Luxury Boutique Resort in Agafay Desert imaginé pour offrir une expérience unique entre désert, lumière et hospitalité marocaine. Niché dans les paysages minéraux d'Agafay, notre Agafay Boutique Resort invite à ralentir, se reconnecter et vivre des instants inoubliables autour de la piscine, du coucher de soleil et des expériences désertiques exclusives.",
     "p2": "À seulement quelques minutes de Marrakech, Sunset Agafay mêle élégance contemporaine, nature et art de vivre marocain dans une atmosphère raffinée et apaisante.",
-    "founders": "Camille & Idriss",
+    "founders": "ABDE EL HAKIM",
     "founders_role": "Fondateurs · Marrakech",
     "fact_locale": "Lieu",
     "fact_locale_val": "Désert d'Agafay, Maroc",
     "fact_distance": "Distance",
-    "fact_distance_val": "47 km de Marrakech-Ménara",
+    "fact_distance_val": "~30 km de Marrakech-Ménara",
     "fact_rooms": "Chambres",
-    "fact_rooms_val": "Quatorze, toutes avec terrasse",
+    "fact_rooms_val": "Quatre, toutes avec terrasse",
     "fact_saison": "Saison",
-    "fact_saison_val": "Toute l'année, 6h30 — 23h00"
+    "fact_saison_val": "Toute l'année, 24/24 7/7"
   },
   "suites_section": {
     "eyebrow": "Hébergement",
     "index": "II · Suites & Hébergements",
-    "title": "Suites & Hébergements",
+    "title": "Suites Signature",
     "lede": "Des suites pensées pour le confort, le calme et l'évasion, inspirées par les textures naturelles et les lumières du désert d'Agafay.",
     "from_night": "À partir de / nuit",
     "discover": "Découvrir les suites"
@@ -181,17 +181,12 @@
     }
   ],
   "hammam_section": {
-    "eyebrow": "V · Spa & Bien-être",
-    "title_1": "Bien-être inspiré",
-    "title_script": "des rituels marocains",
-    "lede": "Hammam traditionnel, massages relaxants et soins à l'huile d'argan dans une atmosphère calme et apaisante inspirée du désert d'Agafay.",
-    "cta": "Réserver un soin",
-    "treatments": [
-      { "name": "Rituel Coucher de Soleil", "duration": "90 min",  "price": "€180" },
-      { "name": "Rassoul & Argan",          "duration": "60 min",  "price": "€120" },
-      { "name": "Duo en Tandem",            "duration": "120 min", "price": "€420" },
-      { "name": "Juste la Vapeur",          "duration": "30 min",  "price": "€60"  }
-    ]
+    "eyebrow": "V · Quiétude",
+    "title_1": "Heures paisibles",
+    "title_script": "sous le ciel du désert",
+    "lede": "Une atmosphère calme et apaisante inspirée du désert d'Agafay — un espace pour ralentir, respirer et laisser la journée se poser.",
+    "cta": "Découvrir les expériences",
+    "treatments": []
   },
   "events_section": {
     "eyebrow": "Événements & célébrations",
@@ -268,7 +263,7 @@
     "items": [
       {
         "q": "Comment se rendre à Sunset Agafay depuis Marrakech ?",
-        "a": "Nous sommes à 47 km au sud de l'aéroport Marrakech-Menara, environ cinquante minutes par la route. Nous organisons des transferts privés en véhicule climatisé — de jour, de nuit, ou à la journée pour des excursions. La plupart de nos hôtes réservent un transfert depuis l'aéroport avec leur séjour ; la route à travers la vallée fait partie de l'arrivée."
+        "a": "Nous sommes à environ 30 km au sud-ouest de l'aéroport Marrakech-Menara, à peu près quarante-cinq minutes par la route. Nous organisons des transferts privés en véhicule climatisé — de jour, de nuit, ou à la journée pour des excursions. La plupart de nos hôtes réservent un transfert depuis l'aéroport avec leur séjour ; la route à travers la vallée fait partie de l'arrivée."
       },
       {
         "q": "Que comprend le tarif de la chambre ?",
@@ -303,10 +298,10 @@
   "practical": {
     "locale_label": "Adresse",
     "locale_h": "Sunset Agafay",
-    "locale_lines": ["Route d'Amizmiz, KM 47", "Agafay, Marrakech-Safi", "Maroc · 42150"],
+    "locale_lines": ["Lot Chaabat Ssi Laaroussi", "Douar Lamlih, Commune Agafay", "Cercle Loudaya, Marrakech-Safi", "Maroc · 40000"],
     "coords_label": "Coordonnées",
-    "coords_h": "31°22′N · 08°10′W",
-    "coords_lines": ["47 km de l'aéroport de Marrakech-Ménara", "65 km de la médina de Marrakech", "Transfert privé sur demande"],
+    "coords_h": "31°26′39″N · 08°11′36″W",
+    "coords_lines": ["~30 km de l'aéroport de Marrakech-Ménara", "~40 km de la médina de Marrakech", "Transfert privé sur demande"],
     "hours_label": "Horaires",
     "hours_h": "Ouvert toute l'année",
     "hours_lines": ["Réception · 24h/24", "Bar Arish · 18h00 — tard", "Le Souk · 12h30 — 23h00"],
@@ -321,9 +316,7 @@
     "reserve_h1": "Retenez une suite.",
     "reserve_script": "Commencez lentement.",
     "arrival": "Arrivée",
-    "arrival_val": "Mardi 12 mai",
     "departure": "Départ",
-    "departure_val": "Dimanche 17 mai",
     "guests": "Hôtes",
     "guests_val": "Deux",
     "room_label": "Chambre",
@@ -379,12 +372,12 @@
     "email": "info@sunsetagafay.com",
     "web": "www.sunsetagafay.com",
     "address_label": "Adresse",
-    "address_lines": ["Route d'Amizmiz, KM 47", "Agafay, Marrakech-Safi", "Maroc 42150"],
+    "address_lines": ["Lot Chaabat Ssi Laaroussi", "Douar Lamlih, Commune Agafay", "Cercle Loudaya, Marrakech-Safi", "Maroc 40000"],
     "directions_label": "Comment nous rejoindre",
     "directions": [
-      "47 km au sud de l'aéroport de Marrakech-Ménara",
+      "~30 km au sud-ouest de l'aéroport de Marrakech-Ménara",
       "Transferts privés disponibles sur demande",
-      "GPS : 31°22′N, 08°10′W"
+      "GPS : 31°26′39″N, 08°11′36″W"
     ]
   },
   "reserve": {
@@ -449,7 +442,7 @@
   },
   "suites_page": {
     "hero_eyebrow": "Les Chambres",
-    "hero_title": "Quatorze, aucune identique.",
+    "hero_title": "Suites & Hébergement",
     "hero_sub": "Chaque chambre réaménagée dans les murs existants de la kasbah. Linge Mtali, céramiques de Tameslouht. Toutes avec terrasse privée.",
     "amenities_label": "Toutes les chambres comprennent",
     "amenities": [
@@ -485,8 +478,19 @@
     "hero_eyebrow": "Événements Privés",
     "hero_title": "La kasbah, entièrement à vous.",
     "hero_sub": "Nous accueillons des rassemblements intimes — mariages, rassemblements privés et séminaires — pour des groupes qui comprennent que le cadre est essentiel.",
-    "enquire_cta": "Nous contacter pour un événement",
-    "enquire_sub": "Réponse sous 24 heures"
+    "form_eyebrow": "Demande d'événement",
+    "form_title": "Parlez-nous de votre événement.",
+    "form_lede": "Quelques détails suffisent — nous répondons sous 24 heures.",
+    "form_name": "Nom complet",
+    "form_email": "Adresse e-mail",
+    "form_phone": "Téléphone (optionnel)",
+    "form_event_type": "Type d'événement",
+    "form_event_date": "Date souhaitée",
+    "form_guests": "Nombre d'invités",
+    "form_message": "Décrivez votre projet",
+    "form_submit": "Envoyer la demande",
+    "form_sending": "Envoi en cours…",
+    "form_submitted": "Demande reçue. Nous vous répondrons sous 24 heures."
   },
   "transfers_page": {
     "hero_eyebrow": "Transferts",

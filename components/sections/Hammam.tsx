@@ -46,7 +46,7 @@ export function Hammam({ dict, lang }: { dict: HammamDict; lang: string }) {
         <div className="hammam-frame" style={{ width: '100%', aspectRatio: '3 / 5', position: 'relative', overflow: 'hidden' }}>
 
           <div aria-hidden="true" style={{ position: 'absolute', left: 18, bottom: 14, color: 'var(--paper)', fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.18em', opacity: 0.85, zIndex: 4 }}>
-            PLATE V · STEAM ROOM
+            PLATE V · QUIET HOURS
           </div>
         </div>
       </div>
