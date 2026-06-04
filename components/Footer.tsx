@@ -1,7 +1,9 @@
 import Link from 'next/link'
+import { connection } from 'next/server'
 import { GrainOverlay } from './shared'
 import { NewsletterForm } from './NewsletterForm'
 import { CONTACT_PHONE, CONTACT_EMAIL, CONTACT_WEB, contactPhoneHref, hasPhone, hasEmail, hasWeb } from '@/lib/contact'
+import { arePartiesEnabled } from '@/lib/db'
 
 interface FooterLink { label: string; href: string }
 
@@ -27,9 +29,7 @@ const base = (lang: string) => `/${lang}`
 function computeStayDates(lang: string): { arrival: string; departure: string } {
   const now = new Date()
   const arrival = new Date(now)
-  arrival.setDate(arrival.getDate() + 14)
-  while (arrival.getDay() !== 5) arrival.setDate(arrival.getDate() + 1)
-  const departure = new Date(arrival)
+  const departure = new Date(now)
   departure.setDate(departure.getDate() + 2)
 
   const locale = lang === 'fr' ? 'fr-FR' : 'en-GB'
@@ -47,8 +47,15 @@ function computeStayDates(lang: string): { arrival: string; departure: string } 
   return { arrival: fmt(arrival), departure: fmt(departure) }
 }
 
-export function Footer({ dict, lang }: FooterProps) {
+export async function Footer({ dict, lang }: FooterProps) {
+  // Opt the stay-date computation out of build-time prerendering so `new Date()`
+  // reflects the actual request time instead of being frozen at build.
+  await connection()
   const { arrival: arrivalVal, departure: departureVal } = computeStayDates(lang)
+  const partiesEnabled = await arePartiesEnabled()
+  const maisonLinks = partiesEnabled
+    ? dict.maison_links
+    : dict.maison_links.filter(l => l.href !== 'sunset-parties')
   return (
     <footer style={{ background: 'var(--ink)', color: 'var(--paper)', padding: 'clamp(80px,10vw,120px) var(--gutter) clamp(48px,6vw,56px)', position: 'relative' }}>
       <GrainOverlay opacity={0.18} blend="overlay" style={{ zIndex: 1 }} />
@@ -102,7 +109,7 @@ export function Footer({ dict, lang }: FooterProps) {
                   {dict.maison_label}
                 </div>
                 <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-                  {dict.maison_links.map(l => (
+                  {maisonLinks.map(l => (
                     <li key={l.label}>
                       <Link
                         href={l.href.startsWith('#') ? `${base(lang)}${l.href}` : `${base(lang)}/${l.href}`}

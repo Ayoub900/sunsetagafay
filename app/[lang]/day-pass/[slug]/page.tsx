@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getDictionary, hasLocale, type Locale } from '../../dictionaries'
 import { Photo, GrainOverlay } from '@/components/shared'
+import { Slideshow } from '@/components/Slideshow'
 import { getActiveDayPasses, getDayPassBySlug } from '@/lib/db'
 import { buildAlternates } from '@/lib/seo'
 import { DayPassBookingForm } from '../DayPassBookingForm'
@@ -59,7 +60,10 @@ export default async function DayPassDetailPage({ params }: { params: Promise<{ 
   const dp = dict.day_pass_page
 
   const cover = item.imageUrl || item.images?.[0] || undefined
-  const thumbs = (item.images && item.images.length > 0 ? item.images.slice(1, 4) : []).filter(Boolean)
+  const heroImage = (item as { heroImageUrl?: string }).heroImageUrl || cover
+  const galleryImages = (item.images ?? []).filter(Boolean)
+  // Body slideshow falls back to the cover photo when no gallery was uploaded.
+  const bodyImages = galleryImages.length ? galleryImages : (cover ? [cover] : [])
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -139,9 +143,9 @@ export default async function DayPassDetailPage({ params }: { params: Promise<{ 
       `}</style>
 
       <section className="page-hero">
-        {cover ? (
+        {heroImage ? (
           <img
-            src={cover}
+            src={heroImage}
             alt=""
             aria-hidden="true"
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
@@ -191,21 +195,12 @@ export default async function DayPassDetailPage({ params }: { params: Promise<{ 
 
           <div className="dp-grid">
             <div className="dp-gallery">
-              <div className="dp-cover">
-                {cover ? (
-                  <img src={cover} alt={name} loading="eager" />
-                ) : (
+              {bodyImages.length > 0 ? (
+                <Slideshow images={bodyImages} alt={name} aspectRatio="4/3" />
+              ) : (
+                <div className="dp-cover">
                   <Photo kind="sunset" alt={name} style={{ position: 'absolute', inset: 0 }} />
-                )}
-                <GrainOverlay opacity={0.16} blend="overlay" />
-              </div>
-              {thumbs.length > 0 && (
-                <div className="dp-thumbs">
-                  {thumbs.map((src, i) => (
-                    <div key={`${src}-${i}`} className="dp-thumb">
-                      <img src={src} alt="" loading="lazy" />
-                    </div>
-                  ))}
+                  <GrainOverlay opacity={0.16} blend="overlay" />
                 </div>
               )}
             </div>

@@ -9,9 +9,11 @@ interface Props {
   formId: string
   label?: string
   hint?: string
+  /** Form field name the chosen URL is submitted under. Defaults to "imageUrl". */
+  fieldName?: string
 }
 
-export function ImageUpload({ currentUrl, formId, label = 'Photograph', hint = 'Used on cards and detail pages' }: Props) {
+export function ImageUpload({ currentUrl, formId, label = 'Photograph', hint = 'Used on cards and detail pages', fieldName = 'imageUrl' }: Props) {
   const [preview, setPreview]       = useState<string>(currentUrl)
   const [uploading, setUploading]   = useState(false)
   const [dragOver, setDragOver]     = useState(false)
@@ -57,7 +59,7 @@ export function ImageUpload({ currentUrl, formId, label = 'Photograph', hint = '
       </div>
 
       {/* Hidden input that carries the URL into the server action form */}
-      <input type="hidden" name="imageUrl" form={formId} value={uploadedUrl} />
+      <input type="hidden" name={fieldName} form={formId} value={uploadedUrl} />
 
       {/* Drop zone */}
       <div

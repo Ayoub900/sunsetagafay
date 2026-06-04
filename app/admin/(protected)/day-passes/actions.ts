@@ -14,6 +14,7 @@ export async function createDayPass(formData: FormData) {
   await guard()
   const images = formData.getAll('images').map(String).filter(Boolean)
   const imageUrl = images[0] ?? String(formData.get('imageUrl') ?? '').trim()
+  const heroImageUrl = String(formData.get('heroImageUrl') ?? '').trim()
   await prisma.dayPass.create({
     data: {
       slug:     String(formData.get('slug')).trim(),
@@ -26,6 +27,7 @@ export async function createDayPass(formData: FormData) {
       hours:    String(formData.get('hours') ?? '').trim(),
       price:    String(formData.get('price') ?? '').trim(),
       currency: String(formData.get('currency') ?? '€').trim() || '€',
+      heroImageUrl,
       imageUrl,
       images,
       active:   formData.get('active') === 'on',
@@ -41,6 +43,7 @@ export async function updateDayPass(id: string, formData: FormData) {
   await guard()
   const images = formData.getAll('images').map(String).filter(Boolean)
   const imageUrl = images[0] ?? String(formData.get('imageUrl') ?? '').trim()
+  const heroImageUrl = String(formData.get('heroImageUrl') ?? '').trim()
   await prisma.dayPass.update({
     where: { id },
     data: {
@@ -54,6 +57,7 @@ export async function updateDayPass(id: string, formData: FormData) {
       hours:    String(formData.get('hours') ?? '').trim(),
       price:    String(formData.get('price') ?? '').trim(),
       currency: String(formData.get('currency') ?? '€').trim() || '€',
+      heroImageUrl,
       imageUrl,
       images,
       active:   formData.get('active') === 'on',

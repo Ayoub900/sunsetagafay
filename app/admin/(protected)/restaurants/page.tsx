@@ -5,6 +5,7 @@ import { AdminTopbar } from '@/components/admin/AdminTopbar'
 import { PageHead } from '@/components/admin/PageHead'
 import { RestaurantsTable } from './RestaurantsTable'
 import { GalleryUpload } from '@/components/admin/GalleryUpload'
+import { ImageUpload } from '@/components/admin/ImageUpload'
 import { RichTextEditor } from '@/components/admin/RichTextEditor'
 import { Field, FormSection, TextInput, TextArea, CheckboxField } from '@/components/admin/FormAtoms'
 import { T } from '@/components/admin/tokens'
@@ -87,13 +88,21 @@ export default async function RestaurantsPage({ searchParams }: { searchParams: 
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                <ImageUpload
+                  currentUrl={(editing as { heroImageUrl?: string } | null)?.heroImageUrl ?? ''}
+                  formId="restaurant-form"
+                  fieldName="heroImageUrl"
+                  label="Hero image"
+                  hint="Full-width banner at the top of the detail page. Falls back to the cover photo if left empty."
+                />
+
                 <div style={{ background: T.surface, border: `1px solid ${T.line}`, borderRadius: T.radius, boxShadow: T.shadow, padding: 20 }}>
                   <div style={{ marginBottom: 14 }}>
                     <h3 style={{ margin: '0 0 4px', fontFamily: 'var(--sans, system-ui)', fontWeight: 600, fontSize: 14, color: T.ink }}>
                       Photo gallery
                     </h3>
                     <p style={{ margin: 0, fontFamily: 'var(--sans, system-ui)', fontSize: 12.5, color: T.ink3 }}>
-                      First photo is the cover. Upload multiple — drag to reorder.
+                      Shown as a slideshow in the detail body. First photo is the cover used on listings — drag to reorder.
                     </p>
                   </div>
                   <GalleryUpload

@@ -14,6 +14,7 @@ export async function createSuite(formData: FormData) {
   await guard()
   const images = formData.getAll('images').map(String).filter(Boolean)
   const imageUrl = images[0] ?? String(formData.get('imageUrl') ?? '').trim()
+  const heroImageUrl = String(formData.get('heroImageUrl') ?? '').trim()
   await prisma.suite.create({
     data: {
       slug:      String(formData.get('slug')).trim(),
@@ -27,6 +28,7 @@ export async function createSuite(formData: FormData) {
       view:      String(formData.get('view')).trim(),
       rate:      String(formData.get('rate')).trim(),
       imageKind: String(formData.get('imageKind')).trim() || 'sunset',
+      heroImageUrl,
       imageUrl,
       images,
       active:    formData.get('active') === 'on',
@@ -42,6 +44,7 @@ export async function updateSuite(id: string, formData: FormData) {
   await guard()
   const images = formData.getAll('images').map(String).filter(Boolean)
   const imageUrl = images[0] ?? String(formData.get('imageUrl') ?? '').trim()
+  const heroImageUrl = String(formData.get('heroImageUrl') ?? '').trim()
   await prisma.suite.update({
     where: { id },
     data: {
@@ -56,6 +59,7 @@ export async function updateSuite(id: string, formData: FormData) {
       view:      String(formData.get('view')).trim(),
       rate:      String(formData.get('rate')).trim(),
       imageKind: String(formData.get('imageKind')).trim() || 'sunset',
+      heroImageUrl,
       imageUrl,
       images,
       active:    formData.get('active') === 'on',

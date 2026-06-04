@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getDictionary, hasLocale, type Locale } from '../../dictionaries'
 import { Photo, GrainOverlay } from '@/components/shared'
+import { Slideshow } from '@/components/Slideshow'
 import { getActiveRestaurants, getRestaurantBySlug } from '@/lib/db'
 import { buildAlternates } from '@/lib/seo'
 
@@ -61,9 +62,10 @@ export default async function RestaurantDetailPage({ params }: { params: Promise
   const copy = isFr ? item.copyFr : item.copyEn
 
   const coverImage = item.imageUrl || undefined
-  const galleryImages = item.images ?? []
-  const thumb1 = galleryImages[1] || undefined
-  const thumb2 = galleryImages[2] || undefined
+  const heroImage = (item as { heroImageUrl?: string }).heroImageUrl || coverImage
+  const galleryImages = (item.images ?? []).filter(Boolean)
+  // Body slideshow falls back to the cover photo when no gallery was uploaded.
+  const bodyImages = galleryImages.length ? galleryImages : (coverImage ? [coverImage] : [])
 
   const restaurantSchema = {
     '@context': 'https://schema.org',
@@ -94,7 +96,7 @@ export default async function RestaurantDetailPage({ params }: { params: Promise
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
     <div style={{ background: 'var(--paper)' }}>
       <section className="page-hero">
-        <Photo kind="aperitif" src={coverImage} alt="" style={{ position: 'absolute', inset: 0 }} grain={false} priority />
+        <Photo kind="aperitif" src={heroImage} alt="" style={{ position: 'absolute', inset: 0 }} grain={false} priority />
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 2, background: 'linear-gradient(to bottom, rgba(20,12,8,0.55) 0%, rgba(20,12,8,0.4) 60%, rgba(20,12,8,0.8) 100%)' }} />
         <GrainOverlay opacity={0.4} blend="overlay" style={{ zIndex: 3 }} />
         <div className="page-hero-content" style={{ zIndex: 4 }}>
@@ -128,22 +130,12 @@ export default async function RestaurantDetailPage({ params }: { params: Promise
             </div>
           </div>
 
-          <div style={{ position: 'sticky', top: 'calc(var(--nav-h) + 24px)', display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5' }}>
-              <Photo kind="palms" src={coverImage} alt={name} style={{ position: 'absolute', inset: 0 }} />
-            </div>
-            {(thumb1 || thumb2) && (
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
-                {thumb1 && (
-                  <div style={{ position: 'relative', aspectRatio: '1/1' }}>
-                    <img src={thumb1} alt="" loading="lazy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </div>
-                )}
-                {thumb2 && (
-                  <div style={{ position: 'relative', aspectRatio: '1/1' }}>
-                    <img src={thumb2} alt="" loading="lazy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </div>
-                )}
+          <div style={{ position: 'sticky', top: 'calc(var(--nav-h) + 24px)' }}>
+            {bodyImages.length > 0 ? (
+              <Slideshow images={bodyImages} alt={name} />
+            ) : (
+              <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5' }}>
+                <Photo kind="palms" src={coverImage} alt={name} style={{ position: 'absolute', inset: 0 }} />
               </div>
             )}
           </div>

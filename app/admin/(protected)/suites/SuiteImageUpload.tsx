@@ -7,9 +7,11 @@ import { Icon } from '@/components/admin/icons'
 interface Props {
   currentUrl: string
   formId: string
+  /** Form field name the chosen URL is submitted under. Defaults to "imageUrl". */
+  fieldName?: string
 }
 
-export function SuiteImageUpload({ currentUrl, formId }: Props) {
+export function SuiteImageUpload({ currentUrl, formId, fieldName = 'imageUrl' }: Props) {
   const [preview, setPreview] = useState<string>(currentUrl)
   const [uploading, setUploading] = useState(false)
   const [dragOver, setDragOver] = useState(false)
@@ -44,7 +46,7 @@ export function SuiteImageUpload({ currentUrl, formId }: Props) {
   return (
     <>
       {/* Hidden input that carries the URL into the form */}
-      <input type="hidden" name="imageUrl" form={formId} value={uploadedUrl} />
+      <input type="hidden" name={fieldName} form={formId} value={uploadedUrl} />
 
       {/* Drop zone */}
       <div

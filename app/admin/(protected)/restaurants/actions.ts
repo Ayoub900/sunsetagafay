@@ -14,6 +14,7 @@ export async function createRestaurant(formData: FormData) {
   await guard()
   const images = formData.getAll('images').map(String).filter(Boolean)
   const imageUrl = images[0] ?? String(formData.get('imageUrl') ?? '').trim()
+  const heroImageUrl = String(formData.get('heroImageUrl') ?? '').trim()
   await prisma.restaurant.create({
     data: {
       slug:     String(formData.get('slug')).trim(),
@@ -24,6 +25,7 @@ export async function createRestaurant(formData: FormData) {
       copyEn:   String(formData.get('copyEn')).trim(),
       copyFr:   String(formData.get('copyFr')).trim(),
       hours:    String(formData.get('hours')).trim(),
+      heroImageUrl,
       imageUrl,
       images,
       active:   formData.get('active') === 'on',
@@ -39,6 +41,7 @@ export async function updateRestaurant(id: string, formData: FormData) {
   await guard()
   const images = formData.getAll('images').map(String).filter(Boolean)
   const imageUrl = images[0] ?? String(formData.get('imageUrl') ?? '').trim()
+  const heroImageUrl = String(formData.get('heroImageUrl') ?? '').trim()
   await prisma.restaurant.update({
     where: { id },
     data: {
@@ -50,6 +53,7 @@ export async function updateRestaurant(id: string, formData: FormData) {
       copyEn:   String(formData.get('copyEn')).trim(),
       copyFr:   String(formData.get('copyFr')).trim(),
       hours:    String(formData.get('hours')).trim(),
+      heroImageUrl,
       imageUrl,
       images,
       active:   formData.get('active') === 'on',

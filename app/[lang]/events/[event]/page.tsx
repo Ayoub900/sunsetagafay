@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getDictionary, hasLocale, type Locale } from '../../dictionaries'
 import { Photo, GrainOverlay } from '@/components/shared'
+import { Slideshow } from '@/components/Slideshow'
 import { getActiveEvents, getEventBySlug } from '@/lib/db'
 import { buildAlternates } from '@/lib/seo'
 
@@ -58,9 +59,10 @@ export default async function EventDetailPage({ params }: { params: Promise<{ la
   const copy = isFr ? item.copyFr : item.copyEn
 
   const coverImage = item.imageUrl || undefined
-  const galleryImages = item.images ?? []
-  const thumb1 = galleryImages[1] || undefined
-  const thumb2 = galleryImages[2] || undefined
+  const heroImage = (item as { heroImageUrl?: string }).heroImageUrl || coverImage
+  const galleryImages = (item.images ?? []).filter(Boolean)
+  // Body slideshow falls back to the cover photo when no gallery was uploaded.
+  const bodyImages = galleryImages.length ? galleryImages : (coverImage ? [coverImage] : [])
 
   const plainCopy = copy.replace(/<[^>]+>/g, '').slice(0, 200)
   const eventSchema = {
@@ -101,7 +103,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ la
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
     <div style={{ background: 'var(--paper)' }}>
       <section className="page-hero">
-        <Photo kind="courtyard" src={coverImage} alt="" style={{ position: 'absolute', inset: 0 }} grain={false} priority />
+        <Photo kind="courtyard" src={heroImage} alt="" style={{ position: 'absolute', inset: 0 }} grain={false} priority />
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 2, background: 'linear-gradient(to bottom, rgba(20,12,8,0.6) 0%, rgba(20,12,8,0.45) 60%, rgba(20,12,8,0.8) 100%)' }} />
         <GrainOverlay opacity={0.4} blend="overlay" style={{ zIndex: 3 }} />
         <div className="page-hero-content" style={{ zIndex: 4 }}>
@@ -133,7 +135,9 @@ export default async function EventDetailPage({ params }: { params: Promise<{ la
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginTop: 36, paddingTop: 28, borderTop: '1px solid rgba(31,26,20,0.18)' }}>
               {[
                 [isFr ? 'Capacité' : 'Capacity', item.capacity],
-                [isFr ? 'Lieu' : 'Venue', isFr ? 'Kasbah complète' : 'Full kasbah'],
+                [isFr ? 'Lieu' : 'Venue', isFr
+                  ? ((item as { venueFr?: string }).venueFr || 'Kasbah complète')
+                  : ((item as { venueEn?: string }).venueEn || 'Full kasbah')],
               ].map(([k, v]) => (
                 <div key={k}>
                   <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 8 }}>{k}</div>
@@ -150,22 +154,12 @@ export default async function EventDetailPage({ params }: { params: Promise<{ la
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5' }}>
-              <Photo kind="courtyard" src={coverImage} alt={name} style={{ position: 'absolute', inset: 0 }} />
-            </div>
-            {(thumb1 || thumb2) && (
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
-                {thumb1 && (
-                  <div style={{ position: 'relative', aspectRatio: '1/1' }}>
-                    <img src={thumb1} alt="" loading="lazy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </div>
-                )}
-                {thumb2 && (
-                  <div style={{ position: 'relative', aspectRatio: '1/1' }}>
-                    <img src={thumb2} alt="" loading="lazy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </div>
-                )}
+          <div>
+            {bodyImages.length > 0 ? (
+              <Slideshow images={bodyImages} alt={name} />
+            ) : (
+              <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5' }}>
+                <Photo kind="courtyard" src={coverImage} alt={name} style={{ position: 'absolute', inset: 0 }} />
               </div>
             )}
           </div>

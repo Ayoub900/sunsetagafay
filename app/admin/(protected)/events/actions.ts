@@ -14,6 +14,7 @@ export async function createEvent(formData: FormData) {
   await guard()
   const images = formData.getAll('images').map(String).filter(Boolean)
   const imageUrl = images[0] ?? String(formData.get('imageUrl') ?? '').trim()
+  const heroImageUrl = String(formData.get('heroImageUrl') ?? '').trim()
   await prisma.event.create({
     data: {
       slug:     String(formData.get('slug')).trim(),
@@ -24,6 +25,9 @@ export async function createEvent(formData: FormData) {
       copyEn:   String(formData.get('copyEn')).trim(),
       copyFr:   String(formData.get('copyFr')).trim(),
       capacity: String(formData.get('capacity')).trim(),
+      venueEn:  String(formData.get('venueEn') ?? '').trim(),
+      venueFr:  String(formData.get('venueFr') ?? '').trim(),
+      heroImageUrl,
       imageUrl,
       images,
       active:   formData.get('active') === 'on',
@@ -39,6 +43,7 @@ export async function updateEvent(id: string, formData: FormData) {
   await guard()
   const images = formData.getAll('images').map(String).filter(Boolean)
   const imageUrl = images[0] ?? String(formData.get('imageUrl') ?? '').trim()
+  const heroImageUrl = String(formData.get('heroImageUrl') ?? '').trim()
   await prisma.event.update({
     where: { id },
     data: {
@@ -50,6 +55,9 @@ export async function updateEvent(id: string, formData: FormData) {
       copyEn:   String(formData.get('copyEn')).trim(),
       copyFr:   String(formData.get('copyFr')).trim(),
       capacity: String(formData.get('capacity')).trim(),
+      venueEn:  String(formData.get('venueEn') ?? '').trim(),
+      venueFr:  String(formData.get('venueFr') ?? '').trim(),
+      heroImageUrl,
       imageUrl,
       images,
       active:   formData.get('active') === 'on',

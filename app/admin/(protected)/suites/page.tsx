@@ -7,6 +7,7 @@ import { SuitesTable } from './SuitesTable'
 import { T } from '@/components/admin/tokens'
 import { Field, FormSection, TextInput, TextArea, SelectInput, CheckboxField } from '@/components/admin/FormAtoms'
 import { SuiteGalleryUpload } from './SuiteGalleryUpload'
+import { SuiteImageUpload } from './SuiteImageUpload'
 import { RichTextEditor } from '@/components/admin/RichTextEditor'
 
 const imageKinds = ['sunset', 'palms', 'courtyard', 'aperitif', 'pool']
@@ -168,6 +169,26 @@ export default async function SuitesPage({
               {/* ── Sidebar ── */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
 
+                {/* Hero image card */}
+                <div style={{
+                  background: T.surface, border: `1px solid ${T.line}`,
+                  borderRadius: T.radius, boxShadow: T.shadow, padding: 20,
+                }}>
+                  <div style={{ marginBottom: 14 }}>
+                    <h3 style={{ margin: '0 0 4px', fontFamily: 'var(--sans, system-ui)', fontWeight: 600, fontSize: 14, color: T.ink }}>
+                      Hero image
+                    </h3>
+                    <p style={{ margin: 0, fontFamily: 'var(--sans, system-ui)', fontSize: 12.5, color: T.ink3 }}>
+                      Full-width banner at the top of the detail page. Falls back to the cover photo if left empty.
+                    </p>
+                  </div>
+                  <SuiteImageUpload
+                    currentUrl={(editing as { heroImageUrl?: string } | null)?.heroImageUrl ?? ''}
+                    formId="suite-form"
+                    fieldName="heroImageUrl"
+                  />
+                </div>
+
                 {/* Gallery upload card */}
                 <div style={{
                   background: T.surface, border: `1px solid ${T.line}`,
@@ -178,7 +199,7 @@ export default async function SuitesPage({
                       Photo gallery
                     </h3>
                     <p style={{ margin: 0, fontFamily: 'var(--sans, system-ui)', fontSize: 12.5, color: T.ink3 }}>
-                      First photo is the cover. Upload multiple — drag to reorder.
+                      Shown as a slideshow in the detail body. First photo is the cover used on listings — drag to reorder.
                     </p>
                   </div>
                   <SuiteGalleryUpload

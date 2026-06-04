@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getDictionary, hasLocale, type Locale } from '../../dictionaries'
 import { Photo, GrainOverlay } from '@/components/shared'
+import { Slideshow } from '@/components/Slideshow'
 import { getActiveSuites, getSuiteBySlug } from '@/lib/db'
 import { buildAlternates } from '@/lib/seo'
 
@@ -62,9 +63,10 @@ export default async function SuiteDetailPage({ params }: { params: Promise<{ la
     : (suite as { descriptionEn?: string }).descriptionEn || ''
 
   const coverImage = suite.imageUrl || undefined
-  const galleryImages = (suite as { images?: string[] }).images ?? []
-  const thumb1 = galleryImages[1] || undefined
-  const thumb2 = galleryImages[2] || undefined
+  const heroImage = (suite as { heroImageUrl?: string }).heroImageUrl || coverImage
+  const galleryImages = ((suite as { images?: string[] }).images ?? []).filter(Boolean)
+  // Body slideshow falls back to the cover photo when no gallery was uploaded.
+  const bodyImages = galleryImages.length ? galleryImages : (coverImage ? [coverImage] : [])
   const plainBrief = brief.replace(/<[^>]+>/g, '').slice(0, 160)
 
   const hotelRoomSchema = {
@@ -97,7 +99,7 @@ export default async function SuiteDetailPage({ params }: { params: Promise<{ la
       <section className="page-hero">
         <Photo
           kind={(suite.imageKind as 'sunset' | 'palms' | 'pool' | 'courtyard' | 'aperitif') || 'palms'}
-          src={coverImage}
+          src={heroImage}
           alt=""
           style={{ position: 'absolute', inset: 0 }}
           grain={false}
@@ -119,26 +121,16 @@ export default async function SuiteDetailPage({ params }: { params: Promise<{ la
         <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto', display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 'clamp(40px,6vw,96px)', alignItems: 'start' }} className="table-article">
           {/* Photo column */}
           <div style={{ position: 'sticky', top: 'calc(var(--nav-h) + 24px)' }}>
-            <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5' }}>
-              <Photo
-                kind={(suite.imageKind as 'sunset' | 'palms' | 'pool' | 'courtyard' | 'aperitif') || 'sunset'}
-                src={coverImage}
-                alt={name}
-                style={{ position: 'absolute', inset: 0 }}
-              />
-            </div>
-            {(thumb1 || thumb2) && (
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, marginTop: 2 }}>
-                {thumb1 && (
-                  <div style={{ position: 'relative', aspectRatio: '1/1' }}>
-                    <img src={thumb1} alt="" loading="lazy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </div>
-                )}
-                {thumb2 && (
-                  <div style={{ position: 'relative', aspectRatio: '1/1' }}>
-                    <img src={thumb2} alt="" loading="lazy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </div>
-                )}
+            {bodyImages.length > 0 ? (
+              <Slideshow images={bodyImages} alt={name} />
+            ) : (
+              <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5' }}>
+                <Photo
+                  kind={(suite.imageKind as 'sunset' | 'palms' | 'pool' | 'courtyard' | 'aperitif') || 'sunset'}
+                  src={coverImage}
+                  alt={name}
+                  style={{ position: 'absolute', inset: 0 }}
+                />
               </div>
             )}
           </div>
