@@ -191,7 +191,7 @@ export async function Footer({ dict, lang }: FooterProps) {
         )}
 
         {dict.tagline && (
-          <div style={{
+          <div translate="no" className="notranslate" style={{
             marginTop: 'clamp(32px,4vw,48px)',
             fontFamily: 'var(--sans)',
             fontSize: 11,
@@ -225,7 +225,7 @@ export async function Footer({ dict, lang }: FooterProps) {
           </div>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--serif)', fontWeight: 400, fontSize: 14, letterSpacing: '0.42em', textTransform: 'uppercase', justifySelf: 'center' }}>
             <img src="/logo_emblem_gold.png" alt="" aria-hidden="true" style={{ height: 40, width: 'auto', display: 'block' }} />
-            Sunset Agafay
+            <span translate="no" className="notranslate">Sunset Agafay</span>
           </div>
           <div style={{ justifySelf: 'end', fontFamily: 'var(--sans)', fontSize: 10.5, letterSpacing: '0.26em', textTransform: 'uppercase', color: 'rgba(242,232,213,0.55)', display: 'flex', gap: 24, flexWrap: 'wrap' }}>
             <Link href={`${base(lang)}/privacy`} className="footer-link">{dict.privacy}</Link>

@@ -37,9 +37,11 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
           </h1>
           <div style={{ fontFamily: 'var(--sans)', fontSize: 'clamp(13px,1.4vw,15px)', lineHeight: 1.8, color: 'var(--ink-soft)' }}>
             <p>
-              {isFr
-                ? 'Les réservations à Sunset Agafay sont confirmées par notre équipe dans un délai de 24 heures. Un acompte peut être demandé pour garantir votre réservation. Les conditions d\'annulation sont communiquées au moment de la confirmation.'
-                : 'Reservations at Sunset Agafay are confirmed by our team within 24 hours. A deposit may be requested to secure your booking. Cancellation conditions are communicated at the time of confirmation.'}
+              {isFr ? (
+                <>Les réservations à <span translate="no" className="notranslate">Sunset Agafay</span> sont confirmées par notre équipe dans un délai de 24 heures. Un acompte peut être demandé pour garantir votre réservation. Les conditions d'annulation sont communiquées au moment de la confirmation.</>
+              ) : (
+                <>Reservations at <span translate="no" className="notranslate">Sunset Agafay</span> are confirmed by our team within 24 hours. A deposit may be requested to secure your booking. Cancellation conditions are communicated at the time of confirmation.</>
+              )}
             </p>
             <p>
               {isFr

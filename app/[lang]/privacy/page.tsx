@@ -38,9 +38,11 @@ export default async function PrivacyPage({ params }: { params: Promise<{ lang: 
           </h1>
           <div style={{ fontFamily: 'var(--sans)', fontSize: 'clamp(13px,1.4vw,15px)', lineHeight: 1.8, color: 'var(--ink-soft)' }}>
             <p>
-              {isFr
-                ? 'Sunset Agafay respecte votre vie privée. Les données que vous nous transmettez (nom, adresse e-mail, numéro de téléphone) via notre formulaire de contact ou de réservation sont utilisées uniquement pour traiter votre demande et vous répondre.'
-                : 'Sunset Agafay respects your privacy. Personal data submitted through our contact or reservation forms (name, email address, phone number) is used solely to process your enquiry and respond to you.'}
+              {isFr ? (
+                <><span translate="no" className="notranslate">Sunset Agafay</span> respecte votre vie privée. Les données que vous nous transmettez (nom, adresse e-mail, numéro de téléphone) via notre formulaire de contact ou de réservation sont utilisées uniquement pour traiter votre demande et vous répondre.</>
+              ) : (
+                <><span translate="no" className="notranslate">Sunset Agafay</span> respects your privacy. Personal data submitted through our contact or reservation forms (name, email address, phone number) is used solely to process your enquiry and respond to you.</>
+              )}
             </p>
             <p>
               {isFr

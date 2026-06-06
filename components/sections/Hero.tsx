@@ -50,7 +50,7 @@ export function HeroCourtyard({ dict, lang }: { dict: HeroDict; lang: string }) 
               letterSpacing: '-0.024em',
               margin: 0,
             }}>
-              {dict.headline}
+              <span translate="no" className="notranslate">{dict.headline}</span>
             </h1>
             {dict.headline_2 && (
               <div style={{

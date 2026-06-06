@@ -181,7 +181,7 @@ export function Nav({ dict, lang, items }: NavProps) {
               className="nav-wordmark-icon"
               style={{ height: 48, width: 'auto', display: 'block' }}
             />
-            <span>Sunset Agafay</span>
+            <span translate="no" className="notranslate">Sunset Agafay</span>
           </Link>
 
           <Link href={`${base(lang)}/reserve`} className="nav-reserve-btn" aria-label={dict.reserve}>

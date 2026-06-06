@@ -16,7 +16,7 @@ export function Practical({ dict }: { dict: PracticalDict }) {
   ].filter((l): l is string => Boolean(l))
 
   const cols = [
-    { label: dict.locale_label,  h: dict.locale_h, lines: dict.locale_lines },
+    { label: dict.locale_label,  h: <span translate="no" className="notranslate">{dict.locale_h}</span>, lines: dict.locale_lines },
     { label: dict.coords_label,  h: dict.coords_h, lines: dict.coords_lines },
     { label: dict.hours_label,   h: dict.hours_h,  lines: dict.hours_lines  },
     ...((CONTACT_PHONE || CONTACT_EMAIL)

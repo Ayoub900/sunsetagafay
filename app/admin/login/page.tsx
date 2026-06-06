@@ -54,7 +54,7 @@ export default async function AdminLoginPage() {
               })}
             </svg>
           </div>
-          <div style={{ color: '#1F1A14', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase' }}>
+          <div translate="no" className="notranslate" style={{ color: '#1F1A14', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase' }}>
             Sunset Agafay
           </div>
           <div style={{ color: 'rgba(31,26,20,0.4)', fontSize: 9, letterSpacing: '0.25em', textTransform: 'uppercase', marginTop: 4 }}>

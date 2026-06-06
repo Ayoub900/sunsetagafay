@@ -28,7 +28,7 @@ model Suite {
   view      String
   rate      String
   imageKind String   @default("sunset")
-  heroImageUrl String @default("")
+  heroImageUrl String? @default("")
   imageUrl  String   @default("")
   images    String[] @default([])
   active    Boolean  @default(true)
@@ -47,7 +47,7 @@ model Restaurant {
   copyEn    String
   copyFr    String
   hours     String
-  heroImageUrl String @default("")
+  heroImageUrl String? @default("")
   imageUrl  String   @default("")
   images    String[] @default([])
   active    Boolean  @default(true)
@@ -82,9 +82,9 @@ model Event {
   copyEn    String
   copyFr    String
   capacity  String
-  venueEn   String   @default("Full kasbah")
-  venueFr   String   @default("Kasbah complète")
-  heroImageUrl String @default("")
+  venueEn   String?  @default("Full kasbah")
+  venueFr   String?  @default("Kasbah complète")
+  heroImageUrl String? @default("")
   imageUrl  String   @default("")
   images    String[] @default([])
   active    Boolean  @default(true)
@@ -124,7 +124,7 @@ model DayPass {
   hours     String   @default("")
   price     String   @default("")
   currency  String   @default("€")
-  heroImageUrl String @default("")
+  heroImageUrl String? @default("")
   imageUrl  String   @default("")
   images    String[] @default([])
   active    Boolean  @default(true)

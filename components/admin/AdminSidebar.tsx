@@ -73,7 +73,7 @@ export function AdminSidebar() {
           <div style={{
             fontFamily: 'var(--serif, Georgia, serif)', fontWeight: 500, fontSize: 15,
             color: T.ink, letterSpacing: '0.02em',
-          }}>Sunset Agafay</div>
+          }} translate="no" className="notranslate">Sunset Agafay</div>
           <div style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 11.5, color: T.ink3 }}>
             Back of house
           </div>
