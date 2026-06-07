@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# raw/source media kept out of the deploy (originals before web encoding)
+/media-src
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

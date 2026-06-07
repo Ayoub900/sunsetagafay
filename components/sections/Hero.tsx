@@ -1,4 +1,5 @@
 import { GrainOverlay } from '../shared'
+import { HeroVideo } from './HeroVideo'
 import Link from 'next/link'
 
 interface HeroDict {
@@ -20,6 +21,10 @@ export function HeroCourtyard({ dict, lang }: { dict: HeroDict; lang: string }) 
         color: 'var(--paper)',
       }}
     >
+
+      {/* Background video — muted/looped autoplay. The .photo-sunset gradient
+          stays behind as a fallback while it buffers or if playback is blocked. */}
+      <HeroVideo />
 
       <div className="halation" aria-hidden="true" style={{ zIndex: 1 }} />
       <GrainOverlay opacity={0.48} blend="overlay" style={{ zIndex: 2 }} />
