@@ -2,11 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   experimental: {
-    // Inline CSS into <head> as <style> instead of a render-blocking <link>.
-    // Removes the critical-path CSS request that was delaying LCP. Our global
-    // stylesheet is small (~10 KiB transferred), so the loss of separate CSS
-    // caching is an easy trade for faster first paint.
-    inlineCss: true,
+    // Keep CSS as a separate file, NOT inlined. Measured on this site: inlining
+    // the ~30 KB stylesheet into <head> bloated the HTML document enough that it
+    // delayed the text LCP more than the saved request helped (simulated LCP
+    // ~4.0s inlined vs ~3.8s external). The external stylesheet downloads in
+    // parallel and is cacheable, so leave inlining off.
+    inlineCss: false,
   },
 };
 

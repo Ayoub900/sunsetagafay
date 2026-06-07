@@ -22,7 +22,7 @@ export function HeroCourtyard({ dict, lang }: { dict: HeroDict; lang: string }) 
       }}
     >
       {/* Prioritise the poster — it's the LCP element. React hoists this to <head>. */}
-      <link rel="preload" as="image" href="/hero-poster.jpg" fetchPriority="high" />
+      <link rel="preload" as="image" href="/hero-poster.webp" fetchPriority="high" />
 
       {/* Background video — muted/looped autoplay. The .photo-sunset gradient
           stays behind as a fallback while it buffers or if playback is blocked. */}
