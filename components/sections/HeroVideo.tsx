@@ -21,6 +21,8 @@ export function HeroVideo() {
     video.defaultMuted = true
 
     const tryPlay = () => {
+      // Switch from preload="none" to actually loading now, then play.
+      video.preload = 'auto'
       const p = video.play()
       if (p && typeof p.catch === 'function') {
         p.catch(() => {
@@ -29,21 +31,38 @@ export function HeroVideo() {
       }
     }
 
-    tryPlay()
+    // Defer the (heavy) video download until the page has painted and gone
+    // idle, so the 11MB+ file never competes with the LCP poster on slow links.
+    let idleId: number | undefined
+    const start = () => {
+      const ric = (window as Window & {
+        requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number
+      }).requestIdleCallback
+      if (ric) idleId = ric(tryPlay, { timeout: 3000 })
+      else idleId = window.setTimeout(tryPlay, 1200)
+    }
+
+    if (document.readyState === 'complete') start()
+    else window.addEventListener('load', start, { once: true })
+
     // Retry once metadata is in, in case the first attempt fired too early.
     video.addEventListener('loadeddata', tryPlay)
-    return () => video.removeEventListener('loadeddata', tryPlay)
+    return () => {
+      window.removeEventListener('load', start)
+      video.removeEventListener('loadeddata', tryPlay)
+      const cic = (window as Window & { cancelIdleCallback?: (id: number) => void }).cancelIdleCallback
+      if (idleId !== undefined) cic ? cic(idleId) : window.clearTimeout(idleId)
+    }
   }, [])
 
   return (
     <video
       ref={ref}
       aria-hidden="true"
-      autoPlay
       loop
       muted
       playsInline
-      preload="auto"
+      preload="none"
       poster="/hero-poster.jpg"
       style={{
         position: 'absolute', inset: 0, zIndex: 0,
