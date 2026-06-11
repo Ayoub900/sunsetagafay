@@ -175,11 +175,16 @@ export function Nav({ dict, lang, items }: NavProps) {
 
           <Link href={base(lang)} className="nav-wordmark" aria-label="Sunset Agafay — Home">
             <img
-              src={scrolled ? '/logo_emblem_black.png' : '/logo_emblem_white.png'}
+              src="/logo_emblem_white.png"
               alt=""
               aria-hidden="true"
-              className="nav-wordmark-icon"
-              style={{ height: 48, width: 'auto', display: 'block' }}
+              className="nav-wordmark-icon nav-wordmark-icon--light"
+            />
+            <img
+              src="/logo_emblem_black.png"
+              alt=""
+              aria-hidden="true"
+              className="nav-wordmark-icon nav-wordmark-icon--dark"
             />
             <span translate="no" className="notranslate">Sunset Agafay</span>
           </Link>

@@ -45,8 +45,11 @@ export default async function EventsPage({ params }: { params: Promise<{ lang: s
         name:     isFr ? e.nameFr : e.nameEn,
         lede:     isFr ? e.ledeFr : e.ledeEn,
         capacity: e.capacity,
+        venue:    isFr
+          ? ((e as { venueFr?: string }).venueFr || 'Kasbah complète')
+          : ((e as { venueEn?: string }).venueEn || 'Full kasbah'),
       }))
-    : dict.events_section.types.map((t: { name: string; lede: string; capacity: string }) => ({ ...t, slug: undefined as string | undefined }))
+    : dict.events_section.types.map((t: { name: string; lede: string; capacity: string }) => ({ ...t, slug: undefined as string | undefined, venue: isFr ? 'Kasbah complète' : 'Full kasbah' }))
   const es = { ...dict.events_section, types: eventTypes }
 
   return (
@@ -119,6 +122,12 @@ export default async function EventsPage({ params }: { params: Promise<{ lang: s
                   </div>
                   <div style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(16px,1.8vw,20px)', color: 'var(--ink)' }}>
                     {type.capacity}
+                  </div>
+                  <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--ink-soft)', margin: '16px 0 6px' }}>
+                    {lang === 'fr' ? 'Lieu' : 'Venue'}
+                  </div>
+                  <div style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(16px,1.8vw,20px)', color: 'var(--ink)' }}>
+                    {type.venue}
                   </div>
                 </div>
               </article>

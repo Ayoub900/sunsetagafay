@@ -299,7 +299,22 @@ img, video { max-width: 100%; display: block; }
   text-decoration: none;
   color: inherit;
 }
-.nav-wordmark-icon { transition: opacity 400ms; }
+.nav-wordmark-icon { transition: opacity 400ms; height: 48px; width: auto; display: block; }
+/* Logo swaps with nav tone: white emblem over dark (top), black emblem on solid. */
+.nav-wordmark-icon--dark { display: none; }
+.nav-root.scrolled .nav-wordmark-icon--light { display: none; }
+.nav-root.scrolled .nav-wordmark-icon--dark  { display: block; }
+
+/* Pages with a light background and no hero opt into a solid nav from the top
+   via [data-solid-nav], so the otherwise-white nav stays legible. */
+body:has([data-solid-nav]) .nav-root.top {
+  background: rgba(242,232,213,0.96);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 1px 0 rgba(31,26,20,0.12);
+  color: var(--ink);
+}
+body:has([data-solid-nav]) .nav-root.top .nav-wordmark-icon--light { display: none; }
+body:has([data-solid-nav]) .nav-root.top .nav-wordmark-icon--dark  { display: block; }
 
 .nav-lang {
   display: inline-flex;

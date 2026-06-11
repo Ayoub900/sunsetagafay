@@ -47,8 +47,10 @@ export default async function ExperiencesPage({ params }: { params: Promise<{ la
         when: e.when,
         who:  e.who,
         lede: isFr ? e.ledeFr : e.ledeEn,
+        image: e.imageUrl || undefined,
       }))
     : dict.experiences
+  const kindMap = ['sunset', 'courtyard', 'palms', 'pool', 'aperitif'] as const
   const hammam = dbTreatments.length > 0
     ? {
         ...dict.hammam_section,
@@ -88,7 +90,7 @@ export default async function ExperiencesPage({ params }: { params: Promise<{ la
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 480px), 1fr))', gap: 'clamp(24px,4vw,48px)' }}>
-            {experiences.map(exp => (
+            {experiences.map((exp, i) => (
               <article
                 key={exp.n}
                 style={{
@@ -98,6 +100,14 @@ export default async function ExperiencesPage({ params }: { params: Promise<{ la
                   position: 'relative',
                 }}
               >
+                <div style={{
+                  margin: 'calc(-1 * clamp(28px,3.5vw,44px)) calc(-1 * clamp(28px,3.5vw,44px)) clamp(24px,3vw,32px)',
+                  position: 'relative',
+                  aspectRatio: '16 / 10',
+                  overflow: 'hidden',
+                }}>
+                  <Photo kind={kindMap[i % kindMap.length]} src={(exp as { image?: string }).image} alt={exp.name} style={{ position: 'absolute', inset: 0 }} />
+                </div>
                 <div style={{ fontFamily: 'var(--sans)', fontSize: 10, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--sienna)', marginBottom: 18 }}>
                   № {exp.n}
                 </div>
