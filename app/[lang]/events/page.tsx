@@ -53,7 +53,7 @@ export default async function EventsPage({ params }: { params: Promise<{ lang: s
     <div style={{ background: 'var(--paper)' }}>
       {/* Hero */}
       <section className="page-hero">
-        <Photo kind="courtyard" alt="" style={{ position: 'absolute', inset: 0 }} grain={false} priority />
+        <Photo kind="courtyard" src="/event-pool-tables.webp" alt="" style={{ position: 'absolute', inset: 0 }} grain={false} priority />
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 2, background: 'linear-gradient(to bottom, rgba(20,12,8,0.6) 0%, rgba(20,12,8,0.45) 60%, rgba(20,12,8,0.8) 100%)' }} />
         <GrainOverlay opacity={0.4} blend="overlay" style={{ zIndex: 3 }} />
         <div className="page-hero-content" style={{ zIndex: 4 }}>
@@ -131,7 +131,7 @@ export default async function EventsPage({ params }: { params: Promise<{ lang: s
 
       {/* Photo break */}
       <section style={{ position: 'relative', height: 'clamp(300px,40vw,540px)', overflow: 'hidden' }}>
-        <Photo kind="palms" alt="Kasbah courtyard at sunset, Agafay desert" style={{ position: 'absolute', inset: 0 }} grain={false} />
+        <Photo kind="palms" src="/proposal-sunset.webp" alt="Kasbah courtyard at sunset, Agafay desert" style={{ position: 'absolute', inset: 0 }} grain={false} />
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'rgba(20,12,8,0.32)' }} />
         <GrainOverlay opacity={0.3} blend="overlay" />
         <div style={{ position: 'relative', zIndex: 2, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 var(--gutter)' }}>

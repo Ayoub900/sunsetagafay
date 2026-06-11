@@ -66,10 +66,10 @@ export default async function SuitesPage({ params }: { params: Promise<{ lang: s
         images:   (s as { images?: string[] }).images ?? [],
         isHtml:   true,
       }))
-    : (dict.rooms as { name: string; brief: string; area: string; view: string; rate: string }[]).map(r => ({
+    : (dict.rooms as { name: string; brief: string; area: string; view: string; rate: string; imageUrl?: string }[]).map(r => ({
         ...r,
         slug: r.name.toLowerCase().replace(/\s+/g, '-').replace(/[éèê]/g, 'e'),
-        imageUrl: '',
+        imageUrl: r.imageUrl ?? '',
         images: [],
         isHtml: false,
       }))
@@ -78,7 +78,7 @@ export default async function SuitesPage({ params }: { params: Promise<{ lang: s
     <div style={{ background: 'var(--paper)' }}>
       {/* Hero */}
       <section className="page-hero">
-        <Photo kind="sunset" alt="" style={{ position: 'absolute', inset: 0 }} grain={false} priority />
+        <Photo kind="sunset" src="/aerial-dusk-resort.webp" alt="" style={{ position: 'absolute', inset: 0 }} grain={false} priority />
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 2, background: 'linear-gradient(to bottom, rgba(20,12,8,0.6) 0%, rgba(20,12,8,0.45) 60%, rgba(20,12,8,0.75) 100%)' }} />
         <GrainOverlay opacity={0.4} blend="overlay" style={{ zIndex: 3 }} />
         <div className="page-hero-content" style={{ zIndex: 4 }}>

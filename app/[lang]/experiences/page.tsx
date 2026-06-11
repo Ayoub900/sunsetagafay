@@ -64,7 +64,7 @@ export default async function ExperiencesPage({ params }: { params: Promise<{ la
     <div style={{ background: 'var(--paper)' }}>
       {/* Hero */}
       <section className="page-hero">
-        <Photo kind="sunset" alt="" style={{ position: 'absolute', inset: 0 }} grain={false} priority />
+        <Photo kind="sunset" src="/couple-cocktails.webp" alt="" style={{ position: 'absolute', inset: 0 }} grain={false} priority />
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 2, background: 'linear-gradient(to bottom, rgba(20,12,8,0.5) 0%, rgba(20,12,8,0.38) 60%, rgba(20,12,8,0.8) 100%)' }} />
         <GrainOverlay opacity={0.4} blend="overlay" style={{ zIndex: 3 }} />
         <div className="page-hero-content" style={{ zIndex: 4 }}>
@@ -171,8 +171,14 @@ export default async function ExperiencesPage({ params }: { params: Promise<{ la
                 </Link>
               </div>
             </div>
-            <div className="hammam-frame frame-double" style={{ width: '100%', aspectRatio: '3 / 5', position: 'relative' }}>
-
+            <div className="hammam-frame frame-double" style={{ width: '100%', aspectRatio: '3 / 5', position: 'relative', overflow: 'hidden' }}>
+              <img
+                src="/suite-tent-interior.webp"
+                alt="Tented suite interior at Sunset Agafay"
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 1 }}
+                loading="lazy"
+              />
+              <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 2, background: 'linear-gradient(to top, rgba(20,12,8,0.55), transparent 45%)' }} />
               <div aria-hidden="true" style={{ position: 'absolute', left: 18, bottom: 14, color: 'var(--paper)', fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.18em', opacity: 0.85, zIndex: 4 }}>
                 PLATE V · STEAM ROOM
               </div>

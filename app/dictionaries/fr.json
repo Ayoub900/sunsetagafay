@@ -81,28 +81,32 @@
       "brief": "Une suite chaleureuse ouverte sur les paysages désertiques, avec terrasse privée et ambiance inspirée du style berbère contemporain.",
       "area": "45 m²",
       "view": "Plateau du désert",
-      "rate": "€580"
+      "rate": "€580",
+      "imageUrl": "/suite-twin-desert.webp"
     },
     {
       "name": "Suite Sunset",
       "brief": "Notre suite signature, imaginée pour profiter des derniers rayons du soleil dans une atmosphère intime et raffinée.",
       "area": "68 m²",
       "view": "Coucher de soleil & Atlas",
-      "rate": "€890"
+      "rate": "€890",
+      "imageUrl": "/suite-tent-interior.webp"
     },
     {
       "name": "Suite Koutoubia",
       "brief": "Une suite élégante mêlant artisanat marocain, lumière naturelle et confort moderne.",
       "area": "52 m²",
       "view": "Silhouette de la médina",
-      "rate": "€680"
+      "rate": "€680",
+      "imageUrl": "/suite-family-2.webp"
     },
     {
       "name": "Suite Familiale",
       "brief": "Un espace spacieux conçu pour accueillir familles et groupes souhaitant partager l'expérience Sunset Agafay ensemble.",
       "area": "105 m²",
       "view": "Kasbah & piscine privée",
-      "rate": "€1 380"
+      "rate": "€1 380",
+      "imageUrl": "/suite-family.webp"
     }
   ],
   "cinematic": {
@@ -122,19 +126,22 @@
       "name": "Le Souk Restaurant",
       "lede": "Cuisine marocaine et méditerranéenne, produits frais et ambiance chaleureuse face au coucher du soleil.",
       "copy": "Cuisine marocaine et méditerranéenne, produits frais et ambiance chaleureuse face au coucher du soleil. Une carte qui célèbre les saveurs du Maroc et de la Méditerranée, à savourer sur la terrasse face aux dunes d'Agafay.",
-      "hours": "12h30 – 15h00 · 19h30 – 23h00"
+      "hours": "12h30 – 15h00 · 19h30 – 23h00",
+      "imageUrl": "/dining-tent-night.webp"
     },
     {
       "name": "Arish Bar",
       "lede": "Cocktails signatures, musique lounge et ambiance désertique sous les étoiles.",
       "copy": "Cocktails signatures, musique lounge et ambiance désertique sous les étoiles. Le rendez-vous des couchers de soleil et des soirées prolongées, au comptoir ou en terrasse.",
-      "hours": "18h00 – Tard"
+      "hours": "18h00 – Tard",
+      "imageUrl": "/pool-night.webp"
     },
     {
       "name": "Private Dining",
       "lede": "Une expérience gastronomique intime et exclusive, idéale pour les occasions spéciales et les dîners romantiques.",
       "copy": "Une expérience gastronomique intime et exclusive, idéale pour les occasions spéciales et les dîners romantiques. Notre équipe compose un menu sur mesure et un service dédié, dans un cadre privatisé pour vous et vos invités.",
-      "hours": "Sur réservation"
+      "hours": "Sur réservation",
+      "imageUrl": "/event-dining-pool.webp"
     }
   ],
   "experiences_section": {
@@ -149,35 +156,40 @@
       "name": "Camel Ride",
       "when": "Quotidien, 17h30",
       "who": "Jusqu'à quatre cavaliers",
-      "lede": "Balade à dos de chameau à travers les paysages uniques du désert d'Agafay au coucher du soleil."
+      "lede": "Balade à dos de chameau à travers les paysages uniques du désert d'Agafay au coucher du soleil.",
+      "imageUrl": "/aerial-dusk-resort.webp"
     },
     {
       "n": "02",
       "name": "Quad Experience",
       "when": "Quotidien, 10h00 & 15h00",
       "who": "Solo ou en duo",
-      "lede": "Explorez les pistes désertiques accompagné de nos guides pour une aventure inoubliable."
+      "lede": "Explorez les pistes désertiques accompagné de nos guides pour une aventure inoubliable.",
+      "imageUrl": "/quad-desert.webp"
     },
     {
       "n": "03",
       "name": "Buggy Adventure",
       "when": "Quotidien, sur demande",
       "who": "Jusqu'à quatre hôtes",
-      "lede": "Sensations fortes et panoramas exceptionnels au cœur des reliefs d'Agafay."
+      "lede": "Sensations fortes et panoramas exceptionnels au cœur des reliefs d'Agafay.",
+      "imageUrl": "/aerial-suites-pool.webp"
     },
     {
       "n": "04",
       "name": "Sunset Dinner",
       "when": "Tous les soirs, 19h30",
       "who": "Sur réservation",
-      "lede": "Dîner sous les étoiles avec ambiance musicale, bougies et gastronomie marocaine raffinée."
+      "lede": "Dîner sous les étoiles avec ambiance musicale, bougies et gastronomie marocaine raffinée.",
+      "imageUrl": "/dining-tent-night.webp"
     },
     {
       "n": "05",
       "name": "Pool Day Pass",
       "when": "Quotidien, 11h00 – 19h00",
       "who": "Adultes & enfants",
-      "lede": "Profitez de notre piscine et de nos espaces détente pour une journée exclusive dans le désert."
+      "lede": "Profitez de notre piscine et de nos espaces détente pour une journée exclusive dans le désert.",
+      "imageUrl": "/pool-guests-day.webp"
     }
   ],
   "hammam_section": {
@@ -476,8 +488,8 @@
   },
   "events_page": {
     "hero_eyebrow": "Événements Privés",
-    "hero_title": "La kasbah, entièrement à vous.",
-    "hero_sub": "Nous accueillons des rassemblements intimes — mariages, rassemblements privés et séminaires — pour des groupes qui comprennent que le cadre est essentiel.",
+    "hero_title": "Là où les plus beaux moments prennent vie.",
+    "hero_sub": "Événements privés, mariages, séminaires et partenariats : découvrez un lieu unique où chaque projet devient une expérience inoubliable.",
     "form_eyebrow": "Demande d'événement",
     "form_title": "Parlez-nous de votre événement.",
     "form_lede": "Quelques détails suffisent — nous répondons sous 24 heures.",

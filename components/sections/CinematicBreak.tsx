@@ -13,10 +13,16 @@ export function CinematicBreak({ dict }: { dict: CinematicDict }) {
         color: 'var(--paper)',
       }}
     >
-
+      <img
+        src="/pool-palms-blue.webp"
+        alt="Infinity pool overlooking the Agafay desert and the snow-capped Atlas range"
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
+        loading="lazy"
+      />
+      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none', background: 'rgba(20,12,8,0.34)' }} />
       <div className="halation" aria-hidden="true" style={{ zIndex: 1 }} />
       <GrainOverlay opacity={0.45} blend="overlay" style={{ zIndex: 2 }} />
-      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none', background: 'linear-gradient(to bottom, rgba(20,12,8,0.42), transparent 30%, transparent 70%, rgba(20,12,8,0.52))' }} />
+      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none', background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(20,12,8,0.5), transparent 75%), linear-gradient(to bottom, rgba(20,12,8,0.45), transparent 35%, transparent 65%, rgba(20,12,8,0.55))' }} />
 
       <div style={{ position: 'absolute', inset: 0, zIndex: 3, display: 'grid', placeItems: 'center', padding: 'clamp(80px,10vw,120px) var(--gutter)', textAlign: 'center' }}>
         <blockquote cite="https://www.cntraveller.com" style={{ maxWidth: 980, margin: 0 }}>

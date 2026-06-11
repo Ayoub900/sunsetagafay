@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 }
 
 const kindMap = ['sunset', 'pool', 'aperitif'] as const
+const partyImages = ['/event-white-party-sunset.webp', '/event-white-party-day.webp', '/event-pool-tables.webp']
 
 export default async function SunsetPartiesPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -50,15 +51,16 @@ export default async function SunsetPartiesPage({ params }: { params: Promise<{ 
           lede:     isFr ? p.ledeFr : p.ledeEn,
           capacity: p.capacity,
           season:   p.season,
+          imageUrl: p.imageUrl || p.images?.[0] || undefined,
         }))
-      : dict.sunset_parties_page.parties.map((p: { id: string; name: string; lede: string; capacity: string; season: string }) => ({ ...p, slug: undefined as string | undefined })),
+      : dict.sunset_parties_page.parties.map((p: { id: string; name: string; lede: string; capacity: string; season: string }) => ({ ...p, slug: undefined as string | undefined, imageUrl: undefined as string | undefined })),
   }
 
   return (
     <div style={{ background: 'var(--paper)' }}>
       {/* Hero */}
       <section className="page-hero">
-        <Photo kind="sunset" alt="" style={{ position: 'absolute', inset: 0 }} grain={false} priority />
+        <Photo kind="sunset" src="/event-white-party-night.webp" alt="" style={{ position: 'absolute', inset: 0 }} grain={false} priority />
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 2, background: 'linear-gradient(to bottom, rgba(20,12,8,0.5) 0%, rgba(20,12,8,0.35) 55%, rgba(20,12,8,0.8) 100%)' }} />
         <GrainOverlay opacity={0.4} blend="overlay" style={{ zIndex: 3 }} />
         <div className="page-hero-content" style={{ zIndex: 4 }}>
@@ -88,14 +90,14 @@ export default async function SunsetPartiesPage({ params }: { params: Promise<{ 
                 <>
                   <PartyText party={party} p={p} lang={lang} index={i} />
                   <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5' }}>
-                    <Photo kind={kindMap[i % 3]} alt={party.name} style={{ position: 'absolute', inset: 0 }} />
+                    <Photo kind={kindMap[i % 3]} src={party.imageUrl || partyImages[i % partyImages.length]} alt={party.name} style={{ position: 'absolute', inset: 0 }} />
                     <div aria-hidden="true" style={{ position: 'absolute', top: 14, left: 14, fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.22em', color: 'var(--paper)', opacity: 0.85, zIndex: 4 }}>0{i + 1}</div>
                   </div>
                 </>
               ) : (
                 <>
                   <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5' }}>
-                    <Photo kind={kindMap[i % 3]} alt={party.name} style={{ position: 'absolute', inset: 0 }} />
+                    <Photo kind={kindMap[i % 3]} src={party.imageUrl || partyImages[i % partyImages.length]} alt={party.name} style={{ position: 'absolute', inset: 0 }} />
                     <div aria-hidden="true" style={{ position: 'absolute', top: 14, left: 14, fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.22em', color: 'var(--paper)', opacity: 0.85, zIndex: 4 }}>0{i + 1}</div>
                   </div>
                   <PartyText party={party} p={p} lang={lang} index={i} />
@@ -108,7 +110,7 @@ export default async function SunsetPartiesPage({ params }: { params: Promise<{ 
 
       {/* Photo break */}
       <section style={{ position: 'relative', height: 'clamp(300px,40vw,540px)', overflow: 'hidden' }}>
-        <Photo kind="aperitif" alt="Sunset over the Agafay desert at golden hour" style={{ position: 'absolute', inset: 0 }} grain={false} />
+        <Photo kind="aperitif" src="/proposal-heart-sunset.webp" alt="Sunset over the Agafay desert at golden hour" style={{ position: 'absolute', inset: 0 }} grain={false} />
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'rgba(20,12,8,0.38)' }} />
         <GrainOverlay opacity={0.3} blend="overlay" />
         <div style={{ position: 'relative', zIndex: 2, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 var(--gutter)' }}>
@@ -148,7 +150,7 @@ function PartyText({
   lang,
   index,
 }: {
-  party: { id: string; slug?: string; name: string; lede: string; capacity: string; season: string }
+  party: { id: string; slug?: string; name: string; lede: string; capacity: string; season: string; imageUrl?: string }
   p: { enquire_cta: string }
   lang: string
   index: number

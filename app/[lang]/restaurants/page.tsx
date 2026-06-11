@@ -56,7 +56,7 @@ export default async function RestaurantsPage({ params }: { params: Promise<{ la
   return (
     <div style={{ background: 'var(--paper)' }}>
       <section className="page-hero">
-        <Photo kind="aperitif" alt="" style={{ position: 'absolute', inset: 0 }} grain={false} priority />
+        <Photo kind="aperitif" src="/dining-tent-night.webp" alt="" style={{ position: 'absolute', inset: 0 }} grain={false} priority />
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 2, background: 'linear-gradient(to bottom, rgba(20,12,8,0.55) 0%, rgba(20,12,8,0.4) 60%, rgba(20,12,8,0.8) 100%)' }} />
         <GrainOverlay opacity={0.4} blend="overlay" style={{ zIndex: 3 }} />
         <div className="page-hero-content" style={{ zIndex: 4 }}>

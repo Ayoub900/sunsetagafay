@@ -60,10 +60,11 @@ export function MaisonLetter({ dict }: { dict: StoryDict }) {
         </div>
 
         {/* Right — framed image + facts */}
-        <div>
-          <div style={{ width: '100%', aspectRatio: '4 / 5', position: 'relative', overflow: 'hidden' }}>
+        <div className="story-media">
+          <div className="story-photo" style={{ width: '100%', position: 'relative', overflow: 'hidden' }}>
             <Photo
               kind="courtyard"
+              src="/aerial-sunset-pool.webp"
               alt="The Olive Court — Sunset Agafay"
               style={{ position: 'absolute', inset: 0 }}
             />
