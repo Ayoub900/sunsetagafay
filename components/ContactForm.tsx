@@ -11,9 +11,12 @@ interface ContactLabels {
   phone_label: string
   subject_label: string
   subject_reservation: string
+  subject_table: string
   subject_event: string
   subject_concierge: string
   subject_other: string
+  table_label: string
+  requested_table: string
   checkin_label: string
   checkout_label: string
   guests_label: string
@@ -34,7 +37,8 @@ interface ContactLabels {
 }
 
 export default function ContactForm({ labels }: { labels: ContactLabels }) {
-  const [subject, setSubject]     = useState(labels.subject_reservation)
+  // Arriving from a restaurant's "Reserve" link (?table=…) pre-selects table reservation.
+  const [subject, setSubject]     = useState(labels.requested_table ? labels.subject_table : labels.subject_reservation)
   const [submitted, setSubmitted] = useState(false)
   const [sending, setSending]     = useState(false)
   const [error, setError]         = useState('')
@@ -52,6 +56,7 @@ export default function ContactForm({ labels }: { labels: ContactLabels }) {
       phone:    String(fd.get('phone') ?? ''),
       subject:  String(fd.get('subject') ?? ''),
       message:  String(fd.get('message') ?? ''),
+      table:    String(fd.get('table') ?? ''),
       checkin:  String(fd.get('checkin') ?? ''),
       checkout: String(fd.get('checkout') ?? ''),
       guests:   String(fd.get('guests') ?? ''),
@@ -147,12 +152,19 @@ export default function ContactForm({ labels }: { labels: ContactLabels }) {
                       onChange={e => setSubject(e.target.value)}
                     >
                       <option>{labels.subject_reservation}</option>
+                      <option>{labels.subject_table}</option>
                       <option>{labels.subject_event}</option>
                       <option>{labels.subject_concierge}</option>
                       <option>{labels.subject_other}</option>
                     </select>
                   </div>
                 </div>
+                {subject === labels.subject_table && (
+                  <div className="form-field">
+                    <label htmlFor="contact-table" className="form-label">{labels.table_label}</label>
+                    <input id="contact-table" name="table" type="text" className="form-input" defaultValue={labels.requested_table} />
+                  </div>
+                )}
                 {subject === labels.subject_reservation && (
                   <div className="form-row">
                     <div className="form-field">
@@ -165,7 +177,7 @@ export default function ContactForm({ labels }: { labels: ContactLabels }) {
                     </div>
                   </div>
                 )}
-                {subject === labels.subject_reservation && (
+                {(subject === labels.subject_reservation || subject === labels.subject_table) && (
                   <div className="form-field">
                     <label htmlFor="contact-guests" className="form-label">{labels.guests_label}</label>
                     <select id="contact-guests" name="guests" className="form-input" style={{ maxWidth: 220 }}>

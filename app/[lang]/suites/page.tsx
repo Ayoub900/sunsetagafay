@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { getDictionary, hasLocale, type Locale } from '../dictionaries'
 import { Photo, GrainOverlay } from '@/components/shared'
 import { getActiveSuites } from '@/lib/db'
+import { suitesOpeningPending } from '@/lib/opening'
 import { buildAlternates } from '@/lib/seo'
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
@@ -41,6 +42,9 @@ export default async function SuitesPage({ params }: { params: Promise<{ lang: s
     getActiveSuites(),
   ])
   const p = dict.suites_page
+
+  // Opening note shown only until the suites open; hidden once that date has passed.
+  const showOpeningNote = suitesOpeningPending()
 
   type Room = {
     slug: string
@@ -106,6 +110,26 @@ export default async function SuitesPage({ params }: { params: Promise<{ lang: s
           </div>
         </div>
       </section>
+
+      {/* Opening note — only shown before the suites open on 1 July */}
+      {showOpeningNote && (
+        <section style={{ padding: 'clamp(28px,4vw,44px) var(--gutter) 0' }}>
+          <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto' }}>
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: 'clamp(12px,2vw,18px)',
+              padding: 'clamp(16px,2.4vw,22px) clamp(18px,2.6vw,26px)',
+              border: '1px solid var(--brass)',
+              borderRadius: 4,
+              background: 'rgba(176,141,87,0.06)',
+            }}>
+              <span aria-hidden="true" style={{ width: 6, height: 6, borderRadius: 3, background: 'var(--brass)', flex: '0 0 auto' }} />
+              <p style={{ margin: 0, fontFamily: 'var(--sans)', fontSize: 'clamp(12px,1.4vw,14px)', lineHeight: 1.6, letterSpacing: '0.02em', color: 'var(--ink)' }}>
+                {p.opening_note}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Rooms */}
       <section style={{ padding: 'clamp(64px,9vw,120px) var(--gutter)' }}>

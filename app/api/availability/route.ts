@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAvailableSuites } from '@/lib/db'
+import { minCheckInDate } from '@/lib/opening'
 import { getClientIp, rateLimit, tooManyRequestsResponse } from '@/lib/rate-limit'
 import { isoDate, readJsonBody, ValidationError } from '@/lib/validation'
 
@@ -17,6 +18,9 @@ export async function POST(req: NextRequest) {
 
     const today = new Date().toISOString().slice(0, 10)
     if (checkIn < today) throw new ValidationError('Check-in cannot be in the past')
+
+    const earliest = minCheckInDate(today)
+    if (checkIn < earliest) throw new ValidationError(`Check-in cannot be before ${earliest}`)
 
     const suites = await getAvailableSuites(checkIn, checkOut)
 

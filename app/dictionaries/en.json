@@ -371,9 +371,11 @@
     "phone_label": "Phone (optional)",
     "subject_label": "Subject",
     "subject_reservation": "Room Reservation",
+    "subject_table": "Table Reservation",
     "subject_event": "Private Event",
     "subject_concierge": "Concierge Request",
     "subject_other": "Other",
+    "table_label": "Requested Table",
     "checkin_label": "Check-in Date",
     "checkout_label": "Check-out Date",
     "guests_label": "Number of Guests",
@@ -470,7 +472,8 @@
     "reserve_cta": "Reserve This Room",
     "from_night": "From / night",
     "view_label": "View",
-    "area_label": "Area"
+    "area_label": "Area",
+    "opening_note": "Our suites open on 1 July. Reservations for stays from this date are now open."
   },
   "restaurants_page": {
     "hero_eyebrow": "The Tables",

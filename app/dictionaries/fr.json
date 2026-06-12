@@ -371,9 +371,11 @@
     "phone_label": "Téléphone (optionnel)",
     "subject_label": "Sujet",
     "subject_reservation": "Réservation de chambre",
+    "subject_table": "Réservation de table",
     "subject_event": "Événement privé",
     "subject_concierge": "Demande de conciergerie",
     "subject_other": "Autre",
+    "table_label": "Table demandée",
     "checkin_label": "Date d'arrivée",
     "checkout_label": "Date de départ",
     "guests_label": "Nombre d'hôtes",
@@ -470,7 +472,8 @@
     "reserve_cta": "Réserver cette chambre",
     "from_night": "À partir de / nuit",
     "view_label": "Vue",
-    "area_label": "Surface"
+    "area_label": "Surface",
+    "opening_note": "Nos suites ouvrent le 1er juillet. Les réservations pour les séjours à partir de cette date sont désormais ouvertes."
   },
   "restaurants_page": {
     "hero_eyebrow": "Les Tables",

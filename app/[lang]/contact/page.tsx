@@ -28,9 +28,16 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   }
 }
 
-export default async function ContactPage({ params }: { params: Promise<{ lang: string }> }) {
+export default async function ContactPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ lang: string }>
+  searchParams: Promise<{ table?: string }>
+}) {
   const { lang } = await params
   if (!hasLocale(lang)) notFound()
+  const { table } = await searchParams
   const dict = await getDictionary(lang as Locale)
   const c = dict.contact
   const isFr = lang === 'fr'
@@ -44,9 +51,12 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
     phone_label:         c.phone_label,
     subject_label:       c.subject_label,
     subject_reservation: c.subject_reservation,
+    subject_table:       c.subject_table,
     subject_event:       c.subject_event,
     subject_concierge:   c.subject_concierge,
     subject_other:       c.subject_other,
+    table_label:         c.table_label,
+    requested_table:     (table ?? '').slice(0, 200),
     checkin_label:       c.checkin_label,
     checkout_label:      c.checkout_label,
     guests_label:        c.guests_label,

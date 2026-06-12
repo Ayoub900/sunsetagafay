@@ -158,6 +158,7 @@ model ContactMessage {
   phone     String   @default("")
   subject   String
   message   String
+  table     String   @default("")
   checkin   String   @default("")
   checkout  String   @default("")
   guests    String   @default("")

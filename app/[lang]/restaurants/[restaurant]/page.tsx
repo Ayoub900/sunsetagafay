@@ -123,7 +123,7 @@ export default async function RestaurantDetailPage({ params }: { params: Promise
             </div>
 
             <div style={{ marginTop: 36 }}>
-              <Link href={`/${lang}/contact`} className="cta">
+              <Link href={`/${lang}/contact?table=${encodeURIComponent(name)}`} className="cta">
                 <span className="cta-label">{p.reserve_cta}</span>
                 <span className="cta-arrow" aria-hidden="true">→</span>
               </Link>
@@ -151,7 +151,7 @@ export default async function RestaurantDetailPage({ params }: { params: Promise
           <p style={{ fontFamily: 'var(--sans)', fontSize: 11, letterSpacing: '0.18em', color: 'rgba(242,232,213,0.55)', margin: '0 0 40px', textTransform: 'uppercase' }}>
             {p.reserve_cta_sub}
           </p>
-          <Link href={`/${lang}/contact`} className="cta">
+          <Link href={`/${lang}/contact?table=${encodeURIComponent(name)}`} className="cta">
             <span className="cta-label">{p.reserve_cta}</span>
             <span className="cta-arrow" aria-hidden="true">→</span>
           </Link>

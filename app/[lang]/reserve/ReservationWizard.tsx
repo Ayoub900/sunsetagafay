@@ -2,6 +2,7 @@
 
 import { useState, useId } from 'react'
 import Link from 'next/link'
+import { minCheckInDate } from '@/lib/opening'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -188,16 +189,18 @@ function DateStep({
   error: string | null
 }) {
   const id = useId()
-  const today    = new Date().toISOString().split('T')[0]
-  const tomorrow = new Date(Date.now() + 86_400_000).toISOString().split('T')[0]
-  const [checkIn, setCheckIn]   = useState(today)
-  const [checkOut, setCheckOut] = useState(tomorrow)
+  const today      = new Date().toISOString().split('T')[0]
+  // Earliest bookable check-in: today, or the suites' opening date if it hasn't passed yet.
+  const earliest   = minCheckInDate(today)
+  const dayAfter   = new Date(new Date(earliest + 'T12:00:00').getTime() + 86_400_000).toISOString().split('T')[0]
+  const [checkIn, setCheckIn]   = useState(earliest)
+  const [checkOut, setCheckOut] = useState(dayAfter)
   const [guests, setGuests]     = useState(2)
   const [localErr, setLocalErr] = useState<string | null>(null)
 
   const minCheckout = checkIn
     ? new Date(new Date(checkIn + 'T12:00:00').getTime() + 86_400_000).toISOString().split('T')[0]
-    : today
+    : earliest
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -239,7 +242,7 @@ function DateStep({
             type="date"
             className="form-input"
             required
-            min={today}
+            min={earliest}
             value={checkIn}
             onChange={e => {
               setCheckIn(e.target.value)

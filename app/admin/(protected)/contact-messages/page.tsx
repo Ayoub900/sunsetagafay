@@ -64,6 +64,11 @@ export default async function ContactMessagesPage() {
                       <span style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 12, color: T.sienna, fontWeight: 500 }}>
                         {m.subject}
                       </span>
+                      {m.table && (
+                        <span style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 12, color: T.ink3 }}>
+                          Table: {m.table}
+                        </span>
+                      )}
                       {m.checkin && (
                         <span style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 12, color: T.ink3 }}>
                           {m.checkin} → {m.checkout}

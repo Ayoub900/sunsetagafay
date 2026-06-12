@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
     const phoneNum = phone(body.phone)
     const subject  = str(body.subject,  { field: 'subject',  max: 200 })
     const message  = str(body.message,  { field: 'message',  required: true, min: 1, max: 5000 })
+    const table    = str(body.table,    { field: 'table',    max: 200 })
     const checkin  = str(body.checkin,  { field: 'checkin',  max: 32 })
     const checkout = str(body.checkout, { field: 'checkout', max: 32 })
     const guests   = str(body.guests,   { field: 'guests',   max: 32 })
@@ -27,6 +28,7 @@ export async function POST(req: NextRequest) {
         phone:    phoneNum,
         subject,
         message,
+        table,
         checkin,
         checkout,
         guests,

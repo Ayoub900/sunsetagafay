@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { minCheckInDate } from '@/lib/opening'
 import { getClientIp, rateLimit, tooManyRequestsResponse } from '@/lib/rate-limit'
 import {
   email,
@@ -23,6 +24,9 @@ export async function POST(req: NextRequest) {
     const checkIn   = isoDate(body.checkIn,  'checkIn')
     const checkOut  = isoDate(body.checkOut, 'checkOut')
     if (checkIn >= checkOut) throw new ValidationError('checkOut must be after checkIn')
+
+    const earliest = minCheckInDate(new Date().toISOString().slice(0, 10))
+    if (checkIn < earliest) throw new ValidationError(`Check-in cannot be before ${earliest}`)
 
     const nights    = intInRange(body.nights, { field: 'nights', min: 1, max: 365, default: 1 })
     const guests    = intInRange(body.guests, { field: 'guests', min: 1, max: 20,  default: 1 })
