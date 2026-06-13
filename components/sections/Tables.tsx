@@ -1,11 +1,10 @@
 import Link from 'next/link'
 import { Photo, SectionHead } from '../shared'
 
-interface TableEntry { name: string; lede: string; hours: string; imageUrl?: string }
+interface TableEntry { slug: string; name: string; lede: string; hours: string; imageUrl?: string }
 interface TablesSectionDict { eyebrow: string; index: string; title: string; lede: string; service: string }
 
 const kinds = ['courtyard', 'aperitif', 'palms'] as const
-const anchors = ['le-souk', 'bar-arish', 'la-table-didriss']
 
 export function Tables({ dict, tables, lang }: { dict: TablesSectionDict; tables: TableEntry[]; lang: string }) {
   return (
@@ -15,17 +14,17 @@ export function Tables({ dict, tables, lang }: { dict: TablesSectionDict; tables
 
         <div style={{ marginTop: 'clamp(48px,7vw,80px)', display: 'flex', flexDirection: 'column', gap: 'clamp(56px,8vw,96px)' }}>
           {tables.map((t, i) => (
-            <article key={t.name} id={anchors[i]} className={`table-entry ${i % 2 === 0 ? 'left' : 'right'}`} style={{ scrollMarginTop: 'var(--nav-h)' }}>
+            <article key={t.slug} id={t.slug} className={`table-entry ${i % 2 === 0 ? 'left' : 'right'}`} style={{ scrollMarginTop: 'var(--nav-h)' }}>
               {i % 2 === 0 ? (
                 <>
                   <div className="table-photo" style={{ position: 'relative', width: '100%', aspectRatio: '5 / 4' }}>
                     <Photo kind={kinds[i]} src={t.imageUrl || undefined} alt={t.name} style={{ position: 'absolute', inset: 0 }} />
                   </div>
-                  <TableText t={t} service={dict.service} lang={lang} anchor={anchors[i]} />
+                  <TableText t={t} service={dict.service} lang={lang} />
                 </>
               ) : (
                 <>
-                  <TableText t={t} service={dict.service} lang={lang} anchor={anchors[i]} />
+                  <TableText t={t} service={dict.service} lang={lang} />
                   <div className="table-photo" style={{ position: 'relative', width: '100%', aspectRatio: '5 / 4' }}>
                     <Photo kind={kinds[i]} src={t.imageUrl || undefined} alt={t.name} style={{ position: 'absolute', inset: 0 }} />
                   </div>
@@ -46,7 +45,7 @@ export function Tables({ dict, tables, lang }: { dict: TablesSectionDict; tables
   )
 }
 
-function TableText({ t, service, lang, anchor }: { t: TableEntry; service: string; lang: string; anchor: string }) {
+function TableText({ t, service, lang }: { t: TableEntry; service: string; lang: string }) {
   return (
     <div>
       <h3 style={{ fontFamily: 'var(--serif)', fontWeight: 400, fontSize: 'clamp(36px,5vw,56px)', lineHeight: 1, letterSpacing: '-0.018em', margin: 0, color: 'var(--ink)' }}>
@@ -60,7 +59,7 @@ function TableText({ t, service, lang, anchor }: { t: TableEntry; service: strin
         <span style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(14px,1.5vw,16px)', color: 'var(--ink)' }}>{t.hours}</span>
       </div>
       <div style={{ marginTop: 28 }}>
-        <Link href={`/${lang}/restaurants/${anchor}`} className="cta">
+        <Link href={`/${lang}/restaurants/${t.slug}`} className="cta">
           <span className="cta-label">{lang === 'fr' ? 'Découvrir' : 'Discover'}</span>
           <span className="cta-arrow" aria-hidden="true">→</span>
         </Link>

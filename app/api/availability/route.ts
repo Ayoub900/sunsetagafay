@@ -43,6 +43,7 @@ export async function POST(req: NextRequest) {
         rateNum,
         total:     rateNum ? `${s.rate.replace(/[\d.,]+/, (n) => String(Math.round(parseFloat(n.replace(/,/g, '')) * nights)))}` : '',
         imageKind: s.imageKind,
+        imageUrl:  s.imageUrl || s.heroImageUrl || '',
       }
     })
 

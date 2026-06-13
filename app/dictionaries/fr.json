@@ -123,6 +123,7 @@
   },
   "tables": [
     {
+      "slug": "le-souk",
       "name": "Le Souk Restaurant",
       "lede": "Cuisine marocaine et méditerranéenne, produits frais et ambiance chaleureuse face au coucher du soleil.",
       "copy": "Cuisine marocaine et méditerranéenne, produits frais et ambiance chaleureuse face au coucher du soleil. Une carte qui célèbre les saveurs du Maroc et de la Méditerranée, à savourer sur la terrasse face aux dunes d'Agafay.",
@@ -130,6 +131,7 @@
       "imageUrl": "/dining-tent-night.webp"
     },
     {
+      "slug": "bar-arish",
       "name": "Arish Bar",
       "lede": "Cocktails signatures, musique lounge et ambiance désertique sous les étoiles.",
       "copy": "Cocktails signatures, musique lounge et ambiance désertique sous les étoiles. Le rendez-vous des couchers de soleil et des soirées prolongées, au comptoir ou en terrasse.",
@@ -137,6 +139,7 @@
       "imageUrl": "/pool-night.webp"
     },
     {
+      "slug": "la-table-didriss",
       "name": "Private Dining",
       "lede": "Une expérience gastronomique intime et exclusive, idéale pour les occasions spéciales et les dîners romantiques.",
       "copy": "Une expérience gastronomique intime et exclusive, idéale pour les occasions spéciales et les dîners romantiques. Notre équipe compose un menu sur mesure et un service dédié, dans un cadre privatisé pour vous et vos invités.",
@@ -240,28 +243,28 @@
     "lede": "Quelques mots laissés par nos hôtes. Nous en sommes discrètement reconnaissants.",
     "items": [
       {
-        "quote": "La lumière à six heures du soir est quelque chose dont nous parlons encore. Camille et Idriss ont créé un lieu qui semble plus ancien qu'il ne l'est — au meilleur sens du terme. Nous sommes restés trois nuits et avons réservé à nouveau depuis l'aéroport.",
-        "name": "Hélène & Mathieu",
-        "stay": "Suite Sunset · Avril 2026",
-        "source": "Direct"
-      },
-      {
-        "quote": "Le dîner au Souk sous la pergola fut le meilleur repas de notre séjour au Maroc, et nous avons bien mangé à Marrakech. La cuisine envoie de petites choses que l'on n'a pas commandées. Le bar ouvre à six heures et l'équipe sait précisément quand vous laisser tranquille.",
-        "name": "Sofia Marchetti",
-        "stay": "Suite La Khoutoubia · Mars 2026",
+        "quote": "Franchement, rien à dire, c'était parfait : le cadre, le service (Hamid, 10/10) et l'ambiance. Une journée inoubliable. Sunset Agafay, je recommande 100 fois !",
+        "name": "Gundo Konaté",
+        "stay": "4 avis",
         "source": "Google"
       },
       {
-        "quote": "Nous sommes venus avec nos deux enfants, vite adoptés par la cour comme des chats résidents. Le rituel du hammam la veille du départ fut extraordinaire — quatre-vingt-dix minutes de silence comme je n'en avais pas connu depuis des années.",
-        "name": "Famille Whitlock",
-        "stay": "Suite Familiale · Février 2026",
-        "source": "Tripadvisor"
+        "quote": "Une expérience incroyable à Sunset Agafay ! Le cadre est absolument magnifique, avec une vue à couper le souffle sur le désert d'Agafay et les montagnes en arrière-plan. La piscine est superbe, l'ambiance calme et reposante, parfaite pour déconnecter le temps d'une journée. Le personnel est aux petits soins, très accueillant et toujours souriant. Un vrai moment de détente dans un lieu exceptionnel. Je recommande à 100 % pour profiter d'un magnifique coucher de soleil près de Marrakech.",
+        "name": "Charlène Barraud",
+        "stay": "Local Guide · 21 avis",
+        "source": "Google"
       },
       {
-        "quote": "Réservé pour deux nuits afin de voir le coucher de soleil, nous avons prolongé deux fois. La piscine attrape les dernières heures de l'après-midi, l'Atlas vire au rose, et quelqu'un vous apporte un apéritif sans qu'on le demande. Un petit miracle.",
-        "name": "James & Rohan",
-        "stay": "Suite Agafay · Mai 2026",
-        "source": "Booking.com"
+        "quote": "Un endroit incroyable, avec des vues à couper le souffle et une cuisine délicieuse ! (Et c'est une Marocaine habituée à la cuisine marocaine qui le dit !) Une belle sélection de boissons et de cocktails, et un personnel formidable, toujours ravi de vous accueillir et de vous offrir un véritable moment de paradis. La piscine est magnifique, avec une vue superbe sur le désert et même les montagnes enneigées — absolument époustouflant. Il y a beaucoup d'espace, des assises confortables et des parasols au choix, que l'on préfère le soleil ou un coin ombragé plus frais. Nous avons déjeuné en extérieur, même si l'intérieur était tout aussi charmant, et l'équipe se donne vraiment à fond pour garantir une expérience fantastique. Vivement recommandé pour une expérience inoubliable dans le désert d'Agafay !",
+        "name": "Lu N",
+        "stay": "5 avis · 10 photos",
+        "source": "Google"
+      },
+      {
+        "quote": "Un lieu magnifique, une belle pause face au désert. Accueil très sympathique et service impeccable. Balade en quad en toute sécurité avec deux ados. Nous ne voulions pas tous faire du quad et certains sont restés au bord de la piscine avec thé à la menthe et pâtisseries marocaines, qui nous ont été offerts sur la note finale. Un grand merci, nous recommandons et reviendrons avec plaisir.",
+        "name": "Auriane Lacince",
+        "stay": "6 avis · 2 photos",
+        "source": "Google"
       }
     ]
   },
@@ -275,35 +278,63 @@
     "items": [
       {
         "q": "Comment se rendre à Sunset Agafay depuis Marrakech ?",
-        "a": "Nous sommes à environ 30 km au sud-ouest de l'aéroport Marrakech-Menara, à peu près quarante-cinq minutes par la route. Nous organisons des transferts privés en véhicule climatisé — de jour, de nuit, ou à la journée pour des excursions. La plupart de nos hôtes réservent un transfert depuis l'aéroport avec leur séjour ; la route à travers la vallée fait partie de l'arrivée."
+        "a": "Sunset Agafay est situé à environ 35 minutes du centre-ville de Marrakech. Vous pouvez venir avec votre propre véhicule ou réserver notre service de transfert privé aller-retour depuis votre hôtel, riad ou l'aéroport."
       },
       {
         "q": "Que comprend le tarif de la chambre ?",
-        "a": "Un long petit-déjeuner sous la pergola, toutes les boissons sans alcool de la journée, le thé à la menthe et les pâtisseries de six heures, ainsi que l'usage de la piscine, de la bibliothèque et des cours. Le wifi est inclus. Les soins au hammam, les dîners au Souk et les excursions sont facturés séparément."
+        "a": "Le tarif comprend l'hébergement dans l'une de nos suites de charme, le petit-déjeuner, l'accès au WiFi, le parking privé gratuit ainsi que l'accès aux espaces communs de l'établissement."
       },
       {
         "q": "Quelle est la meilleure période pour venir ?",
-        "a": "Nous sommes ouverts toute l'année. De mars à mai et de septembre à novembre, le climat est le plus tempéré. Les étés sont chauds en milieu de journée mais se rafraîchissent magnifiquement au coucher du soleil — la piscine est très fréquentée en juillet et août. Les hivers sont lumineux et frais la nuit, avec du feu dans les salons."
+        "a": "Sunset Agafay vous accueille toute l'année. Le printemps et l'automne offrent des températures idéales, mais chaque saison révèle une atmosphère unique du désert d'Agafay."
       },
       {
         "q": "Acceptez-vous les enfants ?",
-        "a": "Oui — nous accueillons les familles, et la Suite Familiale est conçue pour deux adultes et deux enfants. Les enfants dînent au Souk sur un menu adapté et trouvent dans les cours de l'espace pour jouer. Nous organisons volontiers une nounou à la demande pour les parents qui souhaitent un dîner au calme."
+        "a": "Oui, les enfants sont les bienvenus. Les enfants de moins de 5 ans séjournent gratuitement et ceux de 5 à 10 ans bénéficient d'une réduction spéciale sur certaines prestations."
       },
       {
         "q": "Pouvez-vous répondre à des régimes alimentaires particuliers ?",
-        "a": "Bien sûr. Le chef Yassine adapte ses menus pour les régimes végétariens, végans, sans gluten et la plupart des allergies, avec un préavis de vingt-quatre heures. Merci de nous prévenir au moment de la réservation, puis à votre arrivée — mieux vaut deux fois qu'aucune."
+        "a": "Oui. Nous proposons des options végétariennes, véganes et pouvons nous adapter à certaines allergies ou restrictions alimentaires."
       },
       {
         "q": "Quelle est votre politique d'annulation ?",
-        "a": "Les réservations sont entièrement remboursables jusqu'à quatorze jours avant l'arrivée. À moins de quatorze jours, la première nuit n'est pas remboursable. Pour les dates de haute saison (Noël, Nouvel An, Pâques) et les événements privés, des conditions particulières s'appliquent et vous sont communiquées au moment de la réservation."
+        "a": "Pour les séjours, l'annulation est gratuite jusqu'à 7 jours avant l'arrivée. Passé ce délai, la première nuit sera facturée. Pour les Day Pass et événements, un acompte de 50 % est demandé et n'est pas remboursable."
       },
       {
         "q": "Organisez-vous des mariages ou des événements privés ?",
-        "a": "Oui. Nous accueillons des mariages intimes de douze à quatre-vingts convives, des dîners d'anniversaire, des séminaires d'entreprise et des privatisations complètes de la maison. La kasbah se prête naturellement à ces occasions. Merci de nous contacter via le formulaire pour un échange privé."
+        "a": "Oui. Sunset Agafay est un lieu idéal pour les mariages, anniversaires, séminaires, événements d'entreprise et célébrations privées."
       },
       {
-        "q": "Y a-t-il un parking et du wifi sur place ?",
-        "a": "Un parking privé est disponible dans l'enceinte de la kasbah, sans supplément. Le wifi couvre toutes les chambres et la plupart des jardins — nous vous encourageons à en faire un usage mesuré. Le désert est un bon endroit pour perdre le signal volontairement."
+        "q": "Y a-t-il un parking et du WiFi sur place ?",
+        "a": "Oui. Nous mettons à disposition un parking privé gratuit ainsi qu'une connexion WiFi accessible dans l'ensemble de l'établissement."
+      },
+      {
+        "q": "Proposez-vous des activités dans le désert ?",
+        "a": "Oui. Nous proposons des balades à dos de chameau, des excursions en quad ou buggy, l'observation des étoiles et des animations traditionnelles marocaines."
+      },
+      {
+        "q": "À quelle heure sont le check-in et le check-out ?",
+        "a": "Le check-in est disponible à partir de 15h00 et le check-out jusqu'à 12h00."
+      },
+      {
+        "q": "La piscine est-elle chauffée ?",
+        "a": "Non, notre piscine n'est pas chauffée."
+      },
+      {
+        "q": "Peut-on venir uniquement pour déjeuner ou dîner ?",
+        "a": "Oui. Notre restaurant La Table du Désert accueille également les visiteurs extérieurs sur réservation."
+      },
+      {
+        "q": "Les animaux de compagnie sont-ils autorisés ?",
+        "a": "Merci de nous contacter avant votre arrivée. Les demandes sont étudiées au cas par cas."
+      },
+      {
+        "q": "Peut-on admirer le coucher de soleil depuis l'établissement ?",
+        "a": "Absolument. Sunset Agafay offre l'un des plus beaux panoramas sur le désert d'Agafay et les montagnes de l'Atlas."
+      },
+      {
+        "q": "Quels moyens de paiement acceptez-vous ?",
+        "a": "Nous acceptons les cartes bancaires, les virements bancaires ainsi que les paiements en espèces en dirhams marocains."
       }
     ]
   },
@@ -352,11 +383,9 @@
       { "label": "Conciergerie",     "href": "contact" },
       { "label": "Contact",          "href": "contact" }
     ],
-    "bulletin_label": "Le Bulletin",
-    "bulletin_text": "Quatre lettres par an, rédigées par la maison. Pas de marketing.",
-    "email_placeholder": "votre@adresse.com",
-    "email_label": "Votre adresse email",
-    "subscribe": "S'abonner",
+    "concierge_label": "Le Concierge",
+    "concierge_text": "Notre concierge vous répond dans la journée — en français ou en anglais — pour orchestrer chaque détail de votre séjour.",
+    "concierge_cta": "Écrire au concierge",
     "legal": "© 2026 · Sunset Agafay SARL · Maroc",
     "privacy": "Confidentialité",
     "terms": "Conditions",

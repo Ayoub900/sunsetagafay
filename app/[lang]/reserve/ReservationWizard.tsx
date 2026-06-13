@@ -72,6 +72,7 @@ interface AvailableSuite {
   rateNum: number
   total: string
   imageKind: string
+  imageUrl: string
 }
 
 interface DateState {
@@ -345,13 +346,21 @@ function SuiteCard({
       flexDirection: 'column',
       overflow: 'hidden',
     }}>
-      {/* Photo placeholder */}
+      {/* Photo — real image when available, gradient fallback otherwise */}
       <div style={{
         aspectRatio: '3/2',
         background: kindGradients[suite.imageKind] ?? kindGradients.sunset,
         position: 'relative',
         flexShrink: 0,
       }}>
+        {suite.imageUrl && (
+          <img
+            src={suite.imageUrl}
+            alt={name}
+            loading="lazy"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        )}
         {/* Grain */}
         <div className="grain" style={{ opacity: 0.45, mixBlendMode: 'overlay' }} aria-hidden="true" />
       </div>

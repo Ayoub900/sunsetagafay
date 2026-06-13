@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { connection } from 'next/server'
 import { GrainOverlay } from './shared'
-import { NewsletterForm } from './NewsletterForm'
 import { CONTACT_PHONE, CONTACT_EMAIL, CONTACT_WEB, contactPhoneHref, hasPhone, hasEmail, hasWeb } from '@/lib/contact'
 import { arePartiesEnabled } from '@/lib/db'
 
@@ -17,8 +16,7 @@ interface FooterDict {
   confirm: string; concierge: string
   maison_label: string; maison_links: FooterLink[]
   practical_label: string; practical_links: FooterLink[]
-  bulletin_label: string; bulletin_text: string
-  email_placeholder: string; email_label: string; subscribe: string
+  concierge_label: string; concierge_text: string; concierge_cta: string
   legal: string; privacy: string; terms: string; instagram: string
 }
 
@@ -140,19 +138,27 @@ export async function Footer({ dict, lang }: FooterProps) {
               </div>
             </div>
 
-            {/* Newsletter */}
+            {/* Concierge */}
             <div style={{ marginTop: 48, borderTop: '1px solid rgba(242,232,213,0.18)', paddingTop: 32 }}>
               <div style={{ fontFamily: 'var(--sans)', fontSize: 10, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--rose)', marginBottom: 14 }}>
-                {dict.bulletin_label}
+                {dict.concierge_label}
               </div>
               <p style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(16px,1.8vw,18px)', lineHeight: 1.5, margin: '0 0 22px', color: 'rgba(242,232,213,0.85)', maxWidth: 380 }}>
-                {dict.bulletin_text}
+                {dict.concierge_text}
               </p>
-              <NewsletterForm
-                placeholder={dict.email_placeholder}
-                label={dict.email_label}
-                subscribe={dict.subscribe}
-              />
+              {hasPhone && (
+                <a
+                  href={`tel:${contactPhoneHref}`}
+                  className="footer-link"
+                  style={{ display: 'block', fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(20px,2.4vw,26px)', letterSpacing: '0.01em', color: 'var(--paper)', marginBottom: 22 }}
+                >
+                  {CONTACT_PHONE}
+                </a>
+              )}
+              <Link href={`${base(lang)}/contact`} className="cta">
+                <span className="cta-label">{dict.concierge_cta}</span>
+                <span className="cta-arrow" aria-hidden="true">→</span>
+              </Link>
             </div>
           </div>
         </div>

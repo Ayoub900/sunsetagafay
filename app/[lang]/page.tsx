@@ -67,6 +67,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   const tables = dbRestaurants.length > 0
     ? dbRestaurants.map(r => ({
+        slug:     r.slug,
         name:     isFr ? r.nameFr : r.nameEn,
         lede:     isFr ? r.ledeFr : r.ledeEn,
         hours:    r.hours,
@@ -107,7 +108,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <Tables          dict={dict.tables_section}      tables={tables}      lang={lang} />
       <Experiences     dict={dict.experiences_section} experiences={experiences} lang={lang} />
       <Hammam          dict={hammamDict}                lang={lang} />
-      <Reviews         dict={dict.reviews_section} />
+      <Reviews         dict={dict.reviews_section}     lang={lang} />
       <FAQ             dict={dict.faq_section}          lang={lang} />
       <Practical       dict={dict.practical} />
     </div>
