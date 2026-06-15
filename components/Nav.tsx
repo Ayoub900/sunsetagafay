@@ -38,6 +38,24 @@ interface NavProps {
 
 const base = (lang: string) => `/${lang}`
 
+const FlagGB = () => (
+  <svg className="nav-flag" viewBox="0 0 60 30" aria-hidden="true" focusable="false">
+    <rect width="60" height="30" fill="#012169" />
+    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6" />
+    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" strokeWidth="4" />
+    <path d="M30,0 V30 M0,15 H60" stroke="#fff" strokeWidth="10" />
+    <path d="M30,0 V30 M0,15 H60" stroke="#C8102E" strokeWidth="6" />
+  </svg>
+)
+
+const FlagFR = () => (
+  <svg className="nav-flag" viewBox="0 0 3 2" aria-hidden="true" focusable="false">
+    <rect width="1" height="2" x="0" fill="#0055A4" />
+    <rect width="1" height="2" x="1" fill="#fff" />
+    <rect width="1" height="2" x="2" fill="#EF4135" />
+  </svg>
+)
+
 export function Nav({ dict, lang, items }: NavProps) {
   const [scrolled,       setScrolled]       = useState(false)
   const [mobileOpen,     setMobileOpen]     = useState(false)
@@ -160,16 +178,17 @@ export function Nav({ dict, lang, items }: NavProps) {
               aria-label="Switch to English"
               aria-current={lang === 'en' ? 'true' : undefined}
             >
-              EN
+              <FlagGB />
+              <span>EN</span>
             </button>
-            <span className="nav-lang-sep" aria-hidden="true" />
             <button
               className={`nav-lang-btn${lang === 'fr' ? ' active' : ''}`}
               onClick={() => router.push(`/fr${typeof window !== 'undefined' ? window.location.pathname.replace(/^\/(en|fr)/, '') : ''}`)}
               aria-label="Passer en français"
               aria-current={lang === 'fr' ? 'true' : undefined}
             >
-              FR
+              <FlagFR />
+              <span>FR</span>
             </button>
           </nav>
 
@@ -297,14 +316,13 @@ export function Nav({ dict, lang, items }: NavProps) {
               onClick={() => { setMobileOpen(false); router.push(`/en${typeof window !== 'undefined' ? window.location.pathname.replace(/^\/(en|fr)/, '') : ''}`) }}
               aria-label="Switch to English"
               aria-current={lang === 'en' ? 'true' : undefined}
-            >EN</button>
-            <span aria-hidden="true" style={{ width: 12, height: 1, background: 'currentColor', opacity: 0.3, display: 'inline-block' }} />
+            ><FlagGB /><span>English</span></button>
             <button
               className={lang === 'fr' ? 'active' : ''}
               onClick={() => { setMobileOpen(false); router.push(`/fr${typeof window !== 'undefined' ? window.location.pathname.replace(/^\/(en|fr)/, '') : ''}`) }}
               aria-label="Passer en français"
               aria-current={lang === 'fr' ? 'true' : undefined}
-            >FR</button>
+            ><FlagFR /><span>Français</span></button>
           </nav>
 
           <Link
