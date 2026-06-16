@@ -122,7 +122,7 @@ export default async function TransferDetailPage({ params }: { params: Promise<{
             </div>
           </div>
 
-          <div style={{ position: 'sticky', top: 'calc(var(--nav-h) + 24px)' }}>
+          <div>
             <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5' }}>
               <Photo kind="palms" src={coverImage} alt={name} style={{ position: 'absolute', inset: 0 }} />
             </div>

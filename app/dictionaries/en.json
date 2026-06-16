@@ -509,7 +509,93 @@
     "hero_title": "Three rooms to eat & drink in.",
     "hero_sub": "Cooking from the valley, aperitifs at six, and one private table held twice a week.",
     "reserve_cta": "Reserve a Table",
-    "reserve_cta_sub": "Speak to our team about availability"
+    "reserve_cta_sub": "Speak to our team about availability",
+    "menu": {
+      "eyebrow": "À la carte",
+      "title": "The Menu",
+      "lede": "Cooking from the valley — Moroccan and Mediterranean dishes prepared each day by our chef.",
+      "tagline": "If satisfied, please talk about us… if not, please talk to us.",
+      "currency": "€",
+      "groups": [
+        {
+          "title": "Starters",
+          "items": [
+            { "name": "Berber Salads" },
+            { "name": "Selection of Fine Moroccan Salads" },
+            { "name": "Traditional Harira Soup with Dates" }
+          ]
+        },
+        {
+          "title": "Main",
+          "items": [
+            { "name": "Chicken Tagine with Preserved Lemon" },
+            { "name": "Minced Meat Tagine with Eggs" },
+            { "name": "Beef Tagine with Prunes and Almonds" },
+            { "name": "Beef Tagine with Figs and Nuts" },
+            { "name": "Vegetable Tagine" },
+            { "name": "Couscous Agafay, Your Choice (Beef or Chicken)" },
+            { "name": "Vegetable Couscous" },
+            { "name": "Chicken Kebabs" }
+          ]
+        },
+        {
+          "title": "Desserts",
+          "items": [
+            { "name": "Orange Salad" },
+            { "name": "Fresh Fruit Salad" },
+            { "name": "Traditional Pastilla, Milk and Orange Blossom" },
+            { "name": "Knafeh" },
+            { "name": "Moroccan Pastries" }
+          ]
+        },
+        {
+          "title": "Kids' Menu",
+          "items": [
+            { "name": "Chicken Kebabs", "desc": "Rice and french fries" },
+            { "name": "Burger or Cheeseburger", "desc": "Lettuce and tomatoes" }
+          ]
+        },
+        {
+          "title": "Hot Drinks",
+          "items": [
+            { "name": "Nespresso Coffee", "price": "4" },
+            { "name": "Coffee Nous-Nous", "price": "4" },
+            { "name": "Cappuccino", "price": "4" },
+            { "name": "Mint Tea", "price": "4" },
+            { "name": "Black Tea", "price": "4" },
+            { "name": "Hot Chocolate", "price": "4" },
+            { "name": "Iced Tea", "price": "4" },
+            { "name": "Iced Coffee", "price": "4" },
+            { "name": "Verbena", "price": "4" }
+          ]
+        },
+        {
+          "title": "Cold Drinks",
+          "items": [
+            { "name": "Soda 33cl", "price": "4" },
+            { "name": "Fruit Juice", "price": "7" },
+            { "name": "Still Water 75cl", "price": "3" },
+            { "name": "Still Water 33cl", "price": "2" },
+            { "name": "Sparkling Water 75cl", "price": "3" },
+            { "name": "Sparkling Water 50cl", "price": "2" },
+            { "name": "Red Bull", "price": "6" },
+            { "name": "Orangina", "price": "4" }
+          ]
+        },
+        {
+          "title": "Alcohol-Free Cocktails",
+          "items": [
+            { "name": "Virgin Mojito", "desc": "Fresh mint, lime, lemonade", "price": "6" },
+            { "name": "Virgin Piña Colada", "desc": "Pineapple juice, coconut milk", "price": "6" },
+            { "name": "Orange & Red Fruits", "desc": "Orange, strawberry, raspberry juice", "price": "6" },
+            { "name": "Sunset Agafay", "desc": "Orange juice, mango, orange blossom water", "price": "6" },
+            { "name": "Desert Agafay", "desc": "Orange, lemon, grapefruit", "price": "6" },
+            { "name": "Lemon Ginger", "desc": "Lemon juice, fresh ginger, cane sugar", "price": "6" },
+            { "name": "Cocktail Agafay", "desc": "Beetroot, orange juice, banana", "price": "6" }
+          ]
+        }
+      ]
+    }
   },
   "experiences_page": {
     "hero_eyebrow": "The Hours",

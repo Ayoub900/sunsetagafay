@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { getDictionary, hasLocale, type Locale } from '../../dictionaries'
 import { Photo, GrainOverlay } from '@/components/shared'
 import { Slideshow } from '@/components/Slideshow'
+import { RestaurantMenu, type RestaurantMenuDict } from '@/components/sections/RestaurantMenu'
 import { getActiveRestaurants, getRestaurantBySlug } from '@/lib/db'
 import { buildAlternates } from '@/lib/seo'
 
@@ -130,7 +131,7 @@ export default async function RestaurantDetailPage({ params }: { params: Promise
             </div>
           </div>
 
-          <div style={{ position: 'sticky', top: 'calc(var(--nav-h) + 24px)' }}>
+          <div>
             {bodyImages.length > 0 ? (
               <Slideshow images={bodyImages} alt={name} />
             ) : (
@@ -141,6 +142,10 @@ export default async function RestaurantDetailPage({ params }: { params: Promise
           </div>
         </div>
       </section>
+
+      {(p as { menu?: RestaurantMenuDict }).menu && (
+        <RestaurantMenu dict={(p as { menu: RestaurantMenuDict }).menu} />
+      )}
 
       <section style={{ background: 'var(--ink)', color: 'var(--paper)', padding: 'clamp(64px,9vw,100px) var(--gutter)', textAlign: 'center' }}>
         <GrainOverlay opacity={0.16} blend="overlay" />

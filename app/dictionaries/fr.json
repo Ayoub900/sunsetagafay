@@ -509,7 +509,93 @@
     "hero_title": "Trois espaces pour manger et boire.",
     "hero_sub": "Cuisine de la vallée, apéritifs à six heures, et une table privée deux fois par semaine.",
     "reserve_cta": "Réserver une table",
-    "reserve_cta_sub": "Parlez à notre équipe pour les disponibilités"
+    "reserve_cta_sub": "Parlez à notre équipe pour les disponibilités",
+    "menu": {
+      "eyebrow": "À la carte",
+      "title": "La Carte",
+      "lede": "Une cuisine de la vallée — des plats marocains et méditerranéens préparés chaque jour par notre chef.",
+      "tagline": "Si vous êtes satisfait, parlez de nous… sinon, parlez-nous-en.",
+      "currency": "€",
+      "groups": [
+        {
+          "title": "Entrées",
+          "items": [
+            { "name": "Salades berbères" },
+            { "name": "Sélection de fines salades marocaines" },
+            { "name": "Harira traditionnelle aux dattes" }
+          ]
+        },
+        {
+          "title": "Plats",
+          "items": [
+            { "name": "Tajine de poulet au citron confit" },
+            { "name": "Tajine de viande hachée aux œufs" },
+            { "name": "Tajine de bœuf aux pruneaux et amandes" },
+            { "name": "Tajine de bœuf aux figues et noix" },
+            { "name": "Tajine de légumes" },
+            { "name": "Couscous Agafay, au choix (bœuf ou poulet)" },
+            { "name": "Couscous de légumes" },
+            { "name": "Brochettes de poulet" }
+          ]
+        },
+        {
+          "title": "Desserts",
+          "items": [
+            { "name": "Salade d'orange" },
+            { "name": "Salade de fruits frais" },
+            { "name": "Pastilla traditionnelle, lait et fleur d'oranger" },
+            { "name": "Knafeh" },
+            { "name": "Pâtisseries marocaines" }
+          ]
+        },
+        {
+          "title": "Menu enfant",
+          "items": [
+            { "name": "Brochettes de poulet", "desc": "Riz et frites" },
+            { "name": "Burger ou cheeseburger", "desc": "Laitue et tomates" }
+          ]
+        },
+        {
+          "title": "Boissons chaudes",
+          "items": [
+            { "name": "Café Nespresso", "price": "4" },
+            { "name": "Café nous-nous", "price": "4" },
+            { "name": "Cappuccino", "price": "4" },
+            { "name": "Thé à la menthe", "price": "4" },
+            { "name": "Thé noir", "price": "4" },
+            { "name": "Chocolat chaud", "price": "4" },
+            { "name": "Thé glacé", "price": "4" },
+            { "name": "Café glacé", "price": "4" },
+            { "name": "Verveine", "price": "4" }
+          ]
+        },
+        {
+          "title": "Boissons fraîches",
+          "items": [
+            { "name": "Soda 33cl", "price": "4" },
+            { "name": "Jus de fruits", "price": "7" },
+            { "name": "Eau plate 75cl", "price": "3" },
+            { "name": "Eau plate 33cl", "price": "2" },
+            { "name": "Eau gazeuse 75cl", "price": "3" },
+            { "name": "Eau gazeuse 50cl", "price": "2" },
+            { "name": "Red Bull", "price": "6" },
+            { "name": "Orangina", "price": "4" }
+          ]
+        },
+        {
+          "title": "Cocktails sans alcool",
+          "items": [
+            { "name": "Virgin Mojito", "desc": "Menthe fraîche, citron vert, limonade", "price": "6" },
+            { "name": "Virgin Piña Colada", "desc": "Jus d'ananas, lait de coco", "price": "6" },
+            { "name": "Orange & fruits rouges", "desc": "Jus d'orange, fraise, framboise", "price": "6" },
+            { "name": "Sunset Agafay", "desc": "Jus d'orange, mangue, eau de fleur d'oranger", "price": "6" },
+            { "name": "Desert Agafay", "desc": "Orange, citron, pamplemousse", "price": "6" },
+            { "name": "Lemon Ginger", "desc": "Jus de citron, gingembre frais, sucre de canne", "price": "6" },
+            { "name": "Cocktail Agafay", "desc": "Betterave, jus d'orange, banane", "price": "6" }
+          ]
+        }
+      ]
+    }
   },
   "experiences_page": {
     "hero_eyebrow": "Les Heures",

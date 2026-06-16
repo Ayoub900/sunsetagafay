@@ -120,7 +120,7 @@ export default async function SuiteDetailPage({ params }: { params: Promise<{ la
       <section style={{ padding: 'clamp(64px,9vw,120px) var(--gutter)' }}>
         <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto', display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 'clamp(40px,6vw,96px)', alignItems: 'start' }} className="table-article">
           {/* Photo column */}
-          <div style={{ position: 'sticky', top: 'calc(var(--nav-h) + 24px)' }}>
+          <div>
             {bodyImages.length > 0 ? (
               <Slideshow images={bodyImages} alt={name} />
             ) : (

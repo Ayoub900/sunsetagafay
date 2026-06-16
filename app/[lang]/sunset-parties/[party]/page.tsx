@@ -118,7 +118,7 @@ export default async function PartyDetailPage({ params }: { params: Promise<{ la
 
       <section style={{ padding: 'clamp(64px,9vw,120px) var(--gutter)' }}>
         <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto', display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 'clamp(40px,6vw,96px)', alignItems: 'start' }} className="table-article">
-          <div style={{ position: 'sticky', top: 'calc(var(--nav-h) + 24px)' }}>
+          <div>
             <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5' }}>
               <Photo kind="aperitif" src={coverImage} alt={name} style={{ position: 'absolute', inset: 0 }} />
             </div>
