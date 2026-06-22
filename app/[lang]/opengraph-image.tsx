@@ -18,8 +18,8 @@ export default async function Image({ params }: { params: Promise<{ lang: string
   const eyebrow = safeLang === 'fr' ? 'KASBAH BOUTIQUE · DÉSERT D’AGAFAY' : 'BOUTIQUE KASBAH · AGAFAY DESERT'
   const title = 'Sunset Agafay'
   const tagline = safeLang === 'fr'
-    ? 'Quatorze chambres, une heure au sud de Marrakech.'
-    : 'Fourteen rooms, one hour south of Marrakech.'
+    ? 'Une heure au sud de Marrakech.'
+    : 'One hour south of Marrakech.'
   const description = dict.meta.home_description
 
   return new ImageResponse(

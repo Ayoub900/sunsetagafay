@@ -1,12 +1,12 @@
 # Sunset Agafay
 
-> A boutique kasbah of fourteen rooms in the Agafay desert, one hour south of Marrakech, Morocco. Five-star property with restaurants, bar, hammam, pool, and private airport transfers. Open all year.
+> A boutique kasbah in the Agafay desert, one hour south of Marrakech, Morocco. Five-star property with restaurants, bar, hammam, pool, and private airport transfers. Open all year.
 
 ## Key facts
 
 - Location: Lot Chaabat Ssi Laaroussi · Douar Lamlih · Commune et Caïdat Agafay · Cercle Loudaya · Marrakech-Safi · Morocco · 40000
 - Coordinates: 31.444294° N, 8.193362° W (approx. 30 km from Marrakech-Menara airport)
-- Rooms: 14 suites and family rooms
+- Rooms: Suites and family rooms
 - Star rating: 5
 - Languages: English, French
 - Contact: via https://sunsetagafay.com/en/contact
@@ -22,7 +22,7 @@
 
 - [Home (EN)](https://sunsetagafay.com/en): Maison overview, suites, tables, experiences, hammam, reviews, FAQ
 - [Home (FR)](https://sunsetagafay.com/fr): Présentation, suites, tables, expériences, hammam, témoignages, FAQ
-- [Suites](https://sunsetagafay.com/en/suites): All fourteen rooms — Suite Agafay, Suite La Khoutoubia, Suite Sunset, Family Suite
+- [Suites](https://sunsetagafay.com/en/suites): Suite Agafay, Suite La Khoutoubia, Suite Sunset, Family Suite
 - [Restaurants & Bars](https://sunsetagafay.com/en/restaurants): Le Souk, Bar Arish, La Table d'Idriss
 - [Experiences](https://sunsetagafay.com/en/experiences): Sunset rituals, hammam, excursions in the Agafay region
 - [Day Pass](https://sunsetagafay.com/en/day-pass): Day-use access to pool, restaurant, hammam

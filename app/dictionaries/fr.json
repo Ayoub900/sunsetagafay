@@ -544,7 +544,6 @@
             { "name": "Salade d'orange" },
             { "name": "Salade de fruits frais" },
             { "name": "Pastilla traditionnelle, lait et fleur d'oranger" },
-            { "name": "Knafeh" },
             { "name": "Pâtisseries marocaines" }
           ]
         },
@@ -740,7 +739,7 @@
     "le_souk_title": "Le Souk — Sunset Agafay",
     "le_souk_description": "Longs déjeuners sous la pergola et dîners aux bougies par le chef Yassine. Cuisine du marché local à la kasbah Sunset Agafay dans le désert d'Agafay.",
     "reserve_title": "Réserver une Chambre — Sunset Agafay",
-    "reserve_description": "Réservez l'une des quatorze chambres de la kasbah Sunset Agafay dans le désert d'Agafay. Vérifiez les disponibilités et réservez votre séjour à une heure au sud de Marrakech.",
+    "reserve_description": "Réservez votre chambre à la kasbah Sunset Agafay dans le désert d'Agafay. Vérifiez les disponibilités et réservez votre séjour à une heure au sud de Marrakech.",
     "reserve_keywords": "réserver hôtel désert Maroc, réservation kasbah Agafay, réservation hôtel Marrakech, réserver Sunset Agafay",
     "suites_keywords": "chambre hôtel désert Maroc, suite luxe Agafay, suite boutique Marrakech, chambre kasbah Maroc, suite hôtel désert",
     "restaurants_keywords": "restaurant marocain désert Agafay, gastronomie désert Maroc, Le Souk Marrakech, restaurant kasbah Maroc, cuisine marocaine Agafay",
