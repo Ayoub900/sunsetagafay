@@ -387,9 +387,13 @@
     "concierge_text": "Notre concierge vous répond dans la journée — en français ou en anglais — pour orchestrer chaque détail de votre séjour.",
     "concierge_cta": "Écrire au concierge",
     "legal": "© 2026 · Sunset Agafay SARL · Maroc",
+    "legal_notice": "Mentions Légales",
     "privacy": "Confidentialité",
     "terms": "Conditions",
-    "instagram": "Instagram"
+    "refund": "Remboursements",
+    "delivery": "Exécution des Services",
+    "instagram": "Instagram",
+    "credits": "Conçu par"
   },
   "contact": {
     "eyebrow": "Nous Contacter",

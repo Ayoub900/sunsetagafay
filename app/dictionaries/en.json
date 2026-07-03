@@ -387,9 +387,13 @@
     "concierge_text": "Our concierge answers within the day — in French or English — to arrange every detail of your stay.",
     "concierge_cta": "Write to the concierge",
     "legal": "© 2026 · Sunset Agafay SARL · Morocco",
+    "legal_notice": "Legal Notice",
     "privacy": "Privacy",
     "terms": "Terms",
-    "instagram": "Instagram"
+    "refund": "Refunds",
+    "delivery": "Service Delivery",
+    "instagram": "Instagram",
+    "credits": "Crafted by"
   },
   "contact": {
     "eyebrow": "Get in Touch",

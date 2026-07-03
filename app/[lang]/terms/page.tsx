@@ -28,7 +28,8 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
     ? [
         { label: 'Présentation', text: "Le site permet la réservation d'expériences, d'activités, de restauration, d'hébergement et d'événements." },
         { label: 'Réservations', text: 'Toute réservation est soumise à disponibilité et confirmée par écrit.' },
-        { label: 'Paiement', text: 'Un acompte peut être demandé selon la prestation réservée.' },
+        { label: 'Tarifs', text: 'Les tarifs sont indiqués en dirhams marocains (MAD), taxes comprises.' },
+        { label: 'Paiement', text: "Un acompte peut être demandé selon la prestation réservée. La réservation est confirmée après réception du paiement ou de l'acompte demandé. Les paiements par carte bancaire sont traités de manière sécurisée par le Centre Monétique Interbancaire (CMI)." },
         { label: 'Annulation et modification', text: "Les annulations d'hébergement sont gratuites jusqu'à 7 jours avant l'arrivée. Dans les 7 jours précédant l'arrivée, la première nuit est facturée et non remboursable. Pour les Day Pass, Night Pass, activités et événements, un acompte de 50 % est demandé et reste non remboursable en cas d'annulation." },
         { label: 'Hébergement', text: 'Check-in 15h00, Check-out 12h00.' },
         { label: 'Activités', text: 'Les participants doivent respecter les consignes de sécurité.' },
@@ -41,7 +42,8 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
     : [
         { label: 'Overview', text: 'The site allows the booking of experiences, activities, dining, accommodation and events.' },
         { label: 'Reservations', text: 'Any reservation is subject to availability and confirmed in writing.' },
-        { label: 'Payment', text: 'A deposit may be requested depending on the service booked.' },
+        { label: 'Prices', text: 'Prices are shown in Moroccan dirhams (MAD), taxes included.' },
+        { label: 'Payment', text: 'A deposit may be requested depending on the service booked. The reservation is confirmed after receipt of the payment or the requested deposit. Card payments are processed securely by the Centre Monétique Interbancaire (CMI).' },
         { label: 'Cancellation and modification', text: 'Accommodation cancellations are free up to 7 days before arrival. Within the 7 days preceding arrival, the first night is charged and non-refundable. For Day Pass, Night Pass, activities and events, a 50% deposit is required and remains non-refundable in the event of cancellation.' },
         { label: 'Accommodation', text: 'Check-in 3:00 PM, Check-out 12:00 PM.' },
         { label: 'Activities', text: 'Participants must follow the safety instructions.' },

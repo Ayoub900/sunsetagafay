@@ -18,6 +18,8 @@ interface FooterDict {
   practical_label: string; practical_links: FooterLink[]
   concierge_label: string; concierge_text: string; concierge_cta: string
   legal: string; privacy: string; terms: string; instagram: string
+  legal_notice?: string; refund?: string; delivery?: string
+  credits?: string
 }
 
 interface FooterProps { dict: FooterDict; lang: string }
@@ -234,10 +236,36 @@ export async function Footer({ dict, lang }: FooterProps) {
             <span translate="no" className="notranslate">Sunset Agafay</span>
           </div>
           <div style={{ justifySelf: 'end', fontFamily: 'var(--sans)', fontSize: 10.5, letterSpacing: '0.26em', textTransform: 'uppercase', color: 'rgba(242,232,213,0.55)', display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+            {dict.legal_notice && <Link href={`${base(lang)}/legal-notice`} className="footer-link">{dict.legal_notice}</Link>}
             <Link href={`${base(lang)}/privacy`} className="footer-link">{dict.privacy}</Link>
             <Link href={`${base(lang)}/terms`} className="footer-link">{dict.terms}</Link>
+            {dict.refund && <Link href={`${base(lang)}/refund-policy`} className="footer-link">{dict.refund}</Link>}
+            {dict.delivery && <Link href={`${base(lang)}/delivery-policy`} className="footer-link">{dict.delivery}</Link>}
             <a href="https://www.instagram.com/sunsetagafay" target="_blank" rel="noopener noreferrer" className="footer-link">{dict.instagram}</a>
           </div>
+        </div>
+
+        {/* Credits */}
+        <div style={{
+          marginTop: 'clamp(28px,4vw,40px)',
+          fontFamily: 'var(--sans)',
+          fontSize: 10.5,
+          letterSpacing: '0.26em',
+          textTransform: 'uppercase',
+          color: 'rgba(242,232,213,0.4)',
+          textAlign: 'center',
+        }}>
+          <span translate="no" className="notranslate">
+            {dict.credits ?? 'Crafted by'}{' '}
+            <a
+              href="https://www.sentinelstudio.ma/tourism-websites-morocco"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-link"
+            >
+              Sentinel Studio
+            </a>
+          </span>
         </div>
       </div>
     </footer>
