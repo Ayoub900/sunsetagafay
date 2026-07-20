@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { getClientIp, rateLimit } from '@/lib/rate-limit'
-import { getCmiConfig } from '@/lib/cmi/config'
+import { getCmiConfig, publicBaseUrl } from '@/lib/cmi/config'
 import { verifyHash } from '@/lib/cmi/hash'
 import {
   ci,
@@ -20,9 +20,10 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
+  const base = publicBaseUrl(req.url)
   const ip = getClientIp(req.headers)
   const rl = rateLimit(`cmi-ok:${ip}`, 60, 60_000)
-  if (!rl.allowed) return NextResponse.redirect(new URL('/en/reserve', req.url), 303)
+  if (!rl.allowed) return NextResponse.redirect(new URL('/en/reserve', base), 303)
 
   let params: RawParams = {}
   const len = parseInt(req.headers.get('content-length') ?? '0', 10)
@@ -37,7 +38,7 @@ export async function POST(req: NextRequest) {
 
   const oid = (ci(params, 'oid') ?? '').trim()
   const lang = (ci(params, 'lang') ?? 'en').toLowerCase() === 'fr' ? 'fr' : 'en'
-  const dest = new URL(`/${lang}/reserve/confirmation`, req.url)
+  const dest = new URL(`/${lang}/reserve/confirmation`, base)
   if (oid) dest.searchParams.set('oid', oid)
 
   try {

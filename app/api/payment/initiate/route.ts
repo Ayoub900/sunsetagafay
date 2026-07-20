@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { getClientIp, rateLimit } from '@/lib/rate-limit'
-import { getCmiConfig } from '@/lib/cmi/config'
+import { getCmiConfig, publicBaseUrl } from '@/lib/cmi/config'
 import { buildInitiateFields } from '@/lib/cmi/params'
 import { renderAutoSubmitForm } from '@/lib/cmi/form'
 import { createOrLoadOrderForReservation, PaymentError } from '@/lib/cmi/orders'
@@ -61,7 +61,10 @@ export async function POST(req: NextRequest) {
     // page (which tells a possibly-already-charged customer NOT to pay again).
     if (showStatusInstead) {
       return NextResponse.redirect(
-        new URL(`/${lang}/reserve/confirmation?oid=${encodeURIComponent(order.oid)}`, req.url),
+        new URL(
+          `/${lang}/reserve/confirmation?oid=${encodeURIComponent(order.oid)}`,
+          publicBaseUrl(req.url),
+        ),
         303,
       )
     }

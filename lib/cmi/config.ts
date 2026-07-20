@@ -57,6 +57,22 @@ export function getCmiConfig(): CmiConfig {
   return cached
 }
 
+// Best-effort public origin for building the browser-return redirects in the
+// ok / fail / initiate routes. Behind a reverse proxy `req.url` resolves to the
+// internal bind host (e.g. http://localhost:3001), so a customer would be sent
+// to an unreachable URL after paying. Prefer the canonical CMI_BASE_URL (the
+// same origin CMI itself posts back to); fall back to the request origin only
+// if it is unset/malformed. Never throws — redirects must always resolve.
+export function publicBaseUrl(fallbackUrl: string): string {
+  const raw = process.env.CMI_BASE_URL?.trim().replace(/\/+$/, '')
+  if (raw && /^https?:\/\//.test(raw)) return raw
+  try {
+    return new URL(fallbackUrl).origin
+  } catch {
+    return raw ?? ''
+  }
+}
+
 // Absolute callback / return URLs derived from the base URL.
 export function cmiUrls(cfg: CmiConfig) {
   return {
