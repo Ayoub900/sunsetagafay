@@ -40,6 +40,8 @@ export async function POST(req: NextRequest) {
     const reservation = await prisma.reservation.create({
       data: {
         guestName,
+        email:    mail,
+        phone:    phoneNum,
         suite:    suiteName,
         checkIn,
         checkOut,
@@ -76,7 +78,24 @@ export async function POST(req: NextRequest) {
     // Short human-readable reference: last 6 chars of Mongo ObjectId, uppercased
     const ref = `SA-${reservation.id.slice(-6).toUpperCase()}`
 
-    return NextResponse.json({ ref, id: reservation.id })
+    // Tell the client whether this room can be paid online now. The authoritative
+    // MAD price lives on the suite (rateMadCents); if it's unset the flow falls
+    // back to the "room held, we'll contact you" behaviour. The amount shown is
+    // for display only — the server recomputes it at /api/payment/initiate.
+    const suite = await prisma.suite.findFirst({ where: { nameEn: suiteName } })
+    const chargeable = !!suite && suite.rateMadCents > 0
+    const amountMad = chargeable ? suite!.rateMadCents * nights : 0
+    const amountMadLabel = chargeable
+      ? `${(amountMad / 100).toLocaleString('fr-MA', { minimumFractionDigits: 0 })} MAD`
+      : ''
+
+    return NextResponse.json({
+      ref,
+      id: reservation.id,
+      chargeable,
+      amountMad,
+      amountMadLabel,
+    })
   } catch (err) {
     if (err instanceof ValidationError) {
       return NextResponse.json({ error: err.message }, { status: err.status })

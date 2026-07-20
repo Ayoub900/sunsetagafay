@@ -34,6 +34,7 @@ const groups: NavGroup[] = [
   {
     label: 'Operations',
     items: [
+      ['/admin/payments',   'Payments',   'book'],
       ['/admin/transfers',  'Transfers',  'car'],
       ['/admin/treatments', 'Treatments', 'leaf'],
       ['/admin/account',    'Account',    'cog'],

@@ -3,6 +3,7 @@
 import { useState, useId } from 'react'
 import Link from 'next/link'
 import { minCheckInDate } from '@/lib/opening'
+import PaymentLogos from '@/components/PaymentLogos'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -59,6 +60,31 @@ interface ReserveDict {
   error_generic: string
 }
 
+interface PaymentDict {
+  pay_title: string
+  pay_sub: string
+  summary_label: string
+  amount_label: string
+  night: string
+  nights: string
+  terms_prefix: string
+  terms_link: string
+  pay_cta: string
+  secure_note: string
+  logos_note: string
+  not_chargeable_title: string
+  not_chargeable_sub: string
+  back_home: string
+  ref_label: string
+}
+
+interface Booking {
+  ref: string
+  id: string
+  chargeable: boolean
+  amountMadLabel: string
+}
+
 interface AvailableSuite {
   id: string
   slug: string
@@ -90,10 +116,11 @@ interface GuestForm {
   notes: string
 }
 
-type Step = 'dates' | 'suites' | 'details' | 'confirmed'
+type Step = 'dates' | 'suites' | 'details' | 'payment'
 
 interface Props {
   dict: ReserveDict
+  pay: PaymentDict
   lang: string
 }
 
@@ -122,14 +149,14 @@ const kindGradients: Record<string, string> = {
 
 // ── Step indicator ────────────────────────────────────────────────────────────
 
-const STEPS: Step[] = ['dates', 'suites', 'details', 'confirmed']
+const STEPS: Step[] = ['dates', 'suites', 'details', 'payment']
 
 function StepBar({ step, dict }: { step: Step; dict: ReserveDict }) {
   const labels: Record<Step, string> = {
     dates: dict.step_dates,
     suites: dict.step_suites,
     details: dict.step_details,
-    confirmed: dict.step_confirmed,
+    payment: dict.step_confirmed,
   }
   const current = STEPS.indexOf(step)
   return (
@@ -671,110 +698,134 @@ function DetailsStep({
   )
 }
 
-// ── Confirmed Step ────────────────────────────────────────────────────────────
+// ── Payment Step ──────────────────────────────────────────────────────────────
+//
+// Hands off to the server: a native form POST to /api/payment/initiate, which
+// recomputes the amount from the DB, creates/loads the order, and returns the
+// auto-submitting CMI form. Nothing about the price is trusted from here.
 
-function ConfirmedStep({
-  bookingRef,
+function PaymentStep({
   suite,
   dates,
   isFr,
   dict,
+  pay,
   lang,
+  booking,
 }: {
-  bookingRef: string
   suite: AvailableSuite
   dates: DateState
   isFr: boolean
   dict: ReserveDict
+  pay: PaymentDict
   lang: string
+  booking: Booking
 }) {
+  const id = useId()
+  const [accepted, setAccepted] = useState(false)
   const suiteName  = isFr ? suite.nameFr : suite.nameEn
-  const total      = calcTotal(suite.rateNum, dates.nights)
   const datesLabel = `${formatDate(dates.checkIn, isFr ? 'fr' : 'en')} → ${formatDate(dates.checkOut, isFr ? 'fr' : 'en')}`
+  const nightsLabel = `${dates.nights} ${dates.nights === 1 ? pay.night : pay.nights}`
+
+  // No MAD price set on this room yet: fall back to a hold (no online charge).
+  if (!booking.chargeable) {
+    return (
+      <div style={{ textAlign: 'center', maxWidth: 560, margin: '0 auto', padding: 'clamp(16px,2vw,24px) 0 clamp(48px,6vw,80px)' }}>
+        <h2 style={{ fontFamily: 'var(--serif)', fontWeight: 400, fontSize: 'clamp(28px,4vw,48px)', letterSpacing: '-0.015em', lineHeight: 1, color: 'var(--ink)', margin: '0 0 16px' }}>
+          {pay.not_chargeable_title}
+        </h2>
+        <p style={{ fontFamily: 'var(--sans)', fontSize: 13, lineHeight: 1.8, color: 'var(--ink-soft)', margin: '0 0 28px' }}>
+          {pay.not_chargeable_sub}
+        </p>
+        <div style={{ display: 'inline-block', border: '1px solid var(--brass)', padding: '12px 28px', marginBottom: 36 }}>
+          <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 6 }}>{pay.ref_label}</div>
+          <div style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(18px,2.2vw,24px)', letterSpacing: '0.06em', color: 'var(--ink)' }}>{booking.ref}</div>
+        </div>
+        <div>
+          <Link href={`/${lang}`} className="cta" style={{ color: 'var(--ink)' }}>
+            <span className="cta-label">{pay.back_home}</span>
+            <span className="cta-arrow" aria-hidden="true">→</span>
+          </Link>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div style={{ textAlign: 'center', maxWidth: 560, margin: '0 auto', padding: 'clamp(16px,2vw,24px) 0 clamp(48px,6vw,80px)' }}>
-      {/* Sunburst mark */}
-      <svg width="40" height="40" viewBox="0 0 40 40" stroke="var(--brass)" strokeWidth={1} strokeLinecap="round" fill="none" aria-hidden="true" style={{ marginBottom: 28 }}>
-        <circle cx="20" cy="20" r="3.4" />
-        {Array.from({ length: 16 }, (_, i) => {
-          const a  = (i / 16) * Math.PI * 2 - Math.PI / 2
-          const x1 = 20 + Math.cos(a) * 7.2
-          const y1 = 20 + Math.sin(a) * 7.2
-          const x2 = 20 + Math.cos(a) * 18.4
-          const y2 = 20 + Math.sin(a) * 18.4
-          return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} />
-        })}
-      </svg>
-
-      <div className="eyebrow" style={{ color: 'var(--sienna)', marginBottom: 20, justifyContent: 'center' }}>
-        {dict.confirmed_eyebrow}
+    <div style={{ maxWidth: 640, margin: '0 auto' }}>
+      {/* Summary */}
+      <div style={{ background: 'var(--ink)', color: 'var(--paper)', padding: 'clamp(20px,2.5vw,28px)', marginBottom: 'clamp(28px,4vw,40px)', display: 'flex', flexWrap: 'wrap', gap: 24, alignItems: 'center', justifyContent: 'space-between' }}>
+        <div>
+          <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--rose)', marginBottom: 6 }}>{pay.summary_label}</div>
+          <div style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(18px,2vw,22px)', marginBottom: 4 }}>{suiteName}</div>
+          <div style={{ fontFamily: 'var(--sans)', fontSize: 12, letterSpacing: '0.06em', color: 'rgba(242,232,213,0.65)' }}>{datesLabel} · {nightsLabel}</div>
+        </div>
+        <div style={{ textAlign: 'right' }}>
+          <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--rose)', marginBottom: 4 }}>{pay.amount_label}</div>
+          <div style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(20px,2.5vw,26px)', color: 'var(--brass)' }}>{booking.amountMadLabel}</div>
+        </div>
       </div>
-      <h2 style={{
-        fontFamily: 'var(--serif)', fontWeight: 400,
-        fontSize: 'clamp(32px,5vw,60px)',
-        letterSpacing: '-0.02em', lineHeight: 0.95,
-        color: 'var(--ink)', margin: '0 0 24px',
-      }}>
-        {dict.confirmed_title}
+
+      <h2 style={{ fontFamily: 'var(--serif)', fontWeight: 400, fontSize: 'clamp(26px,3.5vw,44px)', letterSpacing: '-0.015em', lineHeight: 1, color: 'var(--ink)', margin: '0 0 8px' }}>
+        {pay.pay_title}
       </h2>
-      <p style={{ fontFamily: 'var(--sans)', fontSize: 13, lineHeight: 1.8, color: 'var(--ink-soft)', margin: '0 0 40px', letterSpacing: '0.03em' }}>
-        {dict.confirmed_sub}
+      <p style={{ fontFamily: 'var(--sans)', fontSize: 13, color: 'var(--ink-soft)', margin: '0 0 24px', letterSpacing: '0.02em' }}>{pay.pay_sub}</p>
+
+      <div style={{ marginBottom: 24 }}>
+        <PaymentLogos note={pay.logos_note} />
+      </div>
+
+      {/* Native POST hand-off to the server-side initiate endpoint. */}
+      <form method="POST" action="/api/payment/initiate">
+        <input type="hidden" name="reservationId" value={booking.id} />
+        <input type="hidden" name="lang" value={lang} />
+
+        <label htmlFor={`${id}-terms`} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontFamily: 'var(--sans)', fontSize: 13, lineHeight: 1.6, color: 'var(--ink)', margin: '0 0 24px', cursor: 'pointer' }}>
+          <input
+            id={`${id}-terms`}
+            type="checkbox"
+            name="acceptTerms"
+            value="true"
+            required
+            checked={accepted}
+            onChange={e => setAccepted(e.target.checked)}
+            style={{ marginTop: 3, flexShrink: 0 }}
+          />
+          <span>
+            {pay.terms_prefix}{' '}
+            <Link href={`/${lang}/terms`} target="_blank" style={{ color: 'var(--sienna)', textDecoration: 'underline', textUnderlineOffset: 3 }}>{pay.terms_link}</Link>.
+          </span>
+        </label>
+
+        <button
+          type="submit"
+          disabled={!accepted}
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 14,
+            fontFamily: 'var(--sans)', fontSize: 11, fontWeight: 600,
+            letterSpacing: '0.28em', textTransform: 'uppercase',
+            color: 'var(--paper)',
+            background: accepted ? 'var(--sienna)' : 'var(--ink-soft)',
+            border: 'none', padding: '18px 36px',
+            cursor: accepted ? 'pointer' : 'not-allowed',
+            minWidth: 240, justifyContent: 'center',
+          }}
+        >
+          {pay.pay_cta}
+          <span aria-hidden="true" style={{ fontSize: 14 }}>→</span>
+        </button>
+      </form>
+
+      <p style={{ fontFamily: 'var(--sans)', fontSize: 11, lineHeight: 1.7, color: 'var(--ink-soft)', margin: '24px 0 0', letterSpacing: '0.02em' }}>
+        {pay.secure_note}
       </p>
-
-      {/* Reference badge */}
-      <div style={{
-        display: 'inline-block',
-        border: '1px solid var(--brass)',
-        padding: '14px 32px',
-        marginBottom: 40,
-      }}>
-        <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 6 }}>
-          {dict.ref_label}
-        </div>
-        <div style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(20px,2.5vw,26px)', letterSpacing: '0.06em', color: 'var(--ink)' }}>
-          {bookingRef}
-        </div>
-      </div>
-
-      {/* Summary grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: '1px',
-        background: 'rgba(31,26,20,0.12)',
-        border: '1px solid rgba(31,26,20,0.12)',
-        marginBottom: 48,
-        textAlign: 'left',
-      }}>
-        {([
-          [dict.confirmed_suite_label, suiteName],
-          [dict.confirmed_dates_label, datesLabel],
-          [dict.confirmed_guests_label, `${dates.guests} ${dates.guests === 1 ? dict.guest_singular : dict.guest_plural}`],
-          ...(total ? [[dict.confirmed_total_label, total]] : []),
-        ] as [string, string][]).map(([k, v]) => (
-          <div key={k} style={{ background: 'var(--paper)', padding: 'clamp(14px,2vw,20px) clamp(16px,2vw,24px)' }}>
-            <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 6 }}>
-              {k}
-            </div>
-            <div style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(14px,1.5vw,17px)', color: 'var(--ink)' }}>
-              {v}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <Link href={`/${lang}`} className="cta" style={{ color: 'var(--ink)' }}>
-        <span className="cta-label">{dict.confirmed_cta}</span>
-        <span className="cta-arrow" aria-hidden="true">→</span>
-      </Link>
     </div>
   )
 }
 
 // ── Wizard shell ──────────────────────────────────────────────────────────────
 
-export default function ReservationWizard({ dict, lang }: Props) {
+export default function ReservationWizard({ dict, pay, lang }: Props) {
   const isFr = lang === 'fr'
 
   const [step, setStep]         = useState<Step>('dates')
@@ -783,7 +834,7 @@ export default function ReservationWizard({ dict, lang }: Props) {
   const [selected, setSelected] = useState<AvailableSuite | null>(null)
   const [loading, setLoading]   = useState(false)
   const [error, setError]       = useState<string | null>(null)
-  const [confirmed, setConfirmed] = useState<{ ref: string } | null>(null)
+  const [booking, setBooking]   = useState<Booking | null>(null)
 
   async function handleSearch(d: DateState) {
     setLoading(true)
@@ -827,8 +878,13 @@ export default function ReservationWizard({ dict, lang }: Props) {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || dict.error_generic)
-      setConfirmed({ ref: data.ref })
-      setStep('confirmed')
+      setBooking({
+        ref: data.ref,
+        id: data.id,
+        chargeable: !!data.chargeable,
+        amountMadLabel: data.amountMadLabel || '',
+      })
+      setStep('payment')
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : dict.error_generic)
@@ -870,14 +926,15 @@ export default function ReservationWizard({ dict, lang }: Props) {
           />
         )}
 
-        {step === 'confirmed' && confirmed && selected && dates && (
-          <ConfirmedStep
-            bookingRef={confirmed.ref}
+        {step === 'payment' && booking && selected && dates && (
+          <PaymentStep
             suite={selected}
             dates={dates}
             isFr={isFr}
             dict={dict}
+            pay={pay}
             lang={lang}
+            booking={booking}
           />
         )}
       </div>

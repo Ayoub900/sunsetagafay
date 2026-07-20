@@ -159,6 +159,26 @@ export async function getAvailableSuites(checkIn: string, checkOut: string) {
   return suites.filter(s => !bookedNames.has(s.nameEn))
 }
 
+// ─── Orders (CMI payments) ───────────────────────────────────────────────────
+
+export const getOrders = () =>
+  prisma.order.findMany({ orderBy: { createdAt: 'desc' }, take: 200 })
+
+// Orders that need manual verification against the CMI Merchant Center:
+// anything UNDER_RECONCILIATION, plus PENDING orders older than 1 hour.
+export async function getOrdersNeedingAttention() {
+  const staleBefore = new Date(Date.now() - 60 * 60_000)
+  return prisma.order.findMany({
+    where: {
+      OR: [
+        { status: 'UNDER_RECONCILIATION' },
+        { status: 'PENDING', createdAt: { lt: staleBefore } },
+      ],
+    },
+    orderBy: { createdAt: 'asc' },
+  })
+}
+
 // ─── Contact Messages ──────────────────────────────────────────────────────
 
 export const getContactMessages = () =>

@@ -107,8 +107,16 @@ export default async function SuitesPage({
                     <Field label="View" w="calc(50% - 8px)">
                       <TextInput name="view" defaultValue={editing?.view} placeholder="Olive court" required />
                     </Field>
-                    <Field label="Rate" w="calc(50% - 8px)">
+                    <Field label="Rate (display)" w="calc(50% - 8px)">
                       <TextInput name="rate" defaultValue={editing?.rate} placeholder="€580" required />
+                    </Field>
+                    <Field label="Online price (MAD / night)" w="calc(50% - 8px)">
+                      <TextInput
+                        name="rateMad"
+                        type="number"
+                        defaultValue={editing ? String((editing.rateMadCents ?? 0) / 100) : '0'}
+                        placeholder="6000"
+                      />
                     </Field>
                     <Field label="Order" w="calc(50% - 8px)">
                       <TextInput name="order" type="number" defaultValue={String(editing?.order ?? 0)} />

@@ -27,6 +27,11 @@ model Suite {
   area      String
   view      String
   rate      String
+  // Authoritative nightly rate charged online, in MAD minor units (centimes).
+  // `rate` above stays the marketing/display string (often shown in €). CMI
+  // settles in MAD (currency 504), so this integer is the single source of
+  // truth the server uses to compute the amount. 0 = not chargeable online.
+  rateMadCents     Int      @default(0)
   imageKind String   @default("sunset")
   heroImageUrl String? @default("")
   imageUrl  String   @default("")
@@ -181,6 +186,8 @@ model Treatment {
 model Reservation {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   guestName String
+  email     String   @default("")
+  phone     String   @default("")
   suite     String
   checkIn   String
   checkOut  String
@@ -189,8 +196,110 @@ model Reservation {
   total     String   @default("")
   status    String   @default("Pending")
   notes     String   @default("")
+  order     Order?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// ─── CMI online payment ──────────────────────────────────────────────────────
+
+// Deliberately NO "failed" status: per the CMI spec, failed payment attempts
+// must not change the order status. The order stays PENDING and every failed
+// attempt is recorded in PaymentCallback instead.
+enum OrderStatus {
+  PENDING
+  PAID
+  UNDER_RECONCILIATION
+  CANCELLED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+model Order {
+  id       String      @id @default(auto()) @map("_id") @db.ObjectId
+  // The CMI merchant order id: alphanumeric only, max 64 chars. Reused across
+  // failed retries of the same order; a new oid is minted only for a new order
+  // or after this oid has been consumed by a successful transaction.
+  oid      String      @unique
+  status   OrderStatus @default(PENDING)
+
+  // Authoritative charged amount, MAD minor units (centimes). Currency is the
+  // ISO-4217 numeric code sent to CMI ("504" = MAD).
+  amount   Int
+  currency String      @default("504")
+
+  // Optional display currency (what the customer sees, e.g. EUR). When present
+  // and different from MAD, initiate sends `amountCur` / `symbolCur` to CMI.
+  displayAmount   Int?
+  displayCurrency String?
+  displaySymbol   String?
+
+  // Mirrors the status shown in the CMI Merchant Center for this order:
+  // PRE = pre-authorized, POST = captured, VOID = cancelled auth, RFND = refunded.
+  cmiStatus   String?
+
+  lang        String  @default("en")
+  description String  @default("")
+
+  customerName  String
+  customerEmail String
+  customerPhone String @default("")
+
+  // Payment data captured from the authoritative host-to-host callback.
+  transId        String?
+  authCode       String?
+  hostRefNum     String?
+  acqStan        String?
+  maskedPan      String?
+  cardBrand      String?
+  trxDate        String?
+  mdStatus       String?
+  txstatus       String?
+  procReturnCode String?
+
+  postAuthRequestedAt DateTime?
+  postAuthConfirmedAt DateTime?
+  paidAt              DateTime?
+  fulfilledAt         DateTime?
+
+  reservationId String?      @unique @db.ObjectId
+  reservation   Reservation? @relation(fields: [reservationId], references: [id])
+
+  callbacks PaymentCallback[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PaymentCallback {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  orderId String? @db.ObjectId
+  order   Order?  @relation(fields: [orderId], references: [id])
+  oid     String
+
+  // Idempotency key: TransId when present, otherwise a payload fingerprint.
+  // A unique index guarantees a duplicate delivery cannot be persisted twice.
+  fingerprint String  @unique
+  transId     String?
+
+  // Which channel delivered this: the authoritative host-to-host callback, or
+  // the browser return on okUrl / failUrl.
+  channel String @default("callback")
+
+  hashValid      Boolean  @default(false)
+  amountMatched  Boolean?
+  procReturnCode String?
+  responseCode   String? // CMI `Response` field: Approved / Declined / Error
+  mdStatus       String?
+  txstatus       String?
+  errCode        String?
+  errMsg         String?
+  // Exact body returned to CMI (ACTION=POSTAUTH | APPROVED | FAILURE) or the
+  // action taken for a browser return.
+  responseSent String?
+  raw          Json
+
+  createdAt DateTime @default(now())
 }
 
 model Guest {

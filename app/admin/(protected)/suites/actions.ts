@@ -27,6 +27,9 @@ export async function createSuite(formData: FormData) {
       area:      String(formData.get('area')).trim(),
       view:      String(formData.get('view')).trim(),
       rate:      String(formData.get('rate')).trim(),
+      // Authoritative online charge, in MAD minor units (centimes). The admin
+      // form takes MAD; we store centimes. 0 = not payable online.
+      rateMadCents: Math.max(0, Math.round((Number(formData.get('rateMad')) || 0) * 100)),
       imageKind: String(formData.get('imageKind')).trim() || 'sunset',
       heroImageUrl,
       imageUrl,
@@ -58,6 +61,9 @@ export async function updateSuite(id: string, formData: FormData) {
       area:      String(formData.get('area')).trim(),
       view:      String(formData.get('view')).trim(),
       rate:      String(formData.get('rate')).trim(),
+      // Authoritative online charge, in MAD minor units (centimes). The admin
+      // form takes MAD; we store centimes. 0 = not payable online.
+      rateMadCents: Math.max(0, Math.round((Number(formData.get('rateMad')) || 0) * 100)),
       imageKind: String(formData.get('imageKind')).trim() || 'sunset',
       heroImageUrl,
       imageUrl,

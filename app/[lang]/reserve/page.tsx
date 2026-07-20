@@ -81,7 +81,7 @@ export default async function ReservePage({ params }: { params: Promise<{ lang: 
       </section>
 
       {/* Wizard */}
-      <ReservationWizard dict={r} lang={lang} />
+      <ReservationWizard dict={r} pay={dict.payment} lang={lang} />
     </div>
   )
 }
