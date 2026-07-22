@@ -3,7 +3,7 @@ import { getClientIp, rateLimit } from '@/lib/rate-limit'
 import { getCmiConfig, publicBaseUrl } from '@/lib/cmi/config'
 import { verifyHash } from '@/lib/cmi/hash'
 import { ci, getOrderByOid, persistCallback, type RawParams } from '@/lib/cmi/orders'
-import { alertPayment } from '@/lib/cmi/observability'
+import { alertPayment, log3dReturn } from '@/lib/cmi/observability'
 
 // failUrl: the browser is POSTed here after a declined/errored payment. Never
 // changes the order status (failed attempts must not). Verifies the hash for
@@ -37,6 +37,19 @@ export async function POST(req: NextRequest) {
     const cfg = getCmiConfig()
     const { ok: hashOk } = verifyHash(params, cfg.storeKey)
     const order = oid ? await getOrderByOid(oid) : null
+
+    // Diagnostic: empty mdStatus / cavv / eci here is the signature of the
+    // E-COMMERCE (unauthenticated) routing this fix is chasing.
+    log3dReturn('failurl', {
+      oid,
+      mdStatus: ci(params, 'mdStatus'),
+      txstatus: ci(params, 'txstatus'),
+      cavv: ci(params, 'cavv') ? 'present' : '',
+      eci: ci(params, 'eci'),
+      xid: ci(params, 'xid') ? 'present' : '',
+      ProcReturnCode: ci(params, 'ProcReturnCode'),
+      ErrMsg: ci(params, 'ErrMsg'),
+    })
 
     if (order?.reservationId) dest.searchParams.set('r', order.reservationId)
 

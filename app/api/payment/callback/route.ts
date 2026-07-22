@@ -12,7 +12,7 @@ import {
   fulfillPaidOrder,
   type RawParams,
 } from '@/lib/cmi/orders'
-import { alertPayment, logCallback } from '@/lib/cmi/observability'
+import { alertPayment, logCallback, log3dReturn } from '@/lib/cmi/observability'
 
 // The authoritative channel for order status. Publicly reachable, no auth, no
 // CSRF. Must respond fast with a bare text/plain body.
@@ -73,6 +73,20 @@ export async function POST(req: NextRequest) {
       }
       return plain('FAILURE')
     }
+
+    // Diagnostic: the 3-D Secure authentication fields. On a correctly routed
+    // 3D transaction mdStatus is 1–4 with CAVV/ECI populated; empty values mean
+    // the transaction reached the acquirer unauthenticated (E-COMMERCE).
+    log3dReturn('callback', {
+      oid,
+      mdStatus: ci(params, 'mdStatus'),
+      txstatus: ci(params, 'txstatus'),
+      cavv: ci(params, 'cavv') ? 'present' : '',
+      eci: ci(params, 'eci'),
+      xid: ci(params, 'xid') ? 'present' : '',
+      ProcReturnCode: ci(params, 'ProcReturnCode'),
+      ErrMsg: ci(params, 'ErrMsg'),
+    })
 
     // 2) Order lookup.
     const order = await getOrderByOid(oid)

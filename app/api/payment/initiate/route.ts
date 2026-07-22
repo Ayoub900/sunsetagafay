@@ -4,6 +4,7 @@ import { getCmiConfig, publicBaseUrl } from '@/lib/cmi/config'
 import { buildInitiateFields } from '@/lib/cmi/params'
 import { renderAutoSubmitForm } from '@/lib/cmi/form'
 import { createOrLoadOrderForReservation, PaymentError } from '@/lib/cmi/orders'
+import { logInitiate } from '@/lib/cmi/observability'
 import { hasLocale } from '@/app/[lang]/dictionaries'
 
 // Needs Node (crypto + Prisma) and must never be cached.
@@ -71,6 +72,9 @@ export async function POST(req: NextRequest) {
 
     const cfg = getCmiConfig()
     const fields = buildInitiateFields(order, cfg)
+    // Diagnostic: record the exact payload (hash redacted) so the 3-D Secure
+    // routing can be verified against est3dgate expectations.
+    logInitiate(order.oid, fields)
     const html = renderAutoSubmitForm(cfg.gatewayUrl, fields)
     return new Response(html, {
       status: 200,

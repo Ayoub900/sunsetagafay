@@ -9,7 +9,7 @@ import {
   persistCallback,
   type RawParams,
 } from '@/lib/cmi/orders'
-import { alertPayment } from '@/lib/cmi/observability'
+import { alertPayment, log3dReturn } from '@/lib/cmi/observability'
 
 // okUrl: the browser is POSTed here after a (claimed) successful payment. This
 // is a DISPLAY/fallback channel only — the authoritative status transition to
@@ -45,6 +45,17 @@ export async function POST(req: NextRequest) {
     const cfg = getCmiConfig()
     const { ok: hashOk } = verifyHash(params, cfg.storeKey)
     const order = oid ? await getOrderByOid(oid) : null
+
+    log3dReturn('okurl', {
+      oid,
+      mdStatus: ci(params, 'mdStatus'),
+      txstatus: ci(params, 'txstatus'),
+      cavv: ci(params, 'cavv') ? 'present' : '',
+      eci: ci(params, 'eci'),
+      xid: ci(params, 'xid') ? 'present' : '',
+      ProcReturnCode: ci(params, 'ProcReturnCode'),
+      ErrMsg: ci(params, 'ErrMsg'),
+    })
 
     // Persist the browser return for the audit trail / certification file —
     // only for known orders, so junk POSTs can't flood the collection.
