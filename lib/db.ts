@@ -1,4 +1,5 @@
 import { prisma } from './prisma'
+import { serviceAllLabel, serviceTypeLabel } from './services'
 
 // ─── Suites ────────────────────────────────────────────────────────────────
 
@@ -138,11 +139,12 @@ export const getReservations = () =>
 export const getReservationById = (id: string) =>
   prisma.reservation.findUnique({ where: { id } })
 
-// Returns active suites that have no overlapping non-cancelled reservation.
+// Returns active suites that have no overlapping non-cancelled reservation and
+// are not covered by an admin availability block for the requested range.
 // Dates are stored as ISO strings (YYYY-MM-DD); lexicographic comparison is
 // equivalent to chronological comparison for that format.
 export async function getAvailableSuites(checkIn: string, checkOut: string) {
-  const [suites, reservations] = await Promise.all([
+  const [suites, reservations, blocks] = await Promise.all([
     prisma.suite.findMany({
       where: { active: true },
       orderBy: [{ order: 'asc' }, { createdAt: 'asc' }],
@@ -154,9 +156,100 @@ export async function getAvailableSuites(checkIn: string, checkOut: string) {
         checkOut: { gt: checkIn },
       },
     }),
+    getOverlappingBlocks(checkIn, checkOut),
   ])
+
+  // A whole-property block (serviceType "") or an all-suites block (serviceType
+  // "suite" with no serviceId) closes every suite for the range.
+  const closedEverySuite = blocks.some(
+    b => b.serviceType === '' || (b.serviceType === 'suite' && !b.serviceId),
+  )
+  if (closedEverySuite) return []
+
   const bookedNames = new Set(reservations.map(r => r.suite))
-  return suites.filter(s => !bookedNames.has(s.nameEn))
+  const blockedSuiteIds = new Set(
+    blocks.filter(b => b.serviceType === 'suite' && b.serviceId).map(b => b.serviceId),
+  )
+  return suites.filter(s => !bookedNames.has(s.nameEn) && !blockedSuiteIds.has(s.id))
+}
+
+// ─── Availability Blocks ─────────────────────────────────────────────────────
+
+export const getAvailabilityBlocks = () =>
+  prisma.availabilityBlock.findMany({ orderBy: [{ startDate: 'asc' }, { createdAt: 'asc' }] })
+
+export const getAvailabilityBlockById = (id: string) =>
+  prisma.availabilityBlock.findUnique({ where: { id } })
+
+// Blocks whose inclusive night range [startDate, endDate] overlaps a stay of
+// [checkIn (inclusive), checkOut (exclusive)). Overlap holds when the block
+// starts before the guest departs AND ends on or after the guest arrives.
+export const getOverlappingBlocks = (checkIn: string, checkOut: string) =>
+  prisma.availabilityBlock.findMany({
+    where: {
+      startDate: { lt: checkOut },
+      endDate:   { gte: checkIn },
+    },
+  })
+
+// True if the given suite is blocked for the range, whether by a whole-property
+// block, an all-suites block, or a block on that specific suite.
+export async function isSuiteBlocked(suiteName: string, checkIn: string, checkOut: string) {
+  const [suite, blocks] = await Promise.all([
+    prisma.suite.findFirst({ where: { nameEn: suiteName } }),
+    getOverlappingBlocks(checkIn, checkOut),
+  ])
+  return blocks.some(b =>
+    b.serviceType === '' ||
+    (b.serviceType === 'suite' && (!b.serviceId || (!!suite && b.serviceId === suite.id))),
+  )
+}
+
+// Every reservable item, grouped by service type, for the block picker. Includes
+// inactive items so an admin can still close something that is currently hidden.
+export async function getReservableServices() {
+  const [suites, restaurants, dayPasses, parties, events, experiences, transfers, treatments] =
+    await Promise.all([
+      prisma.suite.findMany({ orderBy: [{ order: 'asc' }, { createdAt: 'asc' }] }),
+      prisma.restaurant.findMany({ orderBy: [{ order: 'asc' }, { createdAt: 'asc' }] }),
+      prisma.dayPass.findMany({ orderBy: [{ order: 'asc' }, { createdAt: 'asc' }] }),
+      prisma.sunsetParty.findMany({ orderBy: [{ order: 'asc' }, { createdAt: 'asc' }] }),
+      prisma.event.findMany({ orderBy: [{ order: 'asc' }, { createdAt: 'asc' }] }),
+      prisma.experience.findMany({ orderBy: [{ order: 'asc' }, { createdAt: 'asc' }] }),
+      prisma.transfer.findMany({ orderBy: [{ order: 'asc' }, { createdAt: 'asc' }] }),
+      prisma.treatment.findMany({ orderBy: [{ order: 'asc' }, { createdAt: 'asc' }] }),
+    ])
+  const map = (rows: { id: string; nameEn: string }[]) =>
+    rows.map(r => ({ id: r.id, name: r.nameEn }))
+  return {
+    suite:          map(suites),
+    restaurant:     map(restaurants),
+    'day-pass':     map(dayPasses),
+    'sunset-party': map(parties),
+    event:          map(events),
+    experience:     map(experiences),
+    transfer:       map(transfers),
+    treatment:      map(treatments),
+  } as Record<string, { id: string; name: string }[]>
+}
+
+// Resolves the display name for a service reference at block-creation time.
+export async function resolveServiceName(type: string, id: string): Promise<string> {
+  if (!type) return 'Entire property'
+  if (!id)   return serviceAllLabel(type)
+
+  const finders: Record<string, () => Promise<{ nameEn: string } | null>> = {
+    suite:          () => prisma.suite.findUnique({ where: { id } }),
+    restaurant:     () => prisma.restaurant.findUnique({ where: { id } }),
+    'day-pass':     () => prisma.dayPass.findUnique({ where: { id } }),
+    'sunset-party': () => prisma.sunsetParty.findUnique({ where: { id } }),
+    event:          () => prisma.event.findUnique({ where: { id } }),
+    experience:     () => prisma.experience.findUnique({ where: { id } }),
+    transfer:       () => prisma.transfer.findUnique({ where: { id } }),
+    treatment:      () => prisma.treatment.findUnique({ where: { id } }),
+  }
+  const item = await finders[type]?.()
+  return item?.nameEn ?? serviceTypeLabel(type)
 }
 
 // ─── Contact Messages ──────────────────────────────────────────────────────

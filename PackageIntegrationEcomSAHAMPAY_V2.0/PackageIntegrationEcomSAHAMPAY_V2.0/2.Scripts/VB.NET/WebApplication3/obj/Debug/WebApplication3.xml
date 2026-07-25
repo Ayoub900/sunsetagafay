@@ -1,0 +1,355 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+WebApplication3
+</name>
+</assembly>
+<members>
+<member name="T:WebApplication3.My.MyWebExtension">
+ <summary>
+ Module used to define the properties that are available in the My Namespace for Web projects.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:WebApplication3.My.MyWebExtension.Application">
+ <summary>
+ Returns information about the current application.
+ </summary>
+</member>
+<member name="P:WebApplication3.My.MyWebExtension.Computer">
+ <summary>
+ Returns information about the host computer.
+ </summary>
+</member>
+<member name="P:WebApplication3.My.MyWebExtension.User">
+ <summary>
+ Returns information for the current Web user.
+ </summary>
+</member>
+<member name="P:WebApplication3.My.MyWebExtension.Request">
+ <summary>
+ Returns Request object.
+ </summary>
+</member>
+<member name="P:WebApplication3.My.MyWebExtension.Response">
+ <summary>
+ Returns Response object.
+ </summary>
+</member>
+<member name="P:WebApplication3.My.MyWebExtension.Log">
+ <summary>
+ Returns the Asp log object.
+ </summary>
+</member>
+<member name="P:WebApplication3.My.MyWebExtension.WebServices">
+ <summary>
+ Provides access to WebServices added to this project.
+ </summary>
+</member>
+<member name="T:WebApplication3.My.Resources.Resources">
+<summary>
+  Une classe de ressource fortement typée destinée, entre autres, à la consultation des chaînes localisées.
+</summary>
+</member>
+<member name="P:WebApplication3.My.Resources.Resources.ResourceManager">
+<summary>
+  Retourne l'instance ResourceManager mise en cache utilisée par cette classe.
+</summary>
+</member>
+<member name="P:WebApplication3.My.Resources.Resources.Culture">
+<summary>
+  Remplace la propriété CurrentUICulture du thread actuel pour toutes
+  les recherches de ressources à l'aide de cette classe de ressource fortement typée.
+</summary>
+</member>
+<member name="F:WebApplication3.Callback._Head1">
+<summary>
+Contrôle Head1.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.Ok._Head1">
+<summary>
+Contrôle Head1.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._Head1">
+<summary>
+Contrôle Head1.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._form1">
+<summary>
+Contrôle form1.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._frmError">
+<summary>
+Contrôle frmError.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._clientid">
+<summary>
+Contrôle clientid.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._okUrl">
+<summary>
+Contrôle okUrl.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._failUrl">
+<summary>
+Contrôle failUrl.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._shopurl">
+<summary>
+Contrôle shopurl.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._callbackUrl">
+<summary>
+Contrôle callbackUrl.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._TranType">
+<summary>
+Contrôle TranType.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._currency">
+<summary>
+Contrôle currency.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._rnd">
+<summary>
+Contrôle rnd.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._storetype">
+<summary>
+Contrôle storetype.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._lang">
+<summary>
+Contrôle lang.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._hashAlgorithm">
+<summary>
+Contrôle hashAlgorithm.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._refreshtime">
+<summary>
+Contrôle refreshtime.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._encoding">
+<summary>
+Contrôle encoding.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._hash">
+<summary>
+Contrôle hash.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._oid">
+<summary>
+Contrôle oid.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._amount">
+<summary>
+Contrôle amount.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._BillToName">
+<summary>
+Contrôle BillToName.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._email">
+<summary>
+Contrôle email.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._tel">
+<summary>
+Contrôle tel.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._BillToCompany">
+<summary>
+Contrôle BillToCompany.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._BillToStreet1">
+<summary>
+Contrôle BillToStreet1.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._BillToCity">
+<summary>
+Contrôle BillToCity.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._BillToStateProv">
+<summary>
+Contrôle BillToStateProv.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._BillToPostalCode">
+<summary>
+Contrôle BillToPostalCode.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._BillToCountry">
+<summary>
+Contrôle BillToCountry.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.PaymentRequest._submit">
+<summary>
+Contrôle submit.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+<member name="F:WebApplication3.Fail._Head1">
+<summary>
+Contrôle Head1.
+</summary>
+<remarks>
+Champ généré automatiquement.
+Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+</remarks>
+</member>
+</members>
+</doc>

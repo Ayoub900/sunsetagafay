@@ -193,6 +193,31 @@ model Reservation {
   updatedAt DateTime @updatedAt
 }
 
+// An admin-defined closure that removes a reservable service from booking for a
+// date range, while other dates stay bookable. Used for maintenance, private
+// buy-outs, seasonal closures, etc.
+model AvailabilityBlock {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  // What this block closes:
+  //   serviceType = ""      → the entire property (every service)
+  //   serviceType = "suite" → suites; serviceId = "" means every suite,
+  //                           otherwise that one suite's id
+  // serviceType values are the slugs in lib/services.ts (suite, restaurant,
+  // day-pass, sunset-party, event, experience, transfer, treatment).
+  serviceType String   @default("")
+  serviceId   String   @default("")
+  // Human label captured at creation (e.g. "Suite La Khoutoubia", "All suites",
+  // "Entire property") so the admin list stays readable if the item is renamed.
+  serviceName String   @default("")
+  // Inclusive range of blocked nights, YYYY-MM-DD. A stay conflicts with the
+  // block when it occupies any night in [startDate, endDate].
+  startDate   String
+  endDate     String
+  reason      String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model Guest {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String

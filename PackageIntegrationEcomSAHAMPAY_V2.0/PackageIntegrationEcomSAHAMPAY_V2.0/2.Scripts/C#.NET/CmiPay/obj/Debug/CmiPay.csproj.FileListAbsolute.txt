@@ -1,0 +1,21 @@
+C:\inetpub\wwwroot\CmiPay\CmiPay\bin\CmiPay.dll.config
+C:\inetpub\wwwroot\CmiPay\CmiPay\bin\CmiPay.dll
+C:\inetpub\wwwroot\CmiPay\CmiPay\bin\CmiPay.pdb
+C:\inetpub\wwwroot\CmiPay\CmiPay\obj\Debug\CmiPay.csproj.AssemblyReference.cache
+C:\inetpub\wwwroot\CmiPay\CmiPay\obj\Debug\CmiPay.csproj.CoreCompileInputs.cache
+C:\inetpub\wwwroot\CmiPay\CmiPay\obj\Debug\CmiPay.dll
+C:\inetpub\wwwroot\CmiPay\CmiPay\obj\Debug\CmiPay.pdb
+C:\inetpub\wwwroot\ASPNETC\CmiPay\bin\CmiPay.dll.config
+C:\inetpub\wwwroot\ASPNETC\CmiPay\bin\CmiPay.dll
+C:\inetpub\wwwroot\ASPNETC\CmiPay\bin\CmiPay.pdb
+C:\inetpub\wwwroot\ASPNETC\CmiPay\obj\Debug\CmiPay.csproj.AssemblyReference.cache
+C:\inetpub\wwwroot\ASPNETC\CmiPay\obj\Debug\CmiPay.csproj.CoreCompileInputs.cache
+C:\inetpub\wwwroot\ASPNETC\CmiPay\obj\Debug\CmiPay.dll
+C:\inetpub\wwwroot\ASPNETC\CmiPay\obj\Debug\CmiPay.pdb
+C:\Users\admin\Documents\CMI\MAJ DOC\PackageIntegrationEcomCmi_V2.0\PackageIntegrationEcomCmi_V2.0\2.Scripts\C#.NET\CmiPay\bin\CmiPay.dll.config
+C:\Users\admin\Documents\CMI\MAJ DOC\PackageIntegrationEcomCmi_V2.0\PackageIntegrationEcomCmi_V2.0\2.Scripts\C#.NET\CmiPay\bin\CmiPay.dll
+C:\Users\admin\Documents\CMI\MAJ DOC\PackageIntegrationEcomCmi_V2.0\PackageIntegrationEcomCmi_V2.0\2.Scripts\C#.NET\CmiPay\bin\CmiPay.pdb
+C:\Users\admin\Documents\CMI\MAJ DOC\PackageIntegrationEcomCmi_V2.0\PackageIntegrationEcomCmi_V2.0\2.Scripts\C#.NET\CmiPay\obj\Debug\CmiPay.csproj.AssemblyReference.cache
+C:\Users\admin\Documents\CMI\MAJ DOC\PackageIntegrationEcomCmi_V2.0\PackageIntegrationEcomCmi_V2.0\2.Scripts\C#.NET\CmiPay\obj\Debug\CmiPay.csproj.CoreCompileInputs.cache
+C:\Users\admin\Documents\CMI\MAJ DOC\PackageIntegrationEcomCmi_V2.0\PackageIntegrationEcomCmi_V2.0\2.Scripts\C#.NET\CmiPay\obj\Debug\CmiPay.dll
+C:\Users\admin\Documents\CMI\MAJ DOC\PackageIntegrationEcomCmi_V2.0\PackageIntegrationEcomCmi_V2.0\2.Scripts\C#.NET\CmiPay\obj\Debug\CmiPay.pdb
