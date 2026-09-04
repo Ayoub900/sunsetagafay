@@ -2,7 +2,7 @@ import 'server-only'
 import { createHash } from 'node:crypto'
 import { Prisma, type Order, type Reservation, type ServiceBooking } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
-import { newOid, parseAmountToMinor } from './util'
+import { isObjectId, newOid, parseAmountToMinor } from './util'
 import { sendPaymentEmails } from '@/lib/email/payment'
 import { isServiceBlockedOnDate, isSuiteBlocked } from '@/lib/db'
 import { logCallback } from './observability'
@@ -29,6 +29,7 @@ export class PaymentError extends Error {
 }
 
 const FINALIZED: Order['status'][] = ['PAID', 'REFUNDED', 'PARTIALLY_REFUNDED', 'CANCELLED']
+
 
 // ── Pricing ──────────────────────────────────────────────────────────────────
 
@@ -219,6 +220,7 @@ export async function createOrLoadOrderForReservation(
   reservationId: string,
   lang: string,
 ): Promise<OrderResult> {
+  if (!isObjectId(reservationId)) throw new PaymentError('Reservation not found', 'NOT_FOUND')
   const reservation = await prisma.reservation.findUnique({ where: { id: reservationId } })
   if (!reservation) throw new PaymentError('Reservation not found', 'NOT_FOUND')
   if (!reservation.email || !reservation.email.trim()) {
@@ -255,6 +257,7 @@ export async function createOrLoadOrderForServiceBooking(
   serviceBookingId: string,
   lang: string,
 ): Promise<OrderResult> {
+  if (!isObjectId(serviceBookingId)) throw new PaymentError('Booking not found', 'NOT_FOUND')
   const booking = await prisma.serviceBooking.findUnique({ where: { id: serviceBookingId } })
   if (!booking) throw new PaymentError('Booking not found', 'NOT_FOUND')
   if (!booking.email || !booking.email.trim()) {
@@ -286,6 +289,22 @@ export async function createOrLoadOrderForServiceBooking(
 
 export function getOrderByOid(oid: string) {
   return prisma.order.findUnique({ where: { oid } })
+}
+
+/**
+ * Did the customer come back from CMI claiming success for this order?
+ *
+ * A PENDING order is ambiguous. Usually payment was simply never attempted —
+ * but okUrl bails out before the UNDER_RECONCILIATION transition when the
+ * return hash does not verify, which leaves a genuinely paid order sitting at
+ * PENDING. Money may already have moved, so such an order must never be shown
+ * a "pay now" invitation. The okUrl return is persisted either way, so its
+ * presence is the evidence. failUrl rows are deliberately NOT counted: those
+ * are declines, and a decline should still offer a retry.
+ */
+export async function hasClaimedSuccessReturn(orderId: string): Promise<boolean> {
+  const n = await prisma.paymentCallback.count({ where: { orderId, channel: 'okurl' } })
+  return n > 0
 }
 
 // ── Callback field access ────────────────────────────────────────────────────

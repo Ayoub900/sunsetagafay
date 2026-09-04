@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getDictionary, hasLocale, type Locale } from '../../dictionaries'
 import { GrainOverlay } from '@/components/shared'
-import { getOrderByOid } from '@/lib/cmi/orders'
+import { getOrderByOid, hasClaimedSuccessReturn } from '@/lib/cmi/orders'
 import { formatMinorUnits } from '@/lib/cmi/util'
 import { bookingReference } from '@/lib/email/payment'
 
@@ -44,17 +44,51 @@ export default async function ConfirmationPage({
   // A day pass / transfer is not a stay, so the confirmed copy differs.
   const isService = !!order?.serviceBookingId
 
-  const eyebrow = !order ? p.not_found_title : paid ? p.confirm_eyebrow : p.pending_eyebrow
-  const title = !order
-    ? p.not_found_title
-    : paid
-      ? (isService ? p.confirm_title_service : p.confirm_title)
-      : p.pending_title
-  const sub = !order
-    ? p.not_found_sub
-    : paid
-      ? (isService ? p.confirm_sub_service : p.confirm_sub)
-      : p.pending_sub
+  // A PENDING order only counts as unpaid when the customer never came back
+  // from CMI claiming success — see hasClaimedSuccessReturn. Inviting payment
+  // on an order that may already be paid is the one mistake worth a query.
+  const maybePaid =
+    order?.status === 'PENDING' ? await hasClaimedSuccessReturn(order.id) : false
+
+  // Every status gets its own copy. Collapsing all of them into one 'pending'
+  // state told a customer whose payment never went through — or whose booking
+  // had already been cancelled — that we were confirming their payment and
+  // that there was no need to pay again. Only UNDER_RECONCILIATION means that.
+  const state = !order
+    ? 'not_found'
+    : order.status === 'PAID'
+      ? 'paid'
+      : order.status === 'UNDER_RECONCILIATION'
+        ? 'reconciling'
+        : order.status === 'PENDING'
+          ? (maybePaid ? 'reconciling' : 'unpaid')
+          : order.status === 'CANCELLED'
+            ? 'cancelled'
+            : 'refunded'
+
+  const { eyebrow, title, sub } = {
+    not_found: { eyebrow: p.not_found_title, title: p.not_found_title, sub: p.not_found_sub },
+    paid: {
+      eyebrow: p.confirm_eyebrow,
+      title: isService ? p.confirm_title_service : p.confirm_title,
+      sub: isService ? p.confirm_sub_service : p.confirm_sub,
+    },
+    reconciling: { eyebrow: p.pending_eyebrow, title: p.pending_title, sub: p.pending_sub },
+    unpaid: { eyebrow: p.unpaid_eyebrow, title: p.unpaid_title, sub: p.unpaid_sub },
+    cancelled: { eyebrow: p.cancelled_eyebrow, title: p.cancelled_title, sub: p.cancelled_sub },
+    refunded: { eyebrow: p.refunded_eyebrow, title: p.refunded_title, sub: p.refunded_sub },
+  }[state]
+
+  // An unpaid order is still payable: send it to the failure page, which owns
+  // the retry form (terms checkbox included) and reuses the same oid.
+  const retryHref =
+    state === 'unpaid' && order
+      ? order.reservationId
+        ? `/${lang}/reserve/payment-failed?r=${order.reservationId}`
+        : order.serviceBookingId
+          ? `/${lang}/reserve/payment-failed?s=${order.serviceBookingId}`
+          : null
+      : null
 
   const rows: [string, string][] = []
   if (order) {
@@ -98,6 +132,15 @@ export default async function ConfirmationPage({
                   <div style={{ fontFamily: 'var(--serif)', fontStyle: 'italic', fontSize: 'clamp(14px,1.6vw,18px)', color: 'var(--ink)' }}>{v}</div>
                 </div>
               ))}
+            </div>
+          )}
+
+          {retryHref && (
+            <div style={{ marginBottom: 28 }}>
+              <Link href={retryHref} className="cta" style={{ color: 'var(--sienna)' }}>
+                <span className="cta-label">{p.unpaid_cta}</span>
+                <span className="cta-arrow" aria-hidden="true">→</span>
+              </Link>
             </div>
           )}
 

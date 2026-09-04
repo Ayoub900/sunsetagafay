@@ -519,7 +519,17 @@
     "not_found_sub": "Nous n'avons pas trouvé ce paiement. Veuillez démarrer une nouvelle réservation ou nous contacter.",
     "confirm_title_service": "Votre réservation est confirmée.",
     "confirm_sub_service": "Merci. Nous avons reçu votre paiement et votre réservation est confirmée. Un e-mail de confirmation est en route.",
-    "failed_sub_service": "Aucun montant n'a été débité. Vous pouvez réessayer — votre réservation est toujours retenue."
+    "failed_sub_service": "Aucun montant n'a été débité. Vous pouvez réessayer — votre réservation est toujours retenue.",
+    "unpaid_eyebrow": "Paiement non effectué",
+    "unpaid_title": "Cette réservation n'a pas été réglée.",
+    "unpaid_sub": "Aucun paiement n'a encore abouti pour cette réservation, et aucun montant n'a été débité. Vous pouvez le finaliser ci-dessous, ou nous contacter si vous préférez régler autrement.",
+    "unpaid_cta": "Finaliser le paiement",
+    "cancelled_eyebrow": "Réservation annulée",
+    "cancelled_title": "Cette réservation a été annulée.",
+    "cancelled_sub": "Elle a expiré avant que le paiement n'aboutisse, et aucun montant n'a été débité. Veuillez effectuer une nouvelle réservation, ou nous contacter : nous serons ravis de vous aider.",
+    "refunded_eyebrow": "Paiement remboursé",
+    "refunded_title": "Un remboursement a été effectué.",
+    "refunded_sub": "Le montant remboursé a été recrédité sur la carte utilisée. Comptez quelques jours ouvrés avant qu'il n'apparaisse sur votre relevé ; n'hésitez pas à nous contacter pour toute question."
   },
   "service_booking": {
     "title_day_pass": "Réservez votre day pass",

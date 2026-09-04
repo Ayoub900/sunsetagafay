@@ -519,7 +519,17 @@
     "not_found_sub": "We could not find this payment. Please start a new reservation or contact us.",
     "confirm_title_service": "Your booking is confirmed.",
     "confirm_sub_service": "Thank you. We have received your payment and your booking is confirmed. A confirmation email is on its way.",
-    "failed_sub_service": "No charge was made. You can try again — your booking is still held."
+    "failed_sub_service": "No charge was made. You can try again — your booking is still held.",
+    "unpaid_eyebrow": "Payment not completed",
+    "unpaid_title": "This booking has not been paid.",
+    "unpaid_sub": "No payment has gone through for this booking yet, so nothing has been charged. You can complete it below, or contact us if you would rather arrange payment another way.",
+    "unpaid_cta": "Complete payment",
+    "cancelled_eyebrow": "Booking cancelled",
+    "cancelled_title": "This booking was cancelled.",
+    "cancelled_sub": "It expired before payment was completed, and nothing was charged. Please start a new booking, or contact us and we will be glad to help.",
+    "refunded_eyebrow": "Payment refunded",
+    "refunded_title": "A refund has been issued.",
+    "refunded_sub": "The refunded amount has been returned to the card used. Please allow a few working days for it to appear on your statement, and contact us with any question."
   },
   "service_booking": {
     "title_day_pass": "Book your day pass",

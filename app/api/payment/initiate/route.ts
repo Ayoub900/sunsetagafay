@@ -9,6 +9,7 @@ import {
   PaymentError,
 } from '@/lib/cmi/orders'
 import { logInitiate } from '@/lib/cmi/observability'
+import { payRefCookie } from '@/lib/cmi/retry-cookie'
 import { hasLocale } from '@/app/[lang]/dictionaries'
 
 // Needs Node (crypto + Prisma) and must never be cached.
@@ -97,6 +98,10 @@ export async function POST(req: NextRequest) {
         'content-type': 'text/html; charset=utf-8',
         // This page holds an about-to-be-signed payment form; never cache it.
         'cache-control': 'no-store',
+        // Retry hint for the failure page when CMI returns without a usable oid.
+        'set-cookie': payRefCookie(
+          serviceBookingId ? { serviceBookingId } : { reservationId },
+        ),
       },
     })
   } catch (err) {

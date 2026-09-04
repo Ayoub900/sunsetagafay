@@ -4,6 +4,7 @@ import { getCmiConfig, publicBaseUrl } from '@/lib/cmi/config'
 import { verifyHash } from '@/lib/cmi/hash'
 import { ci, getOrderByOid, persistCallback, type RawParams } from '@/lib/cmi/orders'
 import { alertPayment, log3dReturn } from '@/lib/cmi/observability'
+import { PAY_REF_COOKIE, parsePayRef } from '@/lib/cmi/retry-cookie'
 
 // failUrl: the browser is POSTed here after a declined/errored payment. Never
 // changes the order status (failed attempts must not). Verifies the hash for
@@ -53,8 +54,19 @@ export async function POST(req: NextRequest) {
 
     // Carry the booking reference so the failure page can offer a retry that
     // reuses the same oid. `r` = room reservation, `s` = day pass / transfer.
-    if (order?.reservationId) dest.searchParams.set('r', order.reservationId)
-    if (order?.serviceBookingId) dest.searchParams.set('s', order.serviceBookingId)
+    // When the order cannot be resolved — CMI returns a minimal payload on
+    // some errors (3D-1004 being the one to watch), sometimes without a usable
+    // oid — fall back to the hint dropped at initiate time, so the customer
+    // gets a retry instead of a dead end.
+    const ref = order
+      ? order.reservationId
+        ? { reservationId: order.reservationId }
+        : order.serviceBookingId
+          ? { serviceBookingId: order.serviceBookingId }
+          : null
+      : parsePayRef(req.cookies.get(PAY_REF_COOKIE)?.value)
+    if (ref && 'reservationId' in ref) dest.searchParams.set('r', ref.reservationId)
+    if (ref && 'serviceBookingId' in ref) dest.searchParams.set('s', ref.serviceBookingId)
 
     // Only persist browser returns for known orders (anti-flooding).
     if (order) {

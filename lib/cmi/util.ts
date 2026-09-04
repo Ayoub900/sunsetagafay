@@ -49,6 +49,15 @@ export function newRnd(): string {
   return out
 }
 
+/**
+ * MongoDB ids are 24 hex characters. Prisma throws on anything else instead
+ * of returning null, which surfaced as a generic 500 rather than the clean
+ * "booking not found" page — so shape-check before every lookup by id.
+ */
+export function isObjectId(id: string): boolean {
+  return /^[0-9a-fA-F]{24}$/.test(id)
+}
+
 /** Map a site locale to a CMI-supported language code (ar | fr | en). */
 export function toCmiLang(locale: string | undefined): 'ar' | 'fr' | 'en' {
   if (locale === 'fr') return 'fr'
