@@ -19,6 +19,18 @@ auto-submitting form that redirects to the CMI Hosted Payment Page.
 
 Order status is decided **only** by the authoritative host-to-host callback.
 
+**Day passes and transfers are sold the same way — and card payment is the only
+way to book them.** Their pages (`/[lang]/day-pass/[slug]`,
+`/[lang]/transfers/[transfer]`) collect the guest's details, POST them to
+`/api/service-booking` (which validates and prices them from the DB and stores a
+`PENDING` `ServiceBooking`), then show a review step that POSTs
+`serviceBookingId` to the same `/api/payment/initiate`. There is no enquiry path
+and nothing is “held”: the listing and detail CTAs lead to the payment flow, and
+a booking is only `Confirmed` once the callback settles it. One `Order` model,
+one callback, one confirmation page serve all three products; an `Order` carries
+either a `reservationId` (a stay) or a `serviceBookingId` (a pass or a
+transfer), never both.
+
 ## Environment variables
 
 Set these in `.env.local` (never commit real values; `.env*` is gitignored):
@@ -30,6 +42,10 @@ Set these in `.env.local` (never commit real values; `.env*` is gitignored):
 | `CMI_GATEWAY_URL` | Test: `https://test-sahampay.cmi.co.ma/fim/est3dgate` · Prod: `https://sahampay.cmi.co.ma/fim/est3dgate` |
 | `CMI_BASE_URL` | Public **https** base URL of the site; used to build `okUrl`/`failUrl`/`callbackUrl`/`shopurl`. Must be reachable from the internet, including in test. |
 | `CRON_SECRET` | Shared secret for the reconciliation sweep endpoint. |
+| `RESEND_API_KEY` | Resend API key. **Unset = no emails are sent** (logged as `[email][skipped]`), everything else still works. |
+| `EMAIL_FROM` | Sender, e.g. `Sunset Agafay <reservations@sunsetagafay.com>`. Must be on a domain verified in Resend. |
+| `EMAIL_ADMIN_TO` | Where paid-booking notifications go. Default `info@sunsetagafay.com`. |
+| `EMAIL_REPLY_TO` | Reply-To on guest email. Defaults to `EMAIL_ADMIN_TO`. |
 
 ### Where the store key is set
 
@@ -41,7 +57,8 @@ keep it out of the client, logs, and version control.
 
 | Route | Method | Role |
 | --- | --- | --- |
-| `/api/payment/initiate` | POST | Create/load the order (server-computed amount), sign, return the auto-submit CMI form. Reuses the same `oid` on retry. |
+| `/api/service-booking` | POST | Validate + price a day pass / transfer booking and persist it `PENDING`. Returns the booking id the review step pays with. |
+| `/api/payment/initiate` | POST | Create/load the order (server-computed amount) for a `reservationId` **or** a `serviceBookingId`, sign, return the auto-submit CMI form. Reuses the same `oid` on retry. |
 | `/api/payment/callback` | POST | **Authoritative.** Verifies hash + amount, atomically sets `PAID`, replies exactly `ACTION=POSTAUTH` / `APPROVED` / `FAILURE`. |
 | `/api/payment/ok` | POST | Browser return after success. Display/fallback only; sets `UNDER_RECONCILIATION` if the callback hasn’t finalized yet, then redirects to the confirmation page. |
 | `/api/payment/fail` | POST | Browser return after failure. Never changes status; redirects to the retry page. |
@@ -108,7 +125,34 @@ npx prisma db push
 ```
 
 This creates the unique indexes that idempotency relies on
-(`Order.oid`, `Order.reservationId`, `PaymentCallback.fingerprint`). If a
+(`Order.oid`, `Order.bookingRef`, `PaymentCallback.fingerprint`).
+
+### Why `Order.bookingRef` and not the foreign keys
+
+“One order per booking” **cannot** be a unique index on `Order.reservationId`
+or `Order.serviceBookingId`: MongoDB indexes a missing/null value as a value,
+so a unique index on an optional field admits exactly **one** document without
+it. That is invisible while every order has a reservation, and breaks on the
+*second* day-pass/transfer order (`P2002` on `Order_reservationId_key`).
+
+`bookingRef` is therefore always set — `res:<reservationId>` for a stay,
+`svc:<serviceBookingId>` for a pass or transfer — and carries the unique index;
+the two foreign keys are plain non-unique fields used only for navigation
+(hence `Reservation.orders` / `ServiceBooking.orders` are lists holding at most
+one row).
+
+### Migration for databases created before this change
+
+Run **once per database, before `prisma db push`** (existing orders have no
+`bookingRef`, so the unique index cannot be created until they are backfilled):
+
+```
+node --env-file=.env scripts/migrate-order-booking-ref.mjs
+```
+
+It backfills `bookingRef`, drops the old `Order_reservationId_key` /
+`Order_serviceBookingId_key` indexes, and creates `Order_bookingRef_key`. It is
+idempotent, and `--dry-run` reports what it would do without writing. If a
 pre-existing duplicate elsewhere blocks the push, create just these three
 indexes manually (see the createIndexes commands used during setup).
 
@@ -125,6 +169,69 @@ Orders needing attention are listed in the admin at **Operations → Payments**.
 `UNDER_RECONCILIATION` orders are verified/captured manually against the CMI
 Merchant Center (or an official status API if credentials are provided — no
 undocumented endpoints are invented here).
+
+## Blocked dates
+
+*Admin → Maison → Blocked Dates* closes a single item, every item of a type, or
+the entire property for an inclusive date range (`AvailabilityBlock`). The three
+scopes are interpreted in exactly one place — `blockCovers()` in
+`lib/services.ts`, unit-tested in `services.test.ts` — so every entry point
+agrees:
+
+| Block | Closes |
+| --- | --- |
+| `serviceType: ""` | the entire property |
+| `serviceType: "transfer", serviceId: ""` | every transfer |
+| `serviceType: "transfer", serviceId: "<id>"` | that one transfer |
+
+Enforcement, for the three products that are booked online:
+
+| Where | Behaviour |
+| --- | --- |
+| `/api/availability` | A blocked suite is not offered; a property- or all-suites block returns nothing. |
+| `/api/book` | Rejects a blocked suite/range with **409**, so a direct POST cannot slip past a closure. |
+| `/api/service-booking` | Rejects a blocked day pass / transfer date with **409** `DATE_BLOCKED`; the guest sees “we are closed on that date”. |
+| `/api/payment/initiate` | Re-checks **both** kinds before signing anything and refuses with **409** `DATE_BLOCKED`. This closes the window where an admin blocks a date *after* a booking was taken but before it was paid — the customer is told nothing was charged. |
+
+The other service types (restaurants, events, experiences, treatments, sunset
+parties) have no online booking, so a block on one is recorded for staff but
+not enforced on the site; the picker marks them “inquiry only”.
+
+## Emails on a settled payment
+
+Every payment that settles sends **two** emails through Resend, from
+`fulfillPaidOrder` — the same once-per-order path that confirms the booking:
+
+| To | Content |
+| --- | --- |
+| The guest (`Order.customerEmail`) | Receipt / confirmation in **their** language (EN or FR): amount paid, reference, what they booked, their notes. Deliberately contains **no** payment internals (no card, transaction id, or `oid`). |
+| The maison (`EMAIL_ADMIN_TO`, default `info@sunsetagafay.com`) | The same booking plus guest contact details and the payment ids (masked card, `TransId`, auth code, CMI `oid`). `Reply-To` is the guest, so replying answers them directly. |
+
+Both cover all three products (stay, day pass, transfer). Design rules:
+
+- **Never blocks or breaks a payment.** Sending happens after the response to
+  CMI has been returned, inside `after()`, and `sendPaymentEmails` never throws.
+  A missing key, a bounced address, or a Resend outage is logged
+  (`[email][failed]`) and nothing else.
+- **Exactly once per order.** It rides on the atomic `fulfilledAt` claim, so
+  duplicate callbacks cannot produce duplicate mail.
+- The two sends are independent: the maison is still told even if the guest's
+  address bounces, and vice versa.
+- Failed payment attempts send **nothing** — the customer sees the retry page.
+- Guest-supplied values are HTML-escaped in both bodies.
+
+Code: `lib/email/client.ts` (Resend + config), `lib/email/templates.ts` (pure
+HTML/text builders, unit-tested in `templates.test.ts`), `lib/email/payment.ts`
+(assembles either booking type and sends both).
+
+To see the emails without sending any:
+
+```
+node --experimental-strip-types scripts/preview-emails.mjs
+```
+
+which writes both messages for all three products, EN and FR, to
+`.email-preview/`.
 
 ## Observability
 
@@ -148,3 +255,35 @@ data are never logged (`MaskedPan` as received is fine).
 `Suite.rateMadCents` is seeded at **1 € = 10 MAD** from each suite's `€` display
 rate (e.g. €580 → 5 800 MAD/night). Adjust per suite anytime in
 *Admin → Suites → “Online price (MAD / night)”*.
+
+Day passes and transfers work the same way, and start at **0 (not payable
+online)** until a price is entered:
+
+| Item | Field(s) | Admin location | Total charged |
+| --- | --- | --- | --- |
+| Day pass | `priceMadCents`, `childPriceMadCents` | *Day Passes → Online payment* | `adults × price + children × childPrice` |
+| Transfer | `priceMadCents` | *Transfers → Online payment* | flat per vehicle/trip — passengers do not multiply it |
+
+A price of `0` means the item **cannot be booked at all**: the day-pass page
+shows a “contact us to reserve” line and the transfer page falls back to its
+enquiry CTA, because there is no amount to charge. Treat `0` as a
+misconfiguration, not a mode.
+
+Existing databases are priced in one step (idempotent, `--dry-run` available):
+
+```
+node --env-file=.env scripts/set-service-mad-prices.mjs
+```
+
+It reads each item's own € display price at **1 € = 10 MAD** (the conversion the
+suites use), skips anything already priced, and sets the child price equal to
+the adult price — so **children are charged the full adult price until you enter
+a reduced child price** in the admin. `/api/seed` sets the same values for fresh
+databases.
+
+Bookings are listed in the admin at **Maison → Passes & Transfers**; a booking
+turns `Confirmed` only when its order is settled by the callback.
+
+Unlike suites, services send **no `amountCur`/`symbolCur`** to CMI: their `price`
+strings are marketing copy (“From €180”, “55,00”) rather than an exact
+convertible amount, so the review step and the CMI page both quote MAD only.

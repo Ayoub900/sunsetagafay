@@ -5,6 +5,7 @@ import { getDictionary, hasLocale, type Locale } from '../../dictionaries'
 import { Photo, GrainOverlay } from '@/components/shared'
 import { getActiveTransfers, getTransferBySlug } from '@/lib/db'
 import { buildAlternates } from '@/lib/seo'
+import { ServiceBookingForm } from '@/components/ServiceBookingForm'
 
 export async function generateStaticParams() {
   const items = await getActiveTransfers()
@@ -59,6 +60,9 @@ export default async function TransferDetailPage({ params }: { params: Promise<{
   const lede = isFr ? item.ledeFr : item.ledeEn
   const copy = isFr ? item.copyFr : item.copyEn
   const coverImage = item.imageUrl || undefined
+  // A MAD price on the transfer is what makes it payable online; without one the
+  // page keeps its enquiry CTA and nothing is charged.
+  const chargeable = item.priceMadCents > 0
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -114,11 +118,21 @@ export default async function TransferDetailPage({ params }: { params: Promise<{
               ))}
             </div>
 
+            {/* Transfers are booked by card only, in the section below. Without
+                an online price there is nothing to charge, so the page points
+                at contact instead of taking a booking it cannot settle. */}
             <div style={{ marginTop: 36 }}>
-              <Link href={`/${lang}/contact`} className="cta">
-                <span className="cta-label">{p.enquire_cta}</span>
-                <span className="cta-arrow" aria-hidden="true">→</span>
-              </Link>
+              {chargeable ? (
+                <a href="#book" className="cta">
+                  <span className="cta-label">{p.book_cta}</span>
+                  <span className="cta-arrow" aria-hidden="true">→</span>
+                </a>
+              ) : (
+                <Link href={`/${lang}/contact`} className="cta">
+                  <span className="cta-label">{p.enquire_cta}</span>
+                  <span className="cta-arrow" aria-hidden="true">→</span>
+                </Link>
+              )}
             </div>
           </div>
 
@@ -129,6 +143,36 @@ export default async function TransferDetailPage({ params }: { params: Promise<{
           </div>
         </div>
       </section>
+
+      {/* Booking + payment. Kept out of the two-column block above: the form is
+          taller than either column, which left a large empty gap beside it. */}
+      {chargeable && (
+        <section id="book" style={{ background: 'var(--paper)', padding: '0 var(--gutter) clamp(64px,9vw,110px)', scrollMarginTop: 96 }}>
+          <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
+            <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--sienna)', marginBottom: 16 }}>
+              {isFr ? 'Réservation' : 'Booking'}
+            </div>
+            <h2 style={{ fontFamily: 'var(--serif)', fontWeight: 400, fontSize: 'clamp(26px,3.5vw,42px)', lineHeight: 1.02, letterSpacing: '-0.018em', margin: '0 0 10px', color: 'var(--ink)' }}>
+              {p.book_cta}
+            </h2>
+            <p style={{ fontFamily: 'var(--sans)', fontSize: 10.5, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--ink-soft)', margin: 0 }}>
+              {p.book_sub}
+            </p>
+            <div style={{ textAlign: 'left' }}>
+              <ServiceBookingForm
+                kind="transfer"
+                slug={item.slug}
+                lang={lang as 'en' | 'fr'}
+                itemName={name}
+                priceLabel={item.price}
+                fromLabel={isFr ? 'Tarif' : 'Rate'}
+                dict={dict.service_booking}
+                pay={dict.payment}
+              />
+            </div>
+          </div>
+        </section>
+      )}
 
       <section style={{ background: 'var(--sienna)', color: 'var(--paper)', padding: 'clamp(48px,6vw,72px) var(--gutter)', textAlign: 'center' }}>
         <GrainOverlay opacity={0.18} blend="overlay" />

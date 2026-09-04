@@ -1,8 +1,16 @@
 import 'server-only'
 import { createHash } from 'node:crypto'
-import { Prisma, type Order, type Reservation } from '@prisma/client'
+import { Prisma, type Order, type Reservation, type ServiceBooking } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
 import { newOid, parseAmountToMinor } from './util'
+import { sendPaymentEmails } from '@/lib/email/payment'
+import { isServiceBlockedOnDate, isSuiteBlocked } from '@/lib/db'
+import { logCallback } from './observability'
+import {
+  dayPassAmountMadCents,
+  transferAmountMadCents,
+  MAX_CHARGE_MAD_CENTS,
+} from './pricing'
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Order lifecycle + callback persistence. Every status transition here is a
@@ -13,7 +21,7 @@ import { newOid, parseAmountToMinor } from './util'
 export class PaymentError extends Error {
   constructor(
     message: string,
-    readonly code: 'NOT_FOUND' | 'NOT_CHARGEABLE' | 'MISSING_EMAIL' = 'NOT_CHARGEABLE',
+    readonly code: 'NOT_FOUND' | 'NOT_CHARGEABLE' | 'MISSING_EMAIL' | 'DATE_BLOCKED' = 'NOT_CHARGEABLE',
   ) {
     super(message)
     this.name = 'PaymentError'
@@ -63,6 +71,64 @@ export async function computeReservationCharge(reservation: Reservation): Promis
   return { amountMad, displayAmount, displayCurrency, displaySymbol, description }
 }
 
+/**
+ * Compute the amount to charge for a day pass or a transfer, server-side only,
+ * from the DayPass / Transfer row the booking points at. `priceMadCents` there
+ * is the single source of truth; the guest counts on the booking are the only
+ * customer-supplied input and they are re-validated on the way in.
+ *
+ * No display currency is sent for services: their `price` strings are marketing
+ * copy ("From €180", "55,00") rather than an exact convertible amount, so
+ * showing one on the CMI page would risk quoting a figure we are not charging.
+ */
+export async function computeServiceBookingCharge(booking: ServiceBooking): Promise<Charge> {
+  const adults = Math.max(0, booking.adults)
+  const children = Math.max(0, booking.children)
+  const when = [booking.date, booking.time].filter(Boolean).join(' ')
+
+  let amountMad: number
+  let description: string
+
+  if (booking.kind === 'DAY_PASS') {
+    const pass = await prisma.dayPass.findUnique({ where: { id: booking.itemId } })
+    if (!pass || !pass.active || pass.priceMadCents <= 0) {
+      throw new PaymentError('This day pass is not available for online payment.', 'NOT_CHARGEABLE')
+    }
+    amountMad = dayPassAmountMadCents(adults, children, pass.priceMadCents, pass.childPriceMadCents)
+    const guests = [
+      `${adults} adult${adults === 1 ? '' : 's'}`,
+      children > 0 ? `${children} child${children === 1 ? '' : 'ren'}` : '',
+    ]
+      .filter(Boolean)
+      .join(' + ')
+    description = `${pass.nameEn} · ${when} · ${guests}`
+  } else {
+    const transfer = await prisma.transfer.findUnique({ where: { id: booking.itemId } })
+    if (!transfer || !transfer.active || transfer.priceMadCents <= 0) {
+      throw new PaymentError('This transfer is not available for online payment.', 'NOT_CHARGEABLE')
+    }
+    amountMad = transferAmountMadCents(transfer.priceMadCents)
+    const people = adults + children
+    description = `${transfer.nameEn} · ${when} · ${people} passenger${people === 1 ? '' : 's'}`
+  }
+
+  if (amountMad <= 0) {
+    throw new PaymentError('This booking has no amount to charge.', 'NOT_CHARGEABLE')
+  }
+  if (amountMad > MAX_CHARGE_MAD_CENTS) {
+    // A mis-keyed price or an absurd guest count: refuse rather than send it.
+    throw new PaymentError('This booking is too large to pay online. Please contact us.', 'NOT_CHARGEABLE')
+  }
+
+  return {
+    amountMad,
+    displayAmount: null,
+    displayCurrency: null,
+    displaySymbol: null,
+    description: description.slice(0, 200),
+  }
+}
+
 // ── Order create / load ──────────────────────────────────────────────────────
 
 export interface OrderResult {
@@ -77,37 +143,39 @@ export interface OrderResult {
   showStatusInstead: boolean
 }
 
+// What the Order points at: a room stay or a day-pass/transfer booking. Exactly
+// one of the two foreign keys is ever set; `bookingRef` mirrors it as the
+// always-set unique key the "one order per booking" guarantee rests on (a
+// unique index on an optional key would only admit one null in MongoDB).
+type OrderLink = { reservationId: string } | { serviceBookingId: string }
+
+function bookingRefFor(link: OrderLink): string {
+  return 'reservationId' in link ? `res:${link.reservationId}` : `svc:${link.serviceBookingId}`
+}
+
+// The server-computed snapshot refreshed onto the order at every (re-)initiate.
+interface OrderSnapshot {
+  amount: number
+  currency: string
+  displayAmount: number | null
+  displayCurrency: string | null
+  displaySymbol: string | null
+  description: string
+  customerName: string
+  customerEmail: string
+  customerPhone: string
+  lang: string
+}
+
 /**
- * Create the PENDING order for a reservation, or load and reuse the existing
- * unpaid order (keeping its oid) for a retry. A new oid is minted only for a
- * genuinely new order. Every write is conditional on the order still being
+ * Create the PENDING order for what is being bought, or load and reuse the
+ * existing unpaid order (keeping its oid) for a retry. A new oid is minted only
+ * for a genuinely new order. Every write is conditional on the order still being
  * PENDING so a concurrently-arriving success callback can never be clobbered.
  */
-export async function createOrLoadOrderForReservation(
-  reservationId: string,
-  lang: string,
-): Promise<OrderResult> {
-  const reservation = await prisma.reservation.findUnique({ where: { id: reservationId } })
-  if (!reservation) throw new PaymentError('Reservation not found', 'NOT_FOUND')
-  if (!reservation.email || !reservation.email.trim()) {
-    throw new PaymentError('A customer email is required to take payment.', 'MISSING_EMAIL')
-  }
-
-  const charge = await computeReservationCharge(reservation)
-  const refreshData = {
-    amount: charge.amountMad,
-    currency: '504',
-    displayAmount: charge.displayAmount,
-    displayCurrency: charge.displayCurrency,
-    displaySymbol: charge.displaySymbol,
-    description: charge.description,
-    customerName: reservation.guestName,
-    customerEmail: reservation.email.trim(),
-    customerPhone: reservation.phone,
-    lang,
-  }
-
-  const existing = await prisma.order.findUnique({ where: { reservationId } })
+async function createOrLoadOrder(link: OrderLink, refreshData: OrderSnapshot): Promise<OrderResult> {
+  const bookingRef = bookingRefFor(link)
+  const existing = await prisma.order.findUnique({ where: { bookingRef } })
   if (existing) {
     if (existing.status !== 'PENDING') {
       // Finalized or UNDER_RECONCILIATION — never re-initiate, never downgrade.
@@ -130,20 +198,90 @@ export async function createOrLoadOrderForReservation(
 
   try {
     const order = await prisma.order.create({
-      data: { oid: newOid(), status: 'PENDING', reservationId, ...refreshData },
+      data: { oid: newOid(), status: 'PENDING', bookingRef, ...link, ...refreshData },
     })
     return { order, reused: false, showStatusInstead: false }
   } catch (err) {
-    // Unique-index race: another request created the order for this
-    // reservation concurrently. Load and reuse it.
+    // Unique-index race: another request created the order for this booking
+    // concurrently. Load and reuse it.
     if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2002') {
-      const order = await prisma.order.findUnique({ where: { reservationId } })
+      const order = await prisma.order.findUnique({ where: { bookingRef } })
       if (order) {
         return { order, reused: true, showStatusInstead: order.status !== 'PENDING' }
       }
     }
     throw err
   }
+}
+
+/** Order for a room stay. */
+export async function createOrLoadOrderForReservation(
+  reservationId: string,
+  lang: string,
+): Promise<OrderResult> {
+  const reservation = await prisma.reservation.findUnique({ where: { id: reservationId } })
+  if (!reservation) throw new PaymentError('Reservation not found', 'NOT_FOUND')
+  if (!reservation.email || !reservation.email.trim()) {
+    throw new PaymentError('A customer email is required to take payment.', 'MISSING_EMAIL')
+  }
+
+  // A closure added after the reservation was taken must not be payable. The
+  // booking endpoints check this too; re-checking here closes the window
+  // between booking and payment.
+  if (await isSuiteBlocked(reservation.suite, reservation.checkIn, reservation.checkOut)) {
+    throw new PaymentError('These dates are no longer available.', 'DATE_BLOCKED')
+  }
+
+  const charge = await computeReservationCharge(reservation)
+  return createOrLoadOrder(
+    { reservationId },
+    {
+      amount: charge.amountMad,
+      currency: '504',
+      displayAmount: charge.displayAmount,
+      displayCurrency: charge.displayCurrency,
+      displaySymbol: charge.displaySymbol,
+      description: charge.description,
+      customerName: reservation.guestName,
+      customerEmail: reservation.email.trim(),
+      customerPhone: reservation.phone,
+      lang,
+    },
+  )
+}
+
+/** Order for a day pass or a transfer. */
+export async function createOrLoadOrderForServiceBooking(
+  serviceBookingId: string,
+  lang: string,
+): Promise<OrderResult> {
+  const booking = await prisma.serviceBooking.findUnique({ where: { id: serviceBookingId } })
+  if (!booking) throw new PaymentError('Booking not found', 'NOT_FOUND')
+  if (!booking.email || !booking.email.trim()) {
+    throw new PaymentError('A customer email is required to take payment.', 'MISSING_EMAIL')
+  }
+
+  const serviceType = booking.kind === 'TRANSFER' ? 'transfer' : 'day-pass'
+  if (await isServiceBlockedOnDate(serviceType, booking.itemId, booking.date)) {
+    throw new PaymentError('This date is no longer available.', 'DATE_BLOCKED')
+  }
+
+  const charge = await computeServiceBookingCharge(booking)
+  return createOrLoadOrder(
+    { serviceBookingId },
+    {
+      amount: charge.amountMad,
+      currency: '504',
+      displayAmount: charge.displayAmount,
+      displayCurrency: charge.displayCurrency,
+      displaySymbol: charge.displaySymbol,
+      description: charge.description,
+      customerName: booking.guestName,
+      customerEmail: booking.email.trim(),
+      customerPhone: booking.phone,
+      lang,
+    },
+  )
 }
 
 export function getOrderByOid(oid: string) {
@@ -345,6 +483,14 @@ export async function fulfillPaidOrder(orderId: string): Promise<void> {
     })
   }
 
+  // Same for a day pass / transfer booking.
+  if (order.serviceBookingId) {
+    await prisma.serviceBooking.updateMany({
+      where: { id: order.serviceBookingId },
+      data: { status: 'Confirmed' },
+    })
+  }
+
   // Upsert the guest record (match by email), mirroring the /api/book flow.
   if (order.customerEmail) {
     const existingGuest = await prisma.guest.findFirst({ where: { email: order.customerEmail } })
@@ -365,6 +511,9 @@ export async function fulfillPaidOrder(orderId: string): Promise<void> {
     }
   }
 
-  // TODO: send the confirmation email here (async, after response). Left as a
-  // hook so a slow mailer never delays the callback response to CMI.
+  // Confirmation to the guest + notification to the maison. This runs after the
+  // response to CMI has been sent, and sendPaymentEmails never throws, so a
+  // slow or failing mailer can neither delay nor fail the payment.
+  const emails = await sendPaymentEmails(orderId)
+  logCallback('emails', { oid: order.oid, customer: emails.customer, admin: emails.admin })
 }

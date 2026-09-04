@@ -44,3 +44,6 @@ yarn-error.log*
 next-env.d.ts
 
 /PackageIntegrationEcomSAHAMPAY_V2.0
+
+# Rendered email previews (scripts/preview-emails.mjs)
+.email-preview/

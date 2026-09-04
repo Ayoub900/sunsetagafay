@@ -196,10 +196,15 @@ PDF and certification workbook enforce:
   would a retry need a fresh oid — and in our flow a successful order is never
   re-initiated at all.
 
-Implementation: `Order.reservationId` is unique, so one reservation maps to one
-order. `createOrLoadOrderForReservation` reuses the existing order (same oid)
-while it is `PENDING`, refuses to re-initiate when it is `PAID`/finalized or
-`UNDER_RECONCILIATION`, and only mints a new oid for a brand-new order.
+Implementation: `Order.bookingRef` (`res:<reservationId>` for a stay,
+`svc:<serviceBookingId>` for a day pass / transfer) is unique, so one booking
+maps to one order. `createOrLoadOrderForReservation` /
+`createOrLoadOrderForServiceBooking` reuse the existing order (same oid) while
+it is `PENDING`, refuse to re-initiate when it is `PAID`/finalized or
+`UNDER_RECONCILIATION`, and only mint a new oid for a brand-new order.
+
+> `bookingRef` exists because the key has to be a field that is never null —
+> see *Database indexes* in [CMI-PAYMENT.md](CMI-PAYMENT.md#database-indexes-mongodb).
 
 ---
 

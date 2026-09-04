@@ -51,7 +51,10 @@ export async function POST(req: NextRequest) {
       ErrMsg: ci(params, 'ErrMsg'),
     })
 
+    // Carry the booking reference so the failure page can offer a retry that
+    // reuses the same oid. `r` = room reservation, `s` = day pass / transfer.
     if (order?.reservationId) dest.searchParams.set('r', order.reservationId)
+    if (order?.serviceBookingId) dest.searchParams.set('s', order.serviceBookingId)
 
     // Only persist browser returns for known orders (anti-flooding).
     if (order) {

@@ -10,6 +10,11 @@ async function guard() {
   if (!ok) throw new Error('Unauthorized')
 }
 
+/** MAD entered in the admin form -> integer centimes, never negative. */
+function madCents(v: FormDataEntryValue | null): number {
+  return Math.max(0, Math.round((Number(v) || 0) * 100))
+}
+
 export async function createDayPass(formData: FormData) {
   await guard()
   const images = formData.getAll('images').map(String).filter(Boolean)
@@ -27,6 +32,10 @@ export async function createDayPass(formData: FormData) {
       hours:    String(formData.get('hours') ?? '').trim(),
       price:    String(formData.get('price') ?? '').trim(),
       currency: String(formData.get('currency') ?? '€').trim() || '€',
+      // Authoritative online charge, in MAD minor units (centimes). The admin
+      // form takes MAD; we store centimes. 0 = not payable online.
+      priceMadCents:      madCents(formData.get('priceMad')),
+      childPriceMadCents: madCents(formData.get('childPriceMad')),
       heroImageUrl,
       imageUrl,
       images,
@@ -57,6 +66,8 @@ export async function updateDayPass(id: string, formData: FormData) {
       hours:    String(formData.get('hours') ?? '').trim(),
       price:    String(formData.get('price') ?? '').trim(),
       currency: String(formData.get('currency') ?? '€').trim() || '€',
+      priceMadCents:      madCents(formData.get('priceMad')),
+      childPriceMadCents: madCents(formData.get('childPriceMad')),
       heroImageUrl,
       imageUrl,
       images,

@@ -43,7 +43,21 @@ export default async function TransfersPage({ searchParams }: { searchParams: Pr
                     <Field label="Name (EN)" w="calc(50% - 8px)"><TextInput name="nameEn" defaultValue={editing?.nameEn} required /></Field>
                     <Field label="Name (FR)" w="calc(50% - 8px)"><TextInput name="nameFr" defaultValue={editing?.nameFr} required /></Field>
                     <Field label="Duration" w="calc(50% - 8px)"><TextInput name="duration" defaultValue={editing?.duration} required /></Field>
-                    <Field label="Price" w="calc(50% - 8px)"><TextInput name="price" defaultValue={editing?.price} required /></Field>
+                    <Field label="Price" w="calc(50% - 8px)" hint="Marketing price shown on the site"><TextInput name="price" defaultValue={editing?.price} required /></Field>
+                  </FormSection>
+                  <FormSection title="Online payment">
+                    <Field
+                      label="Online price (MAD / vehicle)"
+                      w="calc(50% - 8px)"
+                      hint="What the card is actually charged, flat per trip. 0 = no online payment (the page keeps its enquiry CTA)."
+                    >
+                      <TextInput
+                        name="priceMad"
+                        type="number"
+                        defaultValue={editing ? String((editing.priceMadCents ?? 0) / 100) : '0'}
+                        placeholder="1300"
+                      />
+                    </Field>
                   </FormSection>
                   <FormSection title="Short Description (EN)">
                     <Field label="Summary shown on listing — English" full>

@@ -8,6 +8,18 @@ import { getClientIp, rateLimit, tooManyRequestsResponse } from '@/lib/rate-limi
 // AdminUser, Reservation, Guest, and ContactMessage are never touched.
 // POST /api/seed  with  Authorization: Bearer <ADMIN_TOKEN>
 
+// € figure in a display price ("€120 / vehicle", "From €180") -> MAD centimes at
+// 1 € = 10 MAD, the conversion the suites' online prices were set with. Returns
+// 0 when no amount can be read, which leaves the item unsellable online rather
+// than guessing a charge.
+function eurLabelToMadCents(label: string): number {
+  const m = label.replace(/\s/g, '').match(/(\d+(?:[.,]\d{1,2})?)/)
+  if (!m) return 0
+  const eur = parseFloat(m[1].replace(',', '.'))
+  if (!Number.isFinite(eur) || eur <= 0) return 0
+  return Math.round(eur * 10 * 100)
+}
+
 export async function POST(req: Request) {
   const ip = getClientIp(req.headers)
   const rl = rateLimit(`seed:${ip}`, 5, 60 * 60_000)
@@ -146,6 +158,11 @@ export async function POST(req: Request) {
       hours: '16:00 — 19:00',
       price: '55,00',
       currency: '€',
+      // Authoritative online charge, MAD centimes, at the same 1 € = 10 MAD
+      // convention used for the suites. Children pay the same as adults until a
+      // reduced child price is entered in the admin.
+      priceMadCents: 55_000,
+      childPriceMadCents: 55_000,
     },
     {
       slug: 'swimming-pool-lunch',
@@ -158,6 +175,8 @@ export async function POST(req: Request) {
       hours: '12:00 — 17:00',
       price: '55,00',
       currency: '€',
+      priceMadCents: 55_000,
+      childPriceMadCents: 55_000,
     },
     {
       slug: 'full-day-pass',
@@ -170,6 +189,8 @@ export async function POST(req: Request) {
       hours: '12:00 — 22:00',
       price: '95,00',
       currency: '€',
+      priceMadCents: 95_000,
+      childPriceMadCents: 95_000,
     },
   ]
   await Promise.all(dayPasses.map((d, i) =>
@@ -192,6 +213,10 @@ export async function POST(req: Request) {
         copyFr:   fr?.copy ?? en.copy,
         duration: en.duration,
         price:    en.price,
+        // Authoritative online charge, MAD centimes, flat per vehicle, read
+        // from the € figure in the display price at 1 € = 10 MAD (the same
+        // convention as the suites). Adjust per transfer in the admin.
+        priceMadCents: eurLabelToMadCents(en.price),
         active:   true,
         order:    i,
       },

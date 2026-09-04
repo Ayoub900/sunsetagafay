@@ -10,6 +10,11 @@ async function guard() {
   if (!ok) throw new Error('Unauthorized')
 }
 
+/** MAD entered in the admin form -> integer centimes, never negative. */
+function madCents(v: FormDataEntryValue | null): number {
+  return Math.max(0, Math.round((Number(v) || 0) * 100))
+}
+
 export async function createTransfer(formData: FormData) {
   await guard()
   await prisma.transfer.create({
@@ -23,6 +28,9 @@ export async function createTransfer(formData: FormData) {
       copyFr:   String(formData.get('copyFr')).trim(),
       duration: String(formData.get('duration')).trim(),
       price:    String(formData.get('price')).trim(),
+      // Authoritative online charge, in MAD minor units (centimes), flat per
+      // vehicle. The admin form takes MAD. 0 = not payable online.
+      priceMadCents: madCents(formData.get('priceMad')),
       imageUrl: String(formData.get('imageUrl') ?? '').trim(),
       active:   formData.get('active') === 'on',
       order:    Number(formData.get('order')) || 0,
@@ -47,6 +55,7 @@ export async function updateTransfer(id: string, formData: FormData) {
       copyFr:   String(formData.get('copyFr')).trim(),
       duration: String(formData.get('duration')).trim(),
       price:    String(formData.get('price')).trim(),
+      priceMadCents: madCents(formData.get('priceMad')),
       imageUrl: String(formData.get('imageUrl') ?? '').trim(),
       active:   formData.get('active') === 'on',
       order:    Number(formData.get('order')) || 0,

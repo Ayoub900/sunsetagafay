@@ -129,6 +129,13 @@ model DayPass {
   hours     String   @default("")
   price     String   @default("")
   currency  String   @default("€")
+  // Authoritative online charge in MAD minor units (centimes). `price` and
+  // `currency` above stay the marketing/display strings (usually EUR); CMI
+  // settles in MAD (currency 504), so these integers are what the server
+  // actually charges. 0 = this pass cannot be paid online (the booking form
+  // falls back to sending an enquiry).
+  priceMadCents      Int  @default(0) // per adult
+  childPriceMadCents Int  @default(0) // per child (0 = children not charged)
   heroImageUrl String? @default("")
   imageUrl  String   @default("")
   images    String[] @default([])
@@ -149,6 +156,10 @@ model Transfer {
   copyFr    String
   duration  String
   price     String
+  // Authoritative online charge in MAD minor units (centimes), flat per
+  // vehicle/trip. `price` above stays the marketing string. 0 = not payable
+  // online (the page keeps its enquiry CTA).
+  priceMadCents Int  @default(0)
   imageUrl  String   @default("")
   active    Boolean  @default(true)
   order     Int      @default(0)
@@ -196,7 +207,48 @@ model Reservation {
   total     String   @default("")
   status    String   @default("Pending")
   notes     String   @default("")
-  order     Order?
+  // At most one order in practice (guaranteed by Order.bookingRef); a list only
+  // because the foreign key on Order is not itself unique.
+  orders    Order[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// A booking for a paid-online service that is not a room stay: a day pass or a
+// transfer. Kept separate from Reservation (no check-in/check-out, no suite)
+// but wired into the same Order / payment machinery.
+enum ServiceKind {
+  DAY_PASS
+  TRANSFER
+}
+
+model ServiceBooking {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  kind      ServiceKind
+  // The DayPass / Transfer this booking is for. `itemId` is the join used to
+  // recompute the price server-side; slug and name are snapshots so a later
+  // rename or deletion doesn't erase what was sold.
+  itemId    String      @db.ObjectId
+  itemSlug  String
+  itemName  String
+  date      String   // YYYY-MM-DD
+  time      String   @default("")
+  // For a transfer these are passengers rather than day-pass guests.
+  adults    Int      @default(1)
+  children  Int      @default(0)
+  // Transfers only.
+  pickup    String   @default("")
+  dropoff   String   @default("")
+  guestName String
+  email     String
+  phone     String   @default("")
+  notes     String   @default("")
+  // Display snapshot of what was quoted; the charged amount lives on the Order.
+  total     String   @default("")
+  status    String   @default("Pending") // Pending | Confirmed | Cancelled
+  // At most one order in practice (guaranteed by Order.bookingRef); a list only
+  // because the foreign key on Order is not itself unique.
+  orders    Order[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -222,6 +274,13 @@ model Order {
   // or after this oid has been consumed by a successful transaction.
   oid      String      @unique
   status   OrderStatus @default(PENDING)
+
+  // "One order per thing sold", enforced by a unique index. It has to live on a
+  // field that is ALWAYS set: MongoDB treats a missing/null value as a value,
+  // so a unique index on an optional foreign key would let only ONE order exist
+  // without it. Format: "res:<reservationId>" for a stay, "svc:<serviceBookingId>"
+  // for a day pass / transfer.
+  bookingRef String     @unique
 
   // Authoritative charged amount, MAD minor units (centimes). Currency is the
   // ISO-4217 numeric code sent to CMI ("504" = MAD).
@@ -262,8 +321,14 @@ model Order {
   paidAt              DateTime?
   fulfilledAt         DateTime?
 
-  reservationId String?      @unique @db.ObjectId
+  // Exactly one of these is set: a room stay or a day-pass/transfer booking.
+  // Deliberately NOT @unique — see bookingRef above, which is the uniqueness
+  // key. These are plain foreign keys, for navigation only.
+  reservationId String?      @db.ObjectId
   reservation   Reservation? @relation(fields: [reservationId], references: [id])
+
+  serviceBookingId String?         @db.ObjectId
+  serviceBooking   ServiceBooking? @relation(fields: [serviceBookingId], references: [id])
 
   callbacks PaymentCallback[]
 
@@ -313,6 +378,30 @@ model Guest {
   notes     String   @default("")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// An admin-declared closure: a service (or the whole property) is not bookable
+// for a date range. Enforced server-side by every booking entry point.
+model AvailabilityBlock {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  // What this block closes:
+  //   serviceType = ""      → the entire property (every service)
+  //   serviceType = "suite" → suites; serviceId = "" means every suite,
+  //                           otherwise that one suite's id
+  // serviceType values are the slugs in lib/services.ts (suite, restaurant,
+  // day-pass, sunset-party, event, experience, transfer, treatment).
+  serviceType String   @default("")
+  serviceId   String   @default("")
+  // Human label captured at creation (e.g. "Suite La Khoutoubia", "All suites",
+  // "Entire property") so the admin list stays readable if the item is renamed.
+  serviceName String   @default("")
+  // Inclusive range of blocked dates, YYYY-MM-DD. A booking conflicts with the
+  // block when it occupies any date in [startDate, endDate].
+  startDate   String
+  endDate     String
+  reason      String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model SiteSettings {

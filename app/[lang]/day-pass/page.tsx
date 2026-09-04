@@ -123,7 +123,9 @@ export default async function DayPassIndexPage({ params }: { params: Promise<{ l
           <p style={{ fontFamily: 'var(--sans)', fontSize: 11, letterSpacing: '0.18em', color: 'rgba(242,232,213,0.55)', margin: '0 0 40px', textTransform: 'uppercase' }}>
             {dp.reserve_cta_sub}
           </p>
-          <Link href={`/${lang}/contact`} className="cta">
+          {/* Day passes are booked and paid by card on the pass's own page, so
+              this leads there rather than to an enquiry form. */}
+          <Link href={passes[0] ? `/${lang}/day-pass/${passes[0].slug}` : `/${lang}/contact`} className="cta">
             <span className="cta-label">{dp.reserve_cta}</span>
             <span className="cta-arrow" aria-hidden="true">→</span>
           </Link>

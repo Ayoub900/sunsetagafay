@@ -5,6 +5,7 @@ import { getDictionary, hasLocale, type Locale } from '../../dictionaries'
 import { GrainOverlay } from '@/components/shared'
 import { getOrderByOid } from '@/lib/cmi/orders'
 import { formatMinorUnits } from '@/lib/cmi/util'
+import { bookingReference } from '@/lib/email/payment'
 
 // Confirmation reflects the authoritative order status in the DB, never the
 // (unverified) browser return data.
@@ -40,14 +41,27 @@ export default async function ConfirmationPage({
 
   const order = oid ? await getOrderByOid(String(oid)) : null
   const paid = order?.status === 'PAID'
+  // A day pass / transfer is not a stay, so the confirmed copy differs.
+  const isService = !!order?.serviceBookingId
 
   const eyebrow = !order ? p.not_found_title : paid ? p.confirm_eyebrow : p.pending_eyebrow
-  const title = !order ? p.not_found_title : paid ? p.confirm_title : p.pending_title
-  const sub = !order ? p.not_found_sub : paid ? p.confirm_sub : p.pending_sub
+  const title = !order
+    ? p.not_found_title
+    : paid
+      ? (isService ? p.confirm_title_service : p.confirm_title)
+      : p.pending_title
+  const sub = !order
+    ? p.not_found_sub
+    : paid
+      ? (isService ? p.confirm_sub_service : p.confirm_sub)
+      : p.pending_sub
 
   const rows: [string, string][] = []
   if (order) {
-    rows.push([p.ref_label, `SA-${order.oid.slice(-8)}`])
+    // The booking's own reference — the same one shown while booking and in the
+    // confirmation email, so the guest only ever sees one number.
+    const bookingId = order.reservationId ?? order.serviceBookingId
+    rows.push([p.ref_label, bookingId ? bookingReference(bookingId) : `SA-${order.oid.slice(-8)}`])
     if (order.description) rows.push([p.summary_label, order.description])
     if (paid) {
       rows.push([p.amount_paid_label, `${formatMinorUnits(order.amount)} MAD`])

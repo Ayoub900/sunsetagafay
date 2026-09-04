@@ -55,6 +55,10 @@ export default async function TransfersPage({ params }: { params: Promise<{ lang
       : dict.transfers_page.options.map((o: { id: string; name: string; lede: string; copy: string; duration: string; price: string }) => ({ ...o, slug: undefined as string | undefined })),
   }
 
+  // The transfer the page-level CTA sends people to; undefined when nothing on
+  // this page has a bookable page of its own.
+  const firstBookable = p.options.find(o => o.slug)?.slug
+
   return (
     <div style={{ background: 'var(--paper)' }}>
       {/* Hero */}
@@ -102,16 +106,20 @@ export default async function TransfersPage({ params }: { params: Promise<{ lang
                     {opt.copy}
                   </p>
                   <div style={{ marginTop: 28, display: 'flex', gap: 18, flexWrap: 'wrap' }}>
-                    {opt.slug && (
+                    {/* Transfers are booked and paid by card on the transfer's
+                        own page. Only rows with no page of their own (the
+                        dictionary fallback) still point at the enquiry form. */}
+                    {opt.slug ? (
                       <Link href={`/${lang}/transfers/${opt.slug}`} className="cta">
-                        <span className="cta-label">{lang === 'fr' ? 'Découvrir' : 'Discover'}</span>
+                        <span className="cta-label">{p.book_cta}</span>
+                        <span className="cta-arrow" aria-hidden="true">→</span>
+                      </Link>
+                    ) : (
+                      <Link href={`/${lang}/contact`} className="cta">
+                        <span className="cta-label">{p.enquire_cta}</span>
                         <span className="cta-arrow" aria-hidden="true">→</span>
                       </Link>
                     )}
-                    <Link href={`/${lang}/contact`} className="cta">
-                      <span className="cta-label">{p.enquire_cta}</span>
-                      <span className="cta-arrow" aria-hidden="true">→</span>
-                    </Link>
                   </div>
                 </div>
                 <div className="transfer-row-meta" style={{ textAlign: 'right', flexShrink: 0, paddingTop: 'clamp(28px,3vw,38px)' }}>
@@ -153,18 +161,19 @@ export default async function TransfersPage({ params }: { params: Promise<{ lang
         </div>
       </section>
 
-      {/* Enquire CTA */}
+      {/* Book CTA — card payment is the only way to reserve a transfer, so this
+          leads to a transfer's page rather than to the enquiry form. */}
       <section style={{ background: 'var(--sienna)', color: 'var(--paper)', padding: 'clamp(64px,9vw,100px) var(--gutter)', textAlign: 'center' }}>
         <GrainOverlay opacity={0.18} blend="overlay" />
         <div style={{ position: 'relative', zIndex: 2, maxWidth: 680, margin: '0 auto' }}>
           <h2 style={{ fontFamily: 'var(--serif)', fontWeight: 400, fontSize: 'clamp(36px,5vw,64px)', lineHeight: 0.97, letterSpacing: '-0.018em', margin: '0 0 12px' }}>
-            {p.enquire_cta}
+            {p.book_title}
           </h2>
           <p style={{ fontFamily: 'var(--sans)', fontSize: 11, letterSpacing: '0.18em', color: 'rgba(242,232,213,0.65)', margin: '0 0 40px', textTransform: 'uppercase' }}>
-            {p.enquire_sub}
+            {firstBookable ? p.book_sub : p.enquire_sub}
           </p>
-          <Link href={`/${lang}/contact`} className="cta">
-            <span className="cta-label">{p.enquire_cta}</span>
+          <Link href={firstBookable ? `/${lang}/transfers/${firstBookable}` : `/${lang}/contact`} className="cta">
+            <span className="cta-label">{firstBookable ? p.book_cta : p.enquire_cta}</span>
             <span className="cta-arrow" aria-hidden="true">→</span>
           </Link>
         </div>

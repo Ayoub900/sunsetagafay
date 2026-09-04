@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { isSuiteBlocked } from '@/lib/db'
 import { minCheckInDate } from '@/lib/opening'
 import { getClientIp, rateLimit, tooManyRequestsResponse } from '@/lib/rate-limit'
 import {
@@ -36,6 +37,13 @@ export async function POST(req: NextRequest) {
     const phoneNum  = phone(body.phone)
     const country   = str(body.country, { field: 'country', max: 100 })
     const notes     = str(body.notes,   { field: 'notes',   max: 2000 })
+
+    // Reject dates the admin has closed for this suite (or the whole property).
+    // The availability step already hides these, but a direct POST must not slip
+    // through a closure.
+    if (await isSuiteBlocked(suiteName, checkIn, checkOut)) {
+      throw new ValidationError('These dates are not available for the selected suite', 409)
+    }
 
     const reservation = await prisma.reservation.create({
       data: {

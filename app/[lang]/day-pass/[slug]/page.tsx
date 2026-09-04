@@ -6,7 +6,7 @@ import { Photo, GrainOverlay } from '@/components/shared'
 import { Slideshow } from '@/components/Slideshow'
 import { getActiveDayPasses, getDayPassBySlug } from '@/lib/db'
 import { buildAlternates } from '@/lib/seo'
-import { DayPassBookingForm } from '../DayPassBookingForm'
+import { ServiceBookingForm } from '@/components/ServiceBookingForm'
 
 export async function generateStaticParams() {
   const items = await getActiveDayPasses()
@@ -104,42 +104,7 @@ export default async function DayPassDetailPage({ params }: { params: Promise<{ 
         .dp-copy p { margin: 0 0 14px; }
         .dp-welcome { font-family: var(--sans); font-size: 14px; font-weight: 600; color: var(--ink); margin: 0 0 24px; }
 
-        .dp-form { background: var(--paper); border: 1px solid rgba(31,26,20,0.12); padding: clamp(24px, 3vw, 34px); margin-top: 16px; display: flex; flex-direction: column; gap: 26px; position: relative; }
-        .dp-form::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, var(--brass), transparent); opacity: 0.5; }
-        .dp-price-row { display: flex; flex-direction: column; gap: 4px; padding-bottom: 22px; border-bottom: 1px solid rgba(31,26,20,0.12); }
-        .dp-price-eyebrow { font-family: var(--sans); font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--ink-soft); }
-        .dp-price-amount { font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 3vw, 34px); letter-spacing: -0.01em; color: var(--ink); line-height: 1; }
-        .dp-form-title { font-family: var(--sans); font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--sienna); margin: 0; }
-        .dp-row { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(18px, 2.5vw, 28px); }
-        .dp-field { display: flex; flex-direction: column; gap: 8px; }
-        .dp-field-full { grid-column: 1 / -1; }
-        .dp-field > span { font-family: var(--sans); font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--ink-soft); }
-        .dp-field input { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--ink); background: transparent; border: 0; border-bottom: 1px solid rgba(31,26,20,0.3); padding: 8px 0; outline: none; width: 100%; transition: border-color 300ms; -webkit-appearance: none; appearance: none; }
-        .dp-field input:focus { border-color: var(--sienna); }
-        .dp-field input::-webkit-calendar-picker-indicator { opacity: 0.5; cursor: pointer; }
-        .dp-field input::-webkit-calendar-picker-indicator:hover { opacity: 1; }
-
-        .dp-counter { display: flex; flex-direction: column; gap: 8px; }
-        .dp-counter > span { font-family: var(--sans); font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--ink-soft); }
-        .dp-counter-controls { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-bottom: 1px solid rgba(31,26,20,0.3); padding: 4px 0 8px; transition: border-color 300ms; }
-        .dp-counter-controls:hover, .dp-counter-controls:focus-within { border-color: var(--sienna); }
-        .dp-counter-controls button { width: 26px; height: 26px; border: 1px solid rgba(31,26,20,0.25); background: transparent; color: var(--ink); cursor: pointer; font-size: 14px; line-height: 1; display: flex; align-items: center; justify-content: center; transition: all 200ms; padding: 0; }
-        .dp-counter-controls button:hover { border-color: var(--sienna); color: var(--sienna); }
-        .dp-counter-controls > span { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink); min-width: 24px; text-align: center; }
-
-        .dp-submit { margin-top: 8px; display: inline-flex; align-items: center; justify-content: center; gap: 14px; padding: 18px 36px; background: var(--sienna); color: var(--paper); border: none; font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; cursor: pointer; transition: background 300ms; width: 100%; }
-        .dp-submit:hover:not(:disabled) { background: var(--ink); }
-        .dp-submit:disabled { background: var(--ink-soft); cursor: progress; }
-        .dp-submit-arrow { font-size: 14px; transition: transform 300ms; }
-        .dp-submit:hover .dp-submit-arrow { transform: translateX(4px); }
-
-        .dp-msg { font-family: var(--sans); font-size: 13px; letter-spacing: 0.02em; margin: 0; padding: 0; }
-        .dp-msg-ok { color: var(--brass); font-family: var(--serif); font-style: italic; font-size: 16px; }
-        .dp-msg-err { color: var(--sienna); }
-
-        @media (max-width: 480px) {
-          .dp-row { grid-template-columns: 1fr; gap: 22px; }
-        }
+        /* The booking form ships its own styles (components/ServiceBookingForm). */
       `}</style>
 
       <section className="page-hero">
@@ -215,15 +180,28 @@ export default async function DayPassDetailPage({ params }: { params: Promise<{ 
                 </p>
               )}
 
-              <DayPassBookingForm
-                slug={item.slug}
-                passNameEn={item.nameEn}
-                passNameFr={item.nameFr}
-                lang={lang as 'en' | 'fr'}
-                dict={dp}
-                currency={item.currency || '€'}
-                price={item.price}
-              />
+              {/* Day passes are booked by card only. Without an online price
+                  there is nothing to charge, so the page points at contact
+                  rather than taking a booking it cannot settle. */}
+              {item.priceMadCents > 0 ? (
+                <ServiceBookingForm
+                  kind="day-pass"
+                  slug={item.slug}
+                  lang={lang as 'en' | 'fr'}
+                  itemName={name}
+                  priceLabel={item.price ? `${item.currency || '€'} ${item.price}` : ''}
+                  fromLabel={dp.price_label}
+                  dict={dict.service_booking}
+                  pay={dict.payment}
+                />
+              ) : (
+                <p className="dp-welcome">
+                  {dict.service_booking.unavailable}{' '}
+                  <Link href={`/${lang}/contact`} style={{ color: 'var(--sienna)', textDecoration: 'underline', textUnderlineOffset: 3 }}>
+                    {dict.service_booking.unavailable_cta}
+                  </Link>
+                </p>
+              )}
             </div>
           </div>
 

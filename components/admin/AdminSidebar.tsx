@@ -16,6 +16,8 @@ const groups: NavGroup[] = [
     items: [
       ['/admin/dashboard',          'Overview',    'home'],
       ['/admin/reservations',       'Reservations','book'],
+      ['/admin/service-bookings',   'Passes & Transfers', 'car'],
+      ['/admin/availability',       'Blocked Dates', 'calendar'],
       ['/admin/suites',             'Suites',      'bed'],
       ['/admin/restaurants',        'Restaurants', 'fork'],
       ['/admin/guests',             'Guests',      'user'],

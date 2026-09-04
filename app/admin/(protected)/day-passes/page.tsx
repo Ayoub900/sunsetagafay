@@ -49,8 +49,35 @@ export default async function DayPassesPage({ searchParams }: { searchParams: Pr
                     <Field label="Name (EN)" w="calc(50% - 8px)"><TextInput name="nameEn" defaultValue={editing?.nameEn} required /></Field>
                     <Field label="Name (FR)" w="calc(50% - 8px)"><TextInput name="nameFr" defaultValue={editing?.nameFr} required /></Field>
                     <Field label="Hours" w="calc(50% - 8px)" hint="e.g. 16:00 — 19:00"><TextInput name="hours" defaultValue={editing?.hours ?? ''} /></Field>
-                    <Field label="Price" w="calc(50% - 8px)"><TextInput name="price" defaultValue={editing?.price ?? ''} placeholder="55,00" /></Field>
+                    <Field label="Price" w="calc(50% - 8px)" hint="Marketing price shown on the site"><TextInput name="price" defaultValue={editing?.price ?? ''} placeholder="55,00" /></Field>
                     <Field label="Currency" w="calc(50% - 8px)"><TextInput name="currency" defaultValue={editing?.currency ?? '€'} /></Field>
+                  </FormSection>
+
+                  <FormSection title="Online payment">
+                    <Field
+                      label="Online price (MAD / adult)"
+                      w="calc(50% - 8px)"
+                      hint="What the card is actually charged. 0 = no online payment (the form sends an enquiry instead)."
+                    >
+                      <TextInput
+                        name="priceMad"
+                        type="number"
+                        defaultValue={editing ? String((editing.priceMadCents ?? 0) / 100) : '0'}
+                        placeholder="600"
+                      />
+                    </Field>
+                    <Field
+                      label="Online price (MAD / child)"
+                      w="calc(50% - 8px)"
+                      hint="0 = children are not charged"
+                    >
+                      <TextInput
+                        name="childPriceMad"
+                        type="number"
+                        defaultValue={editing ? String((editing.childPriceMadCents ?? 0) / 100) : '0'}
+                        placeholder="300"
+                      />
+                    </Field>
                   </FormSection>
 
                   <FormSection title="Short Description (EN)">

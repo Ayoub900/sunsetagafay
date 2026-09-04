@@ -14,11 +14,14 @@ export default async function PaymentFailedPage({
   searchParams,
 }: {
   params: Promise<{ lang: string }>
-  searchParams: Promise<{ r?: string }>
+  searchParams: Promise<{ r?: string; s?: string }>
 }) {
   const { lang } = await params
   if (!hasLocale(lang)) notFound()
-  const { r: reservationId } = await searchParams
+  // `r` = room reservation, `s` = day pass / transfer booking. Whichever is
+  // present is replayed to /api/payment/initiate, which reuses the same oid.
+  const { r: reservationId, s: serviceBookingId } = await searchParams
+  const retryId = reservationId || serviceBookingId
 
   const dict = await getDictionary(lang as Locale)
   const p = dict.payment
@@ -38,12 +41,14 @@ export default async function PaymentFailedPage({
       <div style={{ padding: 'clamp(40px,6vw,80px) var(--gutter)' }}>
         <div style={{ maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
           <p style={{ fontFamily: 'var(--sans)', fontSize: 14, lineHeight: 1.8, color: 'var(--ink-soft)', margin: '0 auto 36px', letterSpacing: '0.02em' }}>
-            {p.failed_sub}
+            {serviceBookingId ? p.failed_sub_service : p.failed_sub}
           </p>
 
-          {reservationId && (
+          {retryId && (
             <form method="POST" action="/api/payment/initiate" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20, marginBottom: 28 }}>
-              <input type="hidden" name="reservationId" value={reservationId} />
+              {reservationId
+                ? <input type="hidden" name="reservationId" value={reservationId} />
+                : <input type="hidden" name="serviceBookingId" value={serviceBookingId} />}
               <input type="hidden" name="lang" value={lang} />
               <label style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontFamily: 'var(--sans)', fontSize: 13, color: 'var(--ink)', maxWidth: 420, textAlign: 'left', cursor: 'pointer' }}>
                 <input type="checkbox" name="acceptTerms" value="true" required style={{ marginTop: 3 }} />
