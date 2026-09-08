@@ -65,6 +65,13 @@ async function sweep(expire: boolean) {
 
   return {
     checkedAt: new Date(now).toISOString(),
+    // Counts first so an hourly cron can log the summary alone: the arrays
+    // below carry customer emails, which have no business in a log file.
+    counts: {
+      stalePending: stalePending.length,
+      underReconciliation: underReconciliation.length,
+      expired,
+    },
     stalePending,
     underReconciliation,
     expired,

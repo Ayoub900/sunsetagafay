@@ -430,22 +430,70 @@ auto-touched). Schedule it hourly (Vercel Cron, GitHub Actions, any scheduler).
 
 ## 10. Go-live checklist
 
-1. `CMI_STORE_KEY` — set the **production** key from the back office
-   (*Administration → Changer les clés du magasin*). No `SKS`, long, random.
-2. `CMI_GATEWAY_URL` → `https://sahampay.cmi.co.ma/fim/est3dgate` (drop the
-   `test-` prefix).
-3. `CMI_BASE_URL` → `https://sunsetagafay.com` (must be the exact public
-   origin; it builds the URLs CMI calls).
-4. `npx prisma db push` on the production DB — the **unique indexes are what
+CMI confirmed on 2026-09-08 that integration testing passed and issued the
+**production kit** for the SAHAMPAY platform. Production coordinates:
+
+| Item | Value |
+| --- | --- |
+| Gateway (web) | `https://sahampay.cmi.co.ma/fim/est3dgate` |
+| `clientid` | `830010017` — a **different merchant** from the test id `830010013`; never mix the two |
+| Currency | `504` (MAD), unchanged |
+| Store key | **Not issued by CMI.** You set it yourself in the production back office: *Administration → Changer les clés du magasin* |
+| Back office | `https://sahampay.cmi.co.ma/sahampay/report`, merchant `830010017`, user `sunsetagafay_a` (password change forced on first login) |
+| Support | Connection problems at go-live: `integration.ecom@cmi.co.ma` / +212 5 22 94 28 87. Once live, transaction-flow questions: `helpdesk.ecom@cmi.co.ma` / +212 8 02 00 50 50 |
+
+Steps, in order:
+
+1. Log in to the production back office and change the initial password — it
+   was emailed in clear text, so treat it as already burned. The new one lives
+   in the password manager, never in the repo or in `.env`.
+2. In that same back office, set the **store key** (*Administration → Changer
+   les clés du magasin*): long, random, alphanumeric, and without the substring
+   `SKS` (`config.ts` refuses to boot on it). This is the production key; it
+   has nothing to do with the test one.
+3. Put the production values in the server's `.env`. There is no build-time
+   switch and nothing else in the code is environment-aware:
+
+   ```sh
+   CMI_CLIENT_ID="830010017"
+   CMI_STORE_KEY="<the key you just set in the back office>"
+   CMI_GATEWAY_URL="https://sahampay.cmi.co.ma/fim/est3dgate"
+   CMI_BASE_URL="https://sunsetagafay.com"
+   ```
+
+   `CMI_BASE_URL` must be the exact public origin: it builds `okUrl`, `failUrl`
+   and the `callbackUrl` CMI posts to, and those URLs are part of the signed
+   hash. The devtunnel origin used during testing must be gone — CMI would post
+   the callback to a tunnel that no longer exists and every order would sit in
+   `UNDER_RECONCILIATION`.
+4. **Restart the app.** `getCmiConfig()` caches the config in module scope, so
+   editing `.env` without a restart keeps the old (test) credentials live.
+5. `npx prisma db push` on the production DB — the **unique indexes are what
    make idempotency real**. Caveat: a pre-existing duplicate
    `SiteSettings.key="default"` document blocks the full push; dedupe it or
    create the three payment indexes manually (`Order.oid`,
    `Order.reservationId`, `PaymentCallback.fingerprint`).
-5. Confirm suite MAD prices in the admin (see §8).
-6. Schedule the reconcile cron + wire `alertPayment` to a real channel
-   (email/Slack) — it currently emits structured `[cmi][alert]` log lines.
-7. Run the certification scenarios (§9 level 3–4), fill the workbook, email it
-   to CMI.
+6. Confirm suite MAD prices in the admin (see §8).
+7. Install the reconcile cron — `scripts/reconcile-cron.sh`, hourly (see
+   CMI-PAYMENT.md). Nothing calls the endpoint on its own, and without it an
+   order whose callback never arrived stays `UNDER_RECONCILIATION` unnoticed.
+   Wire `alertPayment` to a real channel (email/Slack) too — it currently only
+   emits structured `[cmi][alert]` log lines.
+8. **Live proof, required by CMI:** make one real payment with a real card on
+   the production site. Check the same three places as in test — the
+   `[cmi][callback][…]` log line, the order in **Admin → Payments** (must reach
+   `PAID`), and the transaction in the production back office (must reach
+   `POST`, i.e. `ACTION=POSTAUTH` was accepted). After ~24 h CMI emails a
+   *relevé d'opérations* for the telecollected transaction and the amount
+   settles on the merchant bank account; that email is the confirmation the
+   chain works end to end. Refund the test purchase from the back office
+   afterwards.
+9. Reply to CMI confirming receipt of the production kit — they asked for it
+   explicitly (kit sent to `info@sunsetagafay.com` and
+   `sentinelstudiooff@gmail.com`).
+
+The certification workbook (§9 level 4) is already done — that is what the
+production kit was issued against.
 
 ---
 

@@ -37,7 +37,7 @@ Set these in `.env.local` (never commit real values; `.env*` is gitignored):
 
 | Variable | Purpose |
 | --- | --- |
-| `CMI_CLIENT_ID` | Merchant client id from CMI (e.g. `830010013`). |
+| `CMI_CLIENT_ID` | Merchant client id from CMI. Test `830010013` · **Prod `830010017`** — two distinct merchants, each with its own store key. |
 | `CMI_STORE_KEY` | **Store key** — signs every request/callback. Must **not** contain `SKS`. |
 | `CMI_GATEWAY_URL` | Test: `https://test-sahampay.cmi.co.ma/fim/est3dgate` · Prod: `https://sahampay.cmi.co.ma/fim/est3dgate` |
 | `CMI_BASE_URL` | Public **https** base URL of the site; used to build `okUrl`/`failUrl`/`callbackUrl`/`shopurl`. Must be reachable from the internet, including in test. |
@@ -53,6 +53,11 @@ In the CMI back office: **Administration → Changer les clés du magasin**. Cop
 that value into `CMI_STORE_KEY`. It is the shared secret behind every `hash`;
 keep it out of the client, logs, and version control.
 
+The test and production back offices are separate, so the key must be set
+twice — once in each. Production back office:
+`https://sahampay.cmi.co.ma/sahampay/report` (merchant `830010017`, user
+`sunsetagafay_a`). See the go-live checklist in CMI-PAYMENT-GUIDE.md §10.
+
 ## Endpoints
 
 | Route | Method | Role |
@@ -62,7 +67,24 @@ keep it out of the client, logs, and version control.
 | `/api/payment/callback` | POST | **Authoritative.** Verifies hash + amount, atomically sets `PAID`, replies exactly `ACTION=POSTAUTH` / `APPROVED` / `FAILURE`. |
 | `/api/payment/ok` | POST | Browser return after success. Display/fallback only; sets `UNDER_RECONCILIATION` if the callback hasn’t finalized yet, then redirects to the confirmation page. |
 | `/api/payment/fail` | POST | Browser return after failure. Never changes status; redirects to the retry page. |
-| `/api/payment/reconcile` | GET/POST | Cron sweep (needs `CRON_SECRET`). Surfaces stale `PENDING` + `UNDER_RECONCILIATION`; `?expire=true` cancels `PENDING` older than 24h. |
+| `/api/payment/reconcile` | GET/POST | Cron sweep (needs `CRON_SECRET`). Surfaces stale `PENDING` + `UNDER_RECONCILIATION`; `?expire=true` cancels `PENDING` older than 24h. Driven hourly by `scripts/reconcile-cron.sh` — see below. |
+
+### The reconcile cron
+
+The endpoint does nothing unless something calls it. On the server:
+
+```sh
+chmod +x /var/www/sunsetagafay/scripts/reconcile-cron.sh
+crontab -e
+# hourly, at :05
+5 * * * * /var/www/sunsetagafay/scripts/reconcile-cron.sh >> /var/log/sunset-reconcile.log 2>&1
+```
+
+It reads `CRON_SECRET` from `.env` and calls the app on `127.0.0.1:3000`, so
+the secret never leaves the box. It logs one line per run — counts only, since
+the endpoint's full response carries customer emails — and exits non-zero when
+anything is `UNDER_RECONCILIATION`, so cron's own mail raises it. A quiet run
+still logs, so silence in that file means the cron itself stopped.
 
 Give CMI these URLs (built from `CMI_BASE_URL`):
 `…/api/payment/ok`, `…/api/payment/fail`, `…/api/payment/callback`.
