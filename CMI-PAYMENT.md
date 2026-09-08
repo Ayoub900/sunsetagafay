@@ -300,8 +300,7 @@ node --env-file=.env scripts/set-service-mad-prices.mjs
 It reads each item's own € display price at **1 € = 10 MAD** (the conversion the
 suites use), skips anything already priced, and sets the child price equal to
 the adult price — so **children are charged the full adult price until you enter
-a reduced child price** in the admin. `/api/seed` sets the same values for fresh
-databases.
+a reduced child price** in the admin.
 
 Bookings are listed in the admin at **Maison → Passes & Transfers**; a booking
 turns `Confirmed` only when its order is settled by the callback.

@@ -5,7 +5,6 @@ import { StatCard } from '@/components/admin/StatCard'
 import { PageHead } from '@/components/admin/PageHead'
 import { StatusPill } from '@/components/admin/Pill'
 import { T } from '@/components/admin/tokens'
-import { SeedButton } from './SeedButton'
 
 const sections = [
   { key: 'suites',       label: 'Suites',         href: '/admin/suites' },
@@ -25,8 +24,6 @@ export default async function DashboardPage() {
     getSuites(),
     getReservations(),
   ])
-
-  const isEmpty = counts.suites === 0 && counts.restaurants === 0
 
   const recentReservations = reservations.slice(0, 5)
 
@@ -50,26 +47,6 @@ export default async function DashboardPage() {
       />
 
       <div className="dash-wrap" style={{ padding: '8px 32px 48px' }}>
-
-        {/* Seed banner */}
-        {isEmpty && (
-          <div style={{
-            background: T.siennaSoft,
-            border: `1px solid rgba(160,74,42,0.2)`,
-            borderRadius: T.radius, padding: '20px 24px', marginBottom: 28,
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap',
-          }}>
-            <div>
-              <div style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 14, fontWeight: 600, color: T.ink, marginBottom: 4 }}>
-                Database is empty
-              </div>
-              <div style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 13, color: T.ink2 }}>
-                Populate all sections with the built-in EN/FR seed content.
-              </div>
-            </div>
-            <SeedButton />
-          </div>
-        )}
 
         {/* Stat cards */}
         <div className="dash-stat-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 28 }}>
