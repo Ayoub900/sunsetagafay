@@ -473,7 +473,21 @@ Steps, in order:
    `SiteSettings.key="default"` document blocks the full push; dedupe it or
    create the three payment indexes manually (`Order.oid`,
    `Order.reservationId`, `PaymentCallback.fingerprint`).
-6. Confirm suite MAD prices in the admin (see §8).
+6. Price everything for MAD. Every MAD field defaults to 0 and 0 means "not
+   payable online" — on a database that predates payment, nothing is
+   sellable and day passes and transfers are unbookable outright. Check with
+   `node --env-file=.env scripts/prod-db-preflight.mjs` (read-only), then:
+
+   ```sh
+   node --env-file=.env scripts/set-service-mad-prices.mjs --dry-run
+   node --env-file=.env scripts/set-service-mad-prices.mjs
+   ```
+
+   It converts each item’s € display price at 1 € = 10 MAD and only touches
+   items still at 0, so it is re-runnable and never overwrites a price set by
+   hand. Confirm the result in the admin (see §8) — especially the child day
+   pass price, which it fills with the adult price for want of anything
+   better.
 7. Install the reconcile cron — `scripts/reconcile-cron.sh`, hourly (see
    CMI-PAYMENT.md). Nothing calls the endpoint on its own, and without it an
    order whose callback never arrived stays `UNDER_RECONCILIATION` unnoticed.

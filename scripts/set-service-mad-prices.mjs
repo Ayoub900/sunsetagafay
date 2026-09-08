@@ -1,7 +1,8 @@
-// Gives every day pass and transfer an online price in MAD, so it can be booked
-// by card. Day passes and transfers are card-only: an item with
-// `priceMadCents = 0` cannot be booked at all, so this has to be run once on any
-// database seeded before online payment existed.
+// Gives every suite, day pass and transfer an online price in MAD, so it can be
+// booked by card. Day passes and transfers are card-only: an item with
+// `priceMadCents = 0` cannot be booked at all. A suite at `rateMadCents = 0`
+// falls back to an enquiry instead of a Pay button. Either way this has to be
+// run once on any database seeded before online payment existed.
 //
 //   node --env-file=.env scripts/set-service-mad-prices.mjs            # apply
 //   node --env-file=.env scripts/set-service-mad-prices.mjs --dry-run  # preview
@@ -41,6 +42,26 @@ const mad = cents => `${(cents / 100).toLocaleString('fr-FR')} MAD`
 
 async function main() {
   console.log(`rate: 1 € = ${RATE} MAD${DRY ? ' (dry run)' : ''}\n`)
+
+  const suites = await prisma.suite.findMany({
+    orderBy: { order: 'asc' },
+    select: { id: true, slug: true, rate: true, rateMadCents: true },
+  })
+  for (const su of suites) {
+    if (su.rateMadCents > 0) {
+      console.log(`suite     ${su.slug.padEnd(24)} already priced at ${mad(su.rateMadCents)} — left alone`)
+      continue
+    }
+    const cents = toMadCents(su.rate)
+    if (cents === 0) {
+      console.log(`suite     ${su.slug.padEnd(24)} no € amount in "${su.rate}" — SET IT IN THE ADMIN`)
+      continue
+    }
+    if (!DRY) {
+      await prisma.suite.update({ where: { id: su.id }, data: { rateMadCents: cents } })
+    }
+    console.log(`suite     ${su.slug.padEnd(24)} ${su.rate} -> ${mad(cents)} per night`)
+  }
 
   const passes = await prisma.dayPass.findMany({
     orderBy: { order: 'asc' },
@@ -91,7 +112,7 @@ async function main() {
     console.log(`transfer  ${t.slug.padEnd(24)} ${t.price} -> ${mad(cents)} per vehicle`)
   }
 
-  console.log('\nConfirm these in Admin → Day Passes / Transfers → Online payment.')
+  console.log('\nConfirm these in Admin → Suites / Day Passes / Transfers → Online payment.')
 }
 
 main()
