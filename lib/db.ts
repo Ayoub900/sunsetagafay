@@ -1,5 +1,6 @@
 import { prisma } from './prisma'
 import { blockClosesWholeType, blockCovers, serviceAllLabel, serviceTypeLabel } from './services'
+import { toReservationRow, toRow } from './payments/view'
 
 // ─── Suites ────────────────────────────────────────────────────────────────
 
@@ -135,6 +136,18 @@ export const getTreatmentById = (id: string) =>
 
 export const getReservations = () =>
   prisma.reservation.findMany({ orderBy: { createdAt: 'desc' } })
+
+// Reservations flattened for the admin table, with the payment order attached
+// and the "did they pay?" answer resolved. See getServiceBookingRows for why
+// the clock is read here rather than in a page.
+export async function getReservationRows() {
+  const reservations = await prisma.reservation.findMany({
+    orderBy: { createdAt: 'desc' },
+    include: { orders: true },
+  })
+  const now = Date.now()
+  return reservations.map(r => toReservationRow(r, now))
+}
 
 export const getReservationById = (id: string) =>
   prisma.reservation.findUnique({ where: { id } })
@@ -285,6 +298,19 @@ export const getServiceBookings = () =>
     include: { orders: true },
     take: 200,
   })
+
+// The same bookings flattened to what the admin screens render, with the
+// "did they pay?" answer already resolved. The clock is read here rather than
+// in a page: `Date.now()` is impure, the "paying now" window depends on it, and
+// the rows have to be plain JSON to cross into a client component anyway.
+export async function getServiceBookingRows() {
+  const bookings = await getServiceBookings()
+  const now = Date.now()
+  return {
+    rows: bookings.map(b => toRow(b, now)),
+    today: new Date(now).toLocaleDateString('en-CA'), // YYYY-MM-DD, local
+  }
+}
 
 // Orders that need manual verification against the CMI Merchant Center:
 // anything UNDER_RECONCILIATION, plus PENDING orders older than 1 hour.

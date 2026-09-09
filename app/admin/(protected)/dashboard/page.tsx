@@ -1,10 +1,15 @@
 import Link from 'next/link'
-import { getDashboardCounts, getSuites, getReservations } from '@/lib/db'
+import { getDashboardCounts, getSuites, getReservationRows, getServiceBookingRows } from '@/lib/db'
 import { AdminTopbar } from '@/components/admin/AdminTopbar'
 import { StatCard } from '@/components/admin/StatCard'
 import { PageHead } from '@/components/admin/PageHead'
-import { StatusPill } from '@/components/admin/Pill'
+import { PayBadge } from '@/components/admin/PayBadge'
+import { ServicePaymentPanel } from '@/components/admin/ServicePaymentPanel'
 import { T } from '@/components/admin/tokens'
+
+// Payment state has to be read fresh: a cached dashboard would tell staff a
+// guest paid when the callback has since said otherwise.
+export const dynamic = 'force-dynamic'
 
 const sections = [
   { key: 'suites',       label: 'Suites',         href: '/admin/suites' },
@@ -19,13 +24,17 @@ const sections = [
 ] as const
 
 export default async function DashboardPage() {
-  const [counts, suites, reservations] = await Promise.all([
+  const [counts, suites, reservations, services] = await Promise.all([
     getDashboardCounts(),
     getSuites(),
-    getReservations(),
+    getReservationRows(),
+    getServiceBookingRows(),
   ])
 
   const recentReservations = reservations.slice(0, 5)
+
+  // Day passes and transfers, with the payment answer already resolved.
+  const { rows: serviceRows, today } = services
 
   return (
     <>
@@ -35,6 +44,8 @@ export default async function DashboardPage() {
           .dash-stat-grid { grid-template-columns: repeat(2, 1fr) !important; }
           .dash-res-row { grid-template-columns: 1fr auto !important; }
           .dash-res-date, .dash-res-total { display: none !important; }
+          .dash-pay-grid { grid-template-columns: 1fr !important; }
+          .dash-pay-amount { display: none !important; }
         }
         @media (max-width: 768px) {
           .dash-content-grid { grid-template-columns: 1fr !important; }
@@ -77,6 +88,11 @@ export default async function DashboardPage() {
           />
         </div>
 
+        {/* Passes & transfers: paid vs not paid, the thing the desk is asked first */}
+        <div style={{ marginBottom: 28 }}>
+          <ServicePaymentPanel rows={serviceRows} today={today} />
+        </div>
+
         {/* Content grid */}
         <div className="dash-content-grid" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 20 }}>
 
@@ -112,15 +128,16 @@ export default async function DashboardPage() {
                 }}>
                   <div style={{ minWidth: 0 }}>
                     <div style={{ fontFamily: 'var(--sans, system-ui)', fontWeight: 600, fontSize: 13.5, color: T.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.guestName}</div>
-                    <div style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 12.5, color: T.ink3, marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.suite}</div>
+                    <div style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 12.5, color: T.ink3, marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.suite} · {r.status}</div>
                   </div>
                   <div className="dash-res-date" style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 13, color: T.ink2, whiteSpace: 'nowrap' }}>
-                    {r.checkIn} → {r.checkOut}
+                    {r.stayLabel}
                   </div>
-                  <div className="dash-res-total" style={{ fontFamily: 'var(--sans, system-ui)', fontWeight: 600, fontSize: 13.5, color: T.ink }}>
-                    {r.total || `${r.nights}n`}
+                  <div className="dash-res-total" style={{ fontFamily: 'var(--sans, system-ui)', fontWeight: 600, fontSize: 13.5, color: T.ink, fontVariantNumeric: 'tabular-nums' }}>
+                    {r.amountLabel}
                   </div>
-                  <div><StatusPill v={r.status} /></div>
+                  {/* Same badge as Passes & Transfers: one signal, learned once. */}
+                  <div><PayBadge state={r.pay} /></div>
                 </div>
               ))}
             </div>
@@ -196,3 +213,4 @@ export default async function DashboardPage() {
     </>
   )
 }
+

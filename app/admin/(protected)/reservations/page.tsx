@@ -1,19 +1,22 @@
 import Link from 'next/link'
-import { getReservations, getReservationById } from '@/lib/db'
+import { getReservationRows, getReservationById } from '@/lib/db'
 import { createReservation, updateReservation, deleteReservation } from './actions'
 import { AdminTopbar } from '@/components/admin/AdminTopbar'
 import { PageHead } from '@/components/admin/PageHead'
-import { ReservationsTable } from './ReservationsTable'
+import { ReservationsBoard } from './ReservationsBoard'
 import { StatusPill } from '@/components/admin/Pill'
 import { Field, FormSection, TextInput, TextArea, SelectInput } from '@/components/admin/FormAtoms'
 import { T } from '@/components/admin/tokens'
-import type { Reservation } from '@prisma/client'
 
 const statusOptions = ['Pending', 'Confirmed', 'In-house', 'Departing', 'Completed', 'Cancelled']
 
+// Payment state has to be read fresh — a cached page would tell staff a guest
+// paid when the callback has since said otherwise.
+export const dynamic = 'force-dynamic'
+
 export default async function ReservationsPage({ searchParams }: { searchParams: Promise<{ new?: string; edit?: string }> }) {
   const params = await searchParams
-  const items = await getReservations()
+  const items = await getReservationRows()
   const editing = params.edit ? await getReservationById(params.edit) : null
   const showForm = params.new === '1' || !!editing
   const updateWithId = editing ? updateReservation.bind(null, editing.id) : null
@@ -119,10 +122,17 @@ export default async function ReservationsPage({ searchParams }: { searchParams:
         <>
           <PageHead
             title="Reservations"
-            lede="All bookings on file. Filter by status or search by guest name."
+            lede="Every room stay on file, newest first. The payment column says what the card gateway actually settled — a stay taken by phone or paid on arrival shows as not paid online, which is not the same as unpaid."
           />
           <div style={{ padding: '8px 32px 48px' }}>
-            <ReservationsTable rows={items} deleteAction={deleteReservation} />
+            {items.length === 0 ? (
+              <p style={{ fontFamily: 'var(--sans, system-ui)', fontSize: 14, color: T.ink3 }}>
+                No reservations yet —{' '}
+                <Link href="/admin/reservations?new=1" style={{ color: T.sienna, textDecoration: 'none' }}>add the first one</Link>.
+              </p>
+            ) : (
+              <ReservationsBoard rows={items} deleteAction={deleteReservation} />
+            )}
           </div>
         </>
       )}
