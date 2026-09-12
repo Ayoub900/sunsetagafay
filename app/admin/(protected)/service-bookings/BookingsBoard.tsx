@@ -7,6 +7,8 @@ import {
   Card, Cards, Chevron, Details, Empty, Notice, NoticeButton, PayCell, PayChips,
   SearchBox, Segmented, TableShell, Tile, Tiles, boardCss, td, th,
 } from '@/components/admin/PaymentBoard'
+import { useBusinessToday } from '@/components/admin/useBusinessToday'
+import { dayBucket, type DayBucket } from '@/lib/dates'
 import { madTotal, totalsOf, type BookingRow, type PayState } from '@/lib/payments/view'
 
 // The one question this screen exists to answer, for every row, without having
@@ -14,7 +16,11 @@ import { madTotal, totalsOf, type BookingRow, type PayState } from '@/lib/paymen
 
 type Tab = 'ALL' | PayState
 type Kind = 'ALL' | 'DAY_PASS' | 'TRANSFER'
-type When = 'ALL' | 'TODAY' | 'UPCOMING' | 'PAST'
+type When = 'ALL' | DayBucket
+
+const whenOptions: [When, string][] = [
+  ['ALL', 'Any date'], ['TODAY', 'Today'], ['UPCOMING', 'Upcoming'], ['PAST', 'Past'],
+]
 
 const tabs: { key: Tab; label: string; state?: PayState }[] = [
   { key: 'ALL', label: 'All' },
@@ -26,7 +32,10 @@ const tabs: { key: Tab; label: string; state?: PayState }[] = [
   { key: 'CANCELLED', label: 'Cancelled', state: 'CANCELLED' },
 ]
 
-export function BookingsBoard({ rows, today }: { rows: BookingRow[]; today: string }) {
+export function BookingsBoard({ rows, today: initialToday }: { rows: BookingRow[]; today: string }) {
+  // The page's date to start with, the browser's from then on, so a board left
+  // open overnight does not keep filtering on yesterday.
+  const today = useBusinessToday(initialToday)
   const [tab, setTab] = useState<Tab>('ALL')
   const [kind, setKind] = useState<Kind>('ALL')
   const [when, setWhen] = useState<When>('ALL')
@@ -35,13 +44,13 @@ export function BookingsBoard({ rows, today }: { rows: BookingRow[]; today: stri
 
   const totals = useMemo(() => totalsOf(rows), [rows])
   const countFor = (t: Tab) => (t === 'ALL' ? rows.length : rows.filter(r => r.pay === t).length)
+  const countWhen = (w: When) =>
+    w === 'ALL' ? rows.length : rows.filter(r => dayBucket(r.date, today) === w).length
 
   const filtered = useMemo(() => rows.filter(r => {
     if (tab !== 'ALL' && r.pay !== tab) return false
     if (kind !== 'ALL' && r.kind !== kind) return false
-    if (when === 'TODAY' && r.date !== today) return false
-    if (when === 'UPCOMING' && r.date < today) return false
-    if (when === 'PAST' && r.date >= today) return false
+    if (when !== 'ALL' && dayBucket(r.date, today) !== when) return false
     if (query) {
       const q = query.toLowerCase()
       return [r.guestName, r.email, r.phone, r.itemName, r.date, r.route, r.oid]
@@ -79,7 +88,7 @@ export function BookingsBoard({ rows, today }: { rows: BookingRow[]; today: stri
       </Tiles>
 
       {unpaidToday > 0 && (
-        <Notice action={<NoticeButton onClick={() => { setWhen('TODAY'); setTab('UNPAID') }}>Show them</NoticeButton>}>
+        <Notice action={<NoticeButton onClick={() => { setWhen('TODAY'); setTab('UNPAID'); setKind('ALL') }}>Show them</NoticeButton>}>
           <strong>{unpaidToday}</strong> booking{unpaidToday === 1 ? '' : 's'} arriving today {unpaidToday === 1 ? 'has' : 'have'} not paid.
         </Notice>
       )}
@@ -92,10 +101,7 @@ export function BookingsBoard({ rows, today }: { rows: BookingRow[]; today: stri
           value={kind} onChange={setKind}
           options={[['ALL', 'All services'], ['DAY_PASS', 'Day passes'], ['TRANSFER', 'Transfers']]}
         />
-        <Segmented
-          value={when} onChange={setWhen}
-          options={[['ALL', 'Any date'], ['TODAY', 'Today'], ['UPCOMING', 'Upcoming'], ['PAST', 'Past']]}
-        />
+        <Segmented value={when} onChange={setWhen} options={whenOptions} countFor={countWhen} />
       </div>
 
       <div style={{ marginTop: 12, fontFamily: 'var(--sans, system-ui)', fontSize: 13, color: T.ink3 }}>

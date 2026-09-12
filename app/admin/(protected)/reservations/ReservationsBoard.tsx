@@ -10,6 +10,8 @@ import {
   Card, Cards, Chevron, Details, Empty, Notice, NoticeButton, PayCell, PayChips,
   SearchBox, Segmented, TableShell, Tile, Tiles, boardCss, td, th,
 } from '@/components/admin/PaymentBoard'
+import { useBusinessToday } from '@/components/admin/useBusinessToday'
+import { stayBucket, type DayBucket } from '@/lib/dates'
 import { madTotal, totalsOf, type PayState, type ReservationRow } from '@/lib/payments/view'
 
 // The same board as Passes & Transfers, on room stays. Two differences, both
@@ -17,11 +19,18 @@ import { madTotal, totalsOf, type PayState, type ReservationRow } from '@/lib/pa
 //
 //  - A reservation can be entered by hand, so "no order" is OFFLINE ("not paid
 //    online"), never an accusation of non-payment.
-//  - checkIn / checkOut are free text on the model ("14 May 2026"), so there is
-//    no today/upcoming/past filter here: it would have to guess at parsing.
+//  - checkIn / checkOut are free text on the model: ISO when the stay was booked
+//    on the site, "14 May 2026" when the desk typed it. They are read into
+//    calendar dates once, in lib/payments/view, and the few that cannot be read
+//    are counted rather than silently placed on a wrong day.
 
 type Tab = 'ALL' | PayState
 type Status = 'ALL' | 'Pending' | 'Confirmed' | 'In-house' | 'Departing' | 'Completed' | 'Cancelled'
+type When = 'ALL' | DayBucket
+
+const whenOptions: [When, string][] = [
+  ['ALL', 'Any date'], ['TODAY', 'Today'], ['UPCOMING', 'Upcoming'], ['PAST', 'Past'],
+]
 
 const tabs: { key: Tab; label: string; state?: PayState }[] = [
   { key: 'ALL', label: 'All' },
@@ -43,8 +52,10 @@ export function ReservationsBoard({ rows, deleteAction }: {
   rows: ReservationRow[]
   deleteAction: (id: string) => Promise<void>
 }) {
+  const today = useBusinessToday()
   const [tab, setTab] = useState<Tab>('ALL')
   const [status, setStatus] = useState<Status>('ALL')
+  const [when, setWhen] = useState<When>('ALL')
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState<string | null>(null)
   const [delRow, setDelRow] = useState<ReservationRow | null>(null)
@@ -53,17 +64,25 @@ export function ReservationsBoard({ rows, deleteAction }: {
 
   const totals = useMemo(() => totalsOf(rows), [rows])
   const countFor = (t: Tab) => (t === 'ALL' ? rows.length : rows.filter(r => r.pay === t).length)
+  const countWhen = (w: When) =>
+    w === 'ALL' ? rows.length : rows.filter(r => stayBucket(r.startIso, r.endIso, today) === w).length
 
   const filtered = useMemo(() => rows.filter(r => {
     if (tab !== 'ALL' && r.pay !== tab) return false
     if (status !== 'ALL' && r.status !== status) return false
+    if (when !== 'ALL' && stayBucket(r.startIso, r.endIso, today) !== when) return false
     if (query) {
       const q = query.toLowerCase()
       return [r.guestName, r.email, r.phone, r.suite, r.checkIn, r.checkOut, r.oid]
         .some(v => v.toLowerCase().includes(q))
     }
     return true
-  }), [rows, tab, status, query])
+  }), [rows, tab, status, when, query, today])
+
+  // Dates the parser could not read. Worth saying out loud while a date filter
+  // is on, because those stays are missing from the list through no fault of
+  // the filter.
+  const undated = rows.filter(r => !r.startIso).length
 
   const shown = useMemo(() => totalsOf(filtered), [filtered])
   const inHouseUnpaid = rows.filter(r =>
@@ -104,7 +123,7 @@ export function ReservationsBoard({ rows, deleteAction }: {
       </Tiles>
 
       {inHouseUnpaid > 0 && (
-        <Notice action={<NoticeButton onClick={() => { setTab('OFFLINE'); setStatus('ALL') }}>Show them</NoticeButton>}>
+        <Notice action={<NoticeButton onClick={() => { setTab('OFFLINE'); setStatus('ALL'); setWhen('ALL') }}>Show them</NoticeButton>}>
           <strong>{inHouseUnpaid}</strong> confirmed or in-house {inHouseUnpaid === 1 ? 'stay has' : 'stays have'} no card payment on file.
         </Notice>
       )}
@@ -114,11 +133,15 @@ export function ReservationsBoard({ rows, deleteAction }: {
       <div style={{ marginTop: 12, display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
         <SearchBox value={query} onChange={setQuery} placeholder="Search a guest, email, phone, suite, date or order id…" />
         <Segmented value={status} onChange={setStatus} options={statuses} />
+        <Segmented value={when} onChange={setWhen} options={whenOptions} countFor={countWhen} />
       </div>
 
       <div style={{ marginTop: 12, fontFamily: 'var(--sans, system-ui)', fontSize: 13, color: T.ink3 }}>
         {filtered.length} {filtered.length === 1 ? 'reservation' : 'reservations'}
         {shown.paid > 0 && <> · <strong style={{ color: T.ink2 }}>{madTotal(shown.paidMinor)}</strong> collected online</>}
+        {when !== 'ALL' && undated > 0 && (
+          <> · {undated} {undated === 1 ? 'stay has dates' : 'stays have dates'} we could not read, left out of this filter</>
+        )}
       </div>
 
       {filtered.length === 0 ? (

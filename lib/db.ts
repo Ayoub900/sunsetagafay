@@ -1,3 +1,4 @@
+import { isoToday } from './dates'
 import { prisma } from './prisma'
 import { blockClosesWholeType, blockCovers, serviceAllLabel, serviceTypeLabel } from './services'
 import { toReservationRow, toRow } from './payments/view'
@@ -308,7 +309,9 @@ export async function getServiceBookingRows() {
   const now = Date.now()
   return {
     rows: bookings.map(b => toRow(b, now)),
-    today: new Date(now).toLocaleDateString('en-CA'), // YYYY-MM-DD, local
+    // The maison's day, not the server's: Vercel runs in UTC, and a booking
+    // date is the day the guest turns up in Agafay. See lib/dates.
+    today: isoToday(now),
   }
 }
 

@@ -158,8 +158,14 @@ export function SearchBox({ value, onChange, placeholder }: {
   )
 }
 
-export function Segmented<V extends string>({ value, onChange, options }: {
+/**
+ * A narrow either/or filter. Pass `countFor` where an empty answer would
+ * otherwise read as a broken filter — "Today 0" says the day is quiet, where a
+ * bare "Today" showing nothing looks like the button did not work.
+ */
+export function Segmented<V extends string>({ value, onChange, options, countFor }: {
   value: V; onChange: (v: V) => void; options: [V, string][]
+  countFor?: (v: V) => number
 }) {
   return (
     <div style={{ display: 'inline-flex', padding: 3, background: T.surfaceAlt, borderRadius: T.radiusSm, border: `1px solid ${T.line}` }}>
@@ -167,11 +173,17 @@ export function Segmented<V extends string>({ value, onChange, options }: {
         const on = value === v
         return (
           <button key={v} onClick={() => onChange(v)} style={{
+            display: 'inline-flex', alignItems: 'center', gap: 6,
             padding: '5px 12px', border: 0, borderRadius: T.radiusSm - 2, cursor: 'pointer',
             background: on ? T.surface : 'transparent', color: on ? T.ink : T.ink2,
             boxShadow: on ? '0 1px 2px rgba(31,26,20,0.06)' : 'none',
             fontFamily: 'var(--sans, system-ui)', fontSize: 12.5, fontWeight: on ? 600 : 500,
-          }}>{label}</button>
+          }}>
+            {label}
+            {countFor && (
+              <span style={{ opacity: 0.55, fontVariantNumeric: 'tabular-nums' }}>{countFor(v)}</span>
+            )}
+          </button>
         )
       })}
     </div>

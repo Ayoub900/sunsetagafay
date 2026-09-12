@@ -1,5 +1,6 @@
 import type { Order, Reservation, ServiceBooking } from '@prisma/client'
 import { formatMinorUnits } from '@/lib/cmi/util'
+import { addDays, toIsoDate } from '@/lib/dates'
 
 // One place that answers "did this guest actually pay?" — for a day pass, a
 // transfer and a room stay alike, so the admin screens can never disagree with
@@ -181,9 +182,15 @@ export interface ReservationRow extends PayFacts {
   email: string
   phone: string
   suite: string
-  // Free text on the model ("14 May 2026"), so these are shown, never compared.
+  // Free text on the model, so these are shown exactly as entered, never
+  // compared: a stay booked on the site holds "2026-05-14", one typed at the
+  // desk "14 May 2026".
   checkIn: string
   checkOut: string
+  // The same two days read as calendar dates (YYYY-MM-DD) for the date filter,
+  // and null when the text was not a date anyone can place on a calendar.
+  startIso: string | null
+  endIso: string | null
   stayLabel: string
   nights: number
   guests: number
@@ -206,6 +213,12 @@ export function toReservationRow(r: Reservation & { orders: Order[] }, now = Dat
   const order = r.orders[0] ?? null
   const state = stateOf(order, r.status === 'Cancelled', now, 'OFFLINE')
 
+  // A half-readable stay is still worth placing: when only the check-out is
+  // unparseable, `nights` on the model says where the stay ends.
+  const startIso = toIsoDate(r.checkIn)
+  const endIso = toIsoDate(r.checkOut)
+    ?? (startIso ? addDays(startIso, Math.max(1, r.nights)) : null)
+
   return {
     id: r.id,
     guestName: r.guestName,
@@ -214,6 +227,8 @@ export function toReservationRow(r: Reservation & { orders: Order[] }, now = Dat
     suite: r.suite,
     checkIn: r.checkIn,
     checkOut: r.checkOut,
+    startIso,
+    endIso,
     stayLabel: `${r.checkIn} → ${r.checkOut}`,
     nights: r.nights,
     guests: r.guests,
