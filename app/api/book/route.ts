@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
 
     const nights    = intInRange(body.nights, { field: 'nights', min: 1, max: 365, default: 1 })
     const guests    = intInRange(body.guests, { field: 'guests', min: 1, max: 20,  default: 1 })
+    const bedType   = str(body.bedType, { field: 'bedType', required: true, max: 6, pattern: /^(Double|Twin)$/ })
     const total     = str(body.total,     { field: 'total',     max: 64 })
     const guestName = str(body.guestName, { field: 'guestName', required: true, min: 1, max: 100 })
     const mail      = email(body.email)
@@ -55,6 +56,7 @@ export async function POST(req: NextRequest) {
         checkOut,
         nights,
         guests,
+        bedType,
         total,
         status:   'Pending',
         notes:    [

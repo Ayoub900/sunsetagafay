@@ -9,6 +9,8 @@ import { Field, FormSection, TextInput, TextArea, SelectInput } from '@/componen
 import { T } from '@/components/admin/tokens'
 
 const statusOptions = ['Pending', 'Confirmed', 'In-house', 'Departing', 'Completed', 'Cancelled']
+// '—' = not specified (reservations taken before guests chose, or by phone).
+const bedOptions = ['—', 'Double', 'Twin']
 
 // Payment state has to be read fresh — a cached page would tell staff a guest
 // paid when the callback has since said otherwise.
@@ -71,6 +73,9 @@ export default async function ReservationsPage({ searchParams }: { searchParams:
                     <Field label="Guests" w="160px">
                       <TextInput name="guests" type="number" defaultValue={String(editing?.guests ?? 1)} required />
                     </Field>
+                    <Field label="Bed" w="160px">
+                      <SelectInput name="bedType" defaultValue={editing?.bedType || '—'} options={bedOptions} />
+                    </Field>
                   </FormSection>
                   <FormSection title="Financials & Status">
                     <Field label="Total" w="calc(50% - 8px)">
@@ -101,6 +106,7 @@ export default async function ReservationsPage({ searchParams }: { searchParams:
                         ['Check-out', editing.checkOut],
                         ['Nights', String(editing.nights)],
                         ['Guests', String(editing.guests)],
+                        ['Bed', editing.bedType || '—'],
                         ['Total', editing.total || '—'],
                       ].map(([k, v]) => (
                         <div key={k} style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 8, borderBottom: `1px solid ${T.line}` }}>

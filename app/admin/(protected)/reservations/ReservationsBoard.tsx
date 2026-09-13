@@ -279,6 +279,7 @@ function ReservationDetails({ r }: { r: ReservationRow }) {
         ['Order id', r.oid || 'no online payment'],
         ['Check-in', r.checkIn],
         ['Check-out', r.checkOut],
+        ['Bed', r.bedType || '—'],
         ['Notes', r.notes || '—'],
       ]}
       footer={

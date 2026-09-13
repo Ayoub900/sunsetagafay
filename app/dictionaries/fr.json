@@ -463,6 +463,11 @@
     "country_label": "Pays",
     "notes_label": "Demandes spéciales",
     "notes_placeholder": "Régimes alimentaires, célébration, heure d'arrivée, allergies…",
+    "bed_label": "Type de lit",
+    "bed_double": "Lit double",
+    "bed_double_sub": "Un grand lit pour deux",
+    "bed_twin": "Lits jumeaux",
+    "bed_twin_sub": "Deux lits simples séparés",
     "summary_label": "Votre sélection",
     "total_label": "Total estimé",
     "confirm_cta": "Confirmer la réservation",
@@ -480,6 +485,7 @@
     "error_dates": "Veuillez sélectionner des dates d'arrivée et de départ valides.",
     "error_name": "Veuillez entrer votre nom.",
     "error_email": "Veuillez entrer une adresse e-mail valide.",
+    "error_bed": "Veuillez choisir un lit double ou des lits jumeaux.",
     "error_generic": "Une erreur s'est produite. Veuillez réessayer ou nous contacter directement."
   },
   "payment": {

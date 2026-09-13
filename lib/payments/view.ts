@@ -194,6 +194,7 @@ export interface ReservationRow extends PayFacts {
   stayLabel: string
   nights: number
   guests: number
+  bedType: string
   occupancy: string
   // What the card was charged when there is an order, otherwise the quote typed
   // on the reservation — which may be in euros, hence no MAD assumption.
@@ -232,6 +233,7 @@ export function toReservationRow(r: Reservation & { orders: Order[] }, now = Dat
     stayLabel: `${r.checkIn} → ${r.checkOut}`,
     nights: r.nights,
     guests: r.guests,
+    bedType: r.bedType ?? '',
     occupancy: `${r.nights} ${r.nights === 1 ? 'night' : 'nights'} · ${r.guests} ${r.guests === 1 ? 'guest' : 'guests'}`,
     amountLabel: order ? `${formatMinorUnits(order.amount)} MAD` : (r.total || '—'),
     amountMinor: order?.amount ?? 0,

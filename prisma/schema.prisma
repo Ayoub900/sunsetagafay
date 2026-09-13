@@ -204,6 +204,9 @@ model Reservation {
   checkOut  String
   nights    Int      @default(1)
   guests    Int      @default(1)
+  // "Double" | "Twin", chosen by the guest before payment. Optional because
+  // reservations created before the choice existed have no value.
+  bedType   String?
   total     String   @default("")
   status    String   @default("Pending")
   notes     String   @default("")

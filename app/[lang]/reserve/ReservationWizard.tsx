@@ -40,6 +40,11 @@ interface ReserveDict {
   country_label: string
   notes_label: string
   notes_placeholder: string
+  bed_label: string
+  bed_double: string
+  bed_double_sub: string
+  bed_twin: string
+  bed_twin_sub: string
   summary_label: string
   total_label: string
   confirm_cta: string
@@ -57,6 +62,7 @@ interface ReserveDict {
   error_dates: string
   error_name: string
   error_email: string
+  error_bed: string
   error_generic: string
 }
 
@@ -83,6 +89,7 @@ interface Booking {
   id: string
   chargeable: boolean
   amountMadLabel: string
+  bedLabel: string
 }
 
 interface AvailableSuite {
@@ -108,7 +115,10 @@ interface DateState {
   nights: number
 }
 
+type BedType = 'Double' | 'Twin'
+
 interface GuestForm {
+  bedType: BedType | ''
   guestName: string
   email: string
   phone: string
@@ -562,7 +572,7 @@ function DetailsStep({
   error: string | null
 }) {
   const id = useId()
-  const [form, setForm] = useState<GuestForm>({ guestName: '', email: '', phone: '', country: '', notes: '' })
+  const [form, setForm] = useState<GuestForm>({ bedType: '', guestName: '', email: '', phone: '', country: '', notes: '' })
   const [localErr, setLocalErr] = useState<string | null>(null)
 
   const suiteName = isFr ? suite.nameFr : suite.nameEn
@@ -577,6 +587,7 @@ function DetailsStep({
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLocalErr(null)
+    if (!form.bedType) { setLocalErr(dict.error_bed); return }
     if (!form.guestName.trim()) { setLocalErr(dict.error_name); return }
     const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRe.test(form.email)) { setLocalErr(dict.error_email); return }
@@ -640,6 +651,44 @@ function DetailsStep({
         <p style={{ fontFamily: 'var(--sans)', fontSize: 13, color: 'var(--ink-soft)', margin: '0 0 clamp(28px,4vw,40px)', letterSpacing: '0.03em' }}>
           {dict.details_sub}
         </p>
+
+        {/* Bed configuration */}
+        <fieldset style={{ border: 'none', padding: 0, margin: '0 0 clamp(24px,3vw,36px)' }}>
+          <legend style={{ fontFamily: 'var(--sans)', fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--ink-soft)', marginBottom: 12, padding: 0 }}>
+            {dict.bed_label} *
+          </legend>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'clamp(12px,2vw,20px)' }}>
+            {([
+              ['Double', dict.bed_double, dict.bed_double_sub],
+              ['Twin', dict.bed_twin, dict.bed_twin_sub],
+            ] as const).map(([value, label, sub]) => {
+              const checked = form.bedType === value
+              return (
+                <label key={value} style={{
+                  display: 'flex', alignItems: 'flex-start', gap: 12,
+                  padding: 'clamp(14px,2vw,20px)',
+                  border: `1px solid ${checked ? 'var(--sienna)' : 'rgba(31,26,20,0.18)'}`,
+                  background: checked ? 'rgba(160,74,42,0.06)' : 'transparent',
+                  cursor: 'pointer',
+                  transition: 'border-color 250ms, background 250ms',
+                }}>
+                  <input
+                    type="radio"
+                    name={`${id}-bed`}
+                    value={value}
+                    checked={checked}
+                    onChange={() => setForm(f => ({ ...f, bedType: value }))}
+                    style={{ marginTop: 4, flexShrink: 0, accentColor: 'var(--sienna)' }}
+                  />
+                  <span>
+                    <span style={{ display: 'block', fontFamily: 'var(--serif)', fontSize: 'clamp(17px,1.8vw,20px)', color: 'var(--ink)', marginBottom: 4 }}>{label}</span>
+                    <span style={{ display: 'block', fontFamily: 'var(--sans)', fontSize: 12, lineHeight: 1.6, color: 'var(--ink-soft)' }}>{sub}</span>
+                  </span>
+                </label>
+              )
+            })}
+          </div>
+        </fieldset>
 
         <div className="form-grid" style={{ marginBottom: 'clamp(20px,2.5vw,28px)' }}>
           <div className="form-field">
@@ -758,7 +807,7 @@ function PaymentStep({
         <div>
           <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--rose)', marginBottom: 6 }}>{pay.summary_label}</div>
           <div style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(18px,2vw,22px)', marginBottom: 4 }}>{suiteName}</div>
-          <div style={{ fontFamily: 'var(--sans)', fontSize: 12, letterSpacing: '0.06em', color: 'rgba(242,232,213,0.65)' }}>{datesLabel} · {nightsLabel}</div>
+          <div style={{ fontFamily: 'var(--sans)', fontSize: 12, letterSpacing: '0.06em', color: 'rgba(242,232,213,0.65)' }}>{datesLabel} · {nightsLabel} · {booking.bedLabel}</div>
         </div>
         <div style={{ textAlign: 'right' }}>
           <div style={{ fontFamily: 'var(--sans)', fontSize: 9, letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--rose)', marginBottom: 4 }}>{pay.amount_label}</div>
@@ -883,6 +932,7 @@ export default function ReservationWizard({ dict, pay, lang }: Props) {
         id: data.id,
         chargeable: !!data.chargeable,
         amountMadLabel: data.amountMadLabel || '',
+        bedLabel: guest.bedType === 'Twin' ? dict.bed_twin : dict.bed_double,
       })
       setStep('payment')
       window.scrollTo({ top: 0, behavior: 'smooth' })

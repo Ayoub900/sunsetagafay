@@ -463,6 +463,11 @@
     "country_label": "Country",
     "notes_label": "Special Requests",
     "notes_placeholder": "Dietary requirements, celebration, arrival time, allergies…",
+    "bed_label": "Bed Configuration",
+    "bed_double": "Double",
+    "bed_double_sub": "One large bed for two",
+    "bed_twin": "Twin",
+    "bed_twin_sub": "Two separate single beds",
     "summary_label": "Your Selection",
     "total_label": "Estimated Total",
     "confirm_cta": "Confirm Reservation",
@@ -480,6 +485,7 @@
     "error_dates": "Please select valid check-in and check-out dates.",
     "error_name": "Please enter your name.",
     "error_email": "Please enter a valid email address.",
+    "error_bed": "Please choose a double or twin bed.",
     "error_generic": "Something went wrong. Please try again or contact us directly."
   },
   "payment": {

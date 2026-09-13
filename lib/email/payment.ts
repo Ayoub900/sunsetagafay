@@ -16,6 +16,8 @@ const LABELS = {
     checkOut: 'Check-out',
     nights: 'Nights',
     guests: 'Guests',
+    bed: 'Bed',
+    bedTypes: { Double: 'Double', Twin: 'Twin' } as Record<string, string>,
     date: 'Date',
     time: 'Start time',
     pickupTime: 'Pickup time',
@@ -31,6 +33,8 @@ const LABELS = {
     checkOut: 'Départ',
     nights: 'Nuits',
     guests: 'Personnes',
+    bed: 'Lit',
+    bedTypes: { Double: 'Lit double', Twin: 'Lits jumeaux' } as Record<string, string>,
     date: 'Date',
     time: 'Heure d’arrivée',
     pickupTime: 'Heure de prise en charge',
@@ -56,12 +60,14 @@ export function bookingReference(id: string): string {
 
 function stayRows(r: Reservation, lang: 'en' | 'fr'): [string, string][] {
   const l = LABELS[lang]
-  return [
+  const rows: [string, string][] = [
     [l.checkIn, r.checkIn],
     [l.checkOut, r.checkOut],
     [l.nights, String(r.nights)],
     [l.guests, String(r.guests)],
   ]
+  if (r.bedType) rows.push([l.bed, l.bedTypes[r.bedType] ?? r.bedType])
+  return rows
 }
 
 function serviceRows(b: ServiceBooking, lang: 'en' | 'fr'): [string, string][] {

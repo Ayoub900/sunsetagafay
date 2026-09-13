@@ -10,6 +10,11 @@ async function guard() {
   if (!ok) throw new Error('Unauthorized')
 }
 
+function bedTypeOf(formData: FormData): string | null {
+  const v = String(formData.get('bedType') ?? '')
+  return v === 'Double' || v === 'Twin' ? v : null
+}
+
 export async function createReservation(formData: FormData) {
   await guard()
   await prisma.reservation.create({
@@ -20,6 +25,7 @@ export async function createReservation(formData: FormData) {
       checkOut:  String(formData.get('checkOut')).trim(),
       nights:    Number(formData.get('nights')) || 1,
       guests:    Number(formData.get('guests')) || 1,
+      bedType:   bedTypeOf(formData),
       total:     String(formData.get('total') ?? '').trim(),
       status:    String(formData.get('status') ?? 'Pending').trim(),
       notes:     String(formData.get('notes') ?? '').trim(),
@@ -40,6 +46,7 @@ export async function updateReservation(id: string, formData: FormData) {
       checkOut:  String(formData.get('checkOut')).trim(),
       nights:    Number(formData.get('nights')) || 1,
       guests:    Number(formData.get('guests')) || 1,
+      bedType:   bedTypeOf(formData),
       total:     String(formData.get('total') ?? '').trim(),
       status:    String(formData.get('status') ?? 'Pending').trim(),
       notes:     String(formData.get('notes') ?? '').trim(),
