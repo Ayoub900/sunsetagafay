@@ -22,7 +22,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
   return (
     <AdminMobileCtx.Provider value={{ isMobile, sidebarOpen, setSidebarOpen }}>
-      <div style={{ display: 'flex', minHeight: '100vh', background: '#F7F1E4' }}>
+      {/* translate="no" too, for translators that ignore the meta tag — see (protected)/layout. */}
+      <div translate="no" style={{ display: 'flex', minHeight: '100vh', background: '#F7F1E4' }}>
         {isMobile && sidebarOpen && (
           <div
             onClick={() => setSidebarOpen(false)}
