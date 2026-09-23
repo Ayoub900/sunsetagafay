@@ -3,6 +3,7 @@
 import { PayBadge, payToneColors } from './PayBadge'
 import { Icon } from './icons'
 import { T } from './tokens'
+import { addDays } from '@/lib/dates'
 import { PAY_META, type PayState } from '@/lib/payments/view'
 
 // The chrome shared by every "who paid?" screen — summary tiles, payment
@@ -162,9 +163,12 @@ export function SearchBox({ value, onChange, placeholder }: {
  * A narrow either/or filter. Pass `countFor` where an empty answer would
  * otherwise read as a broken filter — "Today 0" says the day is quiet, where a
  * bare "Today" showing nothing looks like the button did not work.
+ *
+ * `value` may be null when another control has taken over, e.g. a picked day
+ * in place of Today / Upcoming / Past; then no option is shown as on.
  */
 export function Segmented<V extends string>({ value, onChange, options, countFor }: {
-  value: V; onChange: (v: V) => void; options: [V, string][]
+  value: V | null; onChange: (v: V) => void; options: [V, string][]
   countFor?: (v: V) => number
 }) {
   return (
@@ -188,6 +192,55 @@ export function Segmented<V extends string>({ value, onChange, options, countFor
       })}
     </div>
   )
+}
+
+/**
+ * Choose one calendar day. The arrows step a day at a time, starting from today
+ * when nothing is picked yet, so walking through the week takes one click per
+ * day. `null` means no day is picked.
+ */
+export function DayPicker({ value, onChange, today }: {
+  value: string | null; onChange: (day: string | null) => void; today: string
+}) {
+  const step = (days: number) => onChange(addDays(value ?? today, value ? days : 0))
+  const on = value !== null
+  return (
+    <div style={{
+      display: 'inline-flex', alignItems: 'center', height: 34, padding: '0 3px',
+      background: T.surface, borderRadius: T.radiusSm,
+      border: `1px solid ${on ? T.sienna : T.line2}`,
+      boxShadow: on ? `inset 0 0 0 1px ${T.sienna}` : 'none',
+    }}>
+      <button onClick={() => step(-1)} title="Previous day" style={dayStepBtn}>
+        <span style={{ display: 'inline-flex', transform: 'rotate(180deg)' }}><Icon name="arrow" size={13} /></span>
+      </button>
+      <label style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: on ? T.ink : T.ink3 }}>
+        <Icon name="calendar" size={14} />
+        <input
+          type="date" aria-label="Pick a day" value={value ?? ''}
+          onChange={e => onChange(e.target.value || null)}
+          style={{
+            background: 'transparent', border: 0, outline: 'none', padding: 0, width: 118,
+            fontFamily: 'var(--sans, system-ui)', fontSize: 12.5, fontWeight: on ? 600 : 500,
+            color: on ? T.ink : T.ink2,
+          }}
+        />
+      </label>
+      <button onClick={() => step(1)} title="Next day" style={dayStepBtn}>
+        <Icon name="arrow" size={13} />
+      </button>
+      {on && (
+        <button onClick={() => onChange(null)} title="Clear day" style={{ ...dayStepBtn, color: T.sienna }}>
+          <Icon name="x" size={13} />
+        </button>
+      )}
+    </div>
+  )
+}
+
+const dayStepBtn: React.CSSProperties = {
+  width: 26, height: 26, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+  background: 'transparent', border: 0, borderRadius: 4, cursor: 'pointer', color: T.ink2, padding: 0,
 }
 
 /** The expanded panel under a row (and the body of every mobile card). */

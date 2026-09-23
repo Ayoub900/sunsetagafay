@@ -51,6 +51,15 @@ export function stayBucket(start: string | null, end: string | null, today: stri
   return 'TODAY'
 }
 
+/**
+ * Whether the maison is holding a stay on `day`: arriving, in house or
+ * leaving. This is how `stayBucket` reads TODAY, applied to any day.
+ */
+export function stayCovers(start: string | null, end: string | null, day: string): boolean {
+  if (!start) return false
+  return start <= day && (end ?? start) >= day
+}
+
 const ISO_RE = /^(\d{4})-(\d{2})-(\d{2})$/
 
 /** Whether a string is a real `YYYY-MM-DD` day (rejects 2026-02-30). */
@@ -65,6 +74,20 @@ export function addDays(iso: string, days: number): string {
   const t = Date.parse(`${iso}T00:00:00Z`)
   if (Number.isNaN(t)) return iso
   return new Date(t + days * 86_400_000).toISOString().slice(0, 10)
+}
+
+const dayLabelFormat = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'UTC', weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
+})
+
+/** `YYYY-MM-DD` as "Wed 23 Sep 2026", read at UTC midnight so no timezone can shift the day. */
+export function dayLabel(iso: string): string {
+  const t = Date.parse(`${iso}T00:00:00Z`)
+  if (Number.isNaN(t)) return iso
+  // From parts: en-GB's own join is "Wed, 23 Sept 2026" on current ICU.
+  const parts = dayLabelFormat.formatToParts(t)
+  const at = (type: string) => parts.find(p => p.type === type)?.value ?? ''
+  return `${at('weekday')} ${at('day')} ${at('month').slice(0, 3)} ${at('year')}`
 }
 
 // English and French month names, longest keys first so "juillet" is not read

@@ -7,11 +7,11 @@ import { Icon } from '@/components/admin/icons'
 import { StatusPill } from '@/components/admin/Pill'
 import { T } from '@/components/admin/tokens'
 import {
-  Card, Cards, Chevron, Details, Empty, Notice, NoticeButton, PayCell, PayChips,
+  Card, Cards, Chevron, DayPicker, Details, Empty, Notice, NoticeButton, PayCell, PayChips,
   SearchBox, Segmented, TableShell, Tile, Tiles, boardCss, td, th,
 } from '@/components/admin/PaymentBoard'
 import { useBusinessToday } from '@/components/admin/useBusinessToday'
-import { stayBucket, type DayBucket } from '@/lib/dates'
+import { dayLabel, stayBucket, stayCovers, type DayBucket } from '@/lib/dates'
 import { madTotal, totalsOf, type PayState, type ReservationRow } from '@/lib/payments/view'
 
 // The same board as Passes & Transfers, on room stays. Two differences, both
@@ -56,6 +56,12 @@ export function ReservationsBoard({ rows, deleteAction }: {
   const [tab, setTab] = useState<Tab>('ALL')
   const [status, setStatus] = useState<Status>('ALL')
   const [when, setWhen] = useState<When>('ALL')
+  // One picked day, or null: every stay the maison holds that day, arriving,
+  // in house or leaving. It and `when` are two ways of saying which dates to
+  // show, so setting one clears the other rather than intersecting them.
+  const [day, setDay] = useState<string | null>(null)
+  const pickWhen = (w: When) => { setWhen(w); setDay(null) }
+  const pickDay = (d: string | null) => { setDay(d); if (d) setWhen('ALL') }
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState<string | null>(null)
   const [delRow, setDelRow] = useState<ReservationRow | null>(null)
@@ -71,13 +77,14 @@ export function ReservationsBoard({ rows, deleteAction }: {
     if (tab !== 'ALL' && r.pay !== tab) return false
     if (status !== 'ALL' && r.status !== status) return false
     if (when !== 'ALL' && stayBucket(r.startIso, r.endIso, today) !== when) return false
+    if (day && !stayCovers(r.startIso, r.endIso, day)) return false
     if (query) {
       const q = query.toLowerCase()
       return [r.guestName, r.email, r.phone, r.suite, r.checkIn, r.checkOut, r.oid]
         .some(v => v.toLowerCase().includes(q))
     }
     return true
-  }), [rows, tab, status, when, query, today])
+  }), [rows, tab, status, when, day, query, today])
 
   // Dates the parser could not read. Worth saying out loud while a date filter
   // is on, because those stays are missing from the list through no fault of
@@ -123,7 +130,7 @@ export function ReservationsBoard({ rows, deleteAction }: {
       </Tiles>
 
       {inHouseUnpaid > 0 && (
-        <Notice action={<NoticeButton onClick={() => { setTab('OFFLINE'); setStatus('ALL'); setWhen('ALL') }}>Show them</NoticeButton>}>
+        <Notice action={<NoticeButton onClick={() => { setTab('OFFLINE'); setStatus('ALL'); pickWhen('ALL') }}>Show them</NoticeButton>}>
           <strong>{inHouseUnpaid}</strong> confirmed or in-house {inHouseUnpaid === 1 ? 'stay has' : 'stays have'} no card payment on file.
         </Notice>
       )}
@@ -133,13 +140,15 @@ export function ReservationsBoard({ rows, deleteAction }: {
       <div style={{ marginTop: 12, display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
         <SearchBox value={query} onChange={setQuery} placeholder="Search a guest, email, phone, suite, date or order id…" />
         <Segmented value={status} onChange={setStatus} options={statuses} />
-        <Segmented value={when} onChange={setWhen} options={whenOptions} countFor={countWhen} />
+        <Segmented value={day ? null : when} onChange={pickWhen} options={whenOptions} countFor={countWhen} />
+        <DayPicker value={day} onChange={pickDay} today={today} />
       </div>
 
       <div style={{ marginTop: 12, fontFamily: 'var(--sans, system-ui)', fontSize: 13, color: T.ink3 }}>
         {filtered.length} {filtered.length === 1 ? 'reservation' : 'reservations'}
+        {day && <> on <strong style={{ color: T.ink2 }}>{dayLabel(day)}</strong></>}
         {shown.paid > 0 && <> · <strong style={{ color: T.ink2 }}>{madTotal(shown.paidMinor)}</strong> collected online</>}
-        {when !== 'ALL' && undated > 0 && (
+        {(when !== 'ALL' || day) && undated > 0 && (
           <> · {undated} {undated === 1 ? 'stay has dates' : 'stays have dates'} we could not read, left out of this filter</>
         )}
       </div>

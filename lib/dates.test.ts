@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { addDays, dayBucket, isValidIsoDate, isoToday, stayBucket, toIsoDate } from './dates'
+import { addDays, dayBucket, dayLabel, isValidIsoDate, isoToday, stayBucket, stayCovers, toIsoDate } from './dates'
 
 const TODAY = '2026-09-12'
 
@@ -108,5 +108,35 @@ describe('toIsoDate', () => {
     expect(toIsoDate('30 February 2026')).toBe(null)
     expect(toIsoDate('14 Smith 2026')).toBe(null)
     expect(toIsoDate('2026')).toBe(null)
+  })
+})
+
+describe('stayCovers', () => {
+  it('holds the stay on arrival, in-house and departure days', () => {
+    expect(stayCovers('2026-09-10', '2026-09-14', '2026-09-10')).toBe(true)
+    expect(stayCovers('2026-09-10', '2026-09-14', '2026-09-12')).toBe(true)
+    expect(stayCovers('2026-09-10', '2026-09-14', '2026-09-14')).toBe(true)
+  })
+
+  it('leaves out days outside the stay', () => {
+    expect(stayCovers('2026-09-10', '2026-09-14', '2026-09-09')).toBe(false)
+    expect(stayCovers('2026-09-10', '2026-09-14', '2026-09-15')).toBe(false)
+  })
+
+  it('reads a stay with no end as one day, and one with no start as none', () => {
+    expect(stayCovers('2026-09-10', null, '2026-09-10')).toBe(true)
+    expect(stayCovers('2026-09-10', null, '2026-09-11')).toBe(false)
+    expect(stayCovers(null, '2026-09-14', '2026-09-12')).toBe(false)
+  })
+})
+
+describe('dayLabel', () => {
+  it('prints the day it was given, whatever the host timezone', () => {
+    expect(dayLabel('2026-09-23')).toMatch(/^Wed 23 Sep/)
+    expect(dayLabel('2026-01-01')).toMatch(/^Thu 1 Jan 2026$/)
+  })
+
+  it('hands back text it cannot read', () => {
+    expect(dayLabel('soon')).toBe('soon')
   })
 })

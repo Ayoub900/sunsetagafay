@@ -4,11 +4,11 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { T } from '@/components/admin/tokens'
 import {
-  Card, Cards, Chevron, Details, Empty, Notice, NoticeButton, PayCell, PayChips,
+  Card, Cards, Chevron, DayPicker, Details, Empty, Notice, NoticeButton, PayCell, PayChips,
   SearchBox, Segmented, TableShell, Tile, Tiles, boardCss, td, th,
 } from '@/components/admin/PaymentBoard'
 import { useBusinessToday } from '@/components/admin/useBusinessToday'
-import { dayBucket, type DayBucket } from '@/lib/dates'
+import { dayBucket, dayLabel, type DayBucket } from '@/lib/dates'
 import { madTotal, totalsOf, type BookingRow, type PayState } from '@/lib/payments/view'
 
 // The one question this screen exists to answer, for every row, without having
@@ -39,6 +39,11 @@ export function BookingsBoard({ rows, today: initialToday }: { rows: BookingRow[
   const [tab, setTab] = useState<Tab>('ALL')
   const [kind, setKind] = useState<Kind>('ALL')
   const [when, setWhen] = useState<When>('ALL')
+  // One picked day, or null. It and `when` are two ways of saying which dates
+  // to show, so setting one clears the other rather than intersecting them.
+  const [day, setDay] = useState<string | null>(null)
+  const pickWhen = (w: When) => { setWhen(w); setDay(null) }
+  const pickDay = (d: string | null) => { setDay(d); if (d) setWhen('ALL') }
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState<string | null>(null)
 
@@ -51,13 +56,14 @@ export function BookingsBoard({ rows, today: initialToday }: { rows: BookingRow[
     if (tab !== 'ALL' && r.pay !== tab) return false
     if (kind !== 'ALL' && r.kind !== kind) return false
     if (when !== 'ALL' && dayBucket(r.date, today) !== when) return false
+    if (day && r.date !== day) return false
     if (query) {
       const q = query.toLowerCase()
       return [r.guestName, r.email, r.phone, r.itemName, r.date, r.route, r.oid]
         .some(v => v.toLowerCase().includes(q))
     }
     return true
-  }), [rows, tab, kind, when, query, today])
+  }), [rows, tab, kind, when, day, query, today])
 
   const shown = useMemo(() => totalsOf(filtered), [filtered])
   const unpaidToday = rows.filter(r => r.date === today && (r.pay === 'UNPAID' || r.pay === 'AWAITING')).length
@@ -88,7 +94,7 @@ export function BookingsBoard({ rows, today: initialToday }: { rows: BookingRow[
       </Tiles>
 
       {unpaidToday > 0 && (
-        <Notice action={<NoticeButton onClick={() => { setWhen('TODAY'); setTab('UNPAID'); setKind('ALL') }}>Show them</NoticeButton>}>
+        <Notice action={<NoticeButton onClick={() => { pickWhen('TODAY'); setTab('UNPAID'); setKind('ALL') }}>Show them</NoticeButton>}>
           <strong>{unpaidToday}</strong> booking{unpaidToday === 1 ? '' : 's'} arriving today {unpaidToday === 1 ? 'has' : 'have'} not paid.
         </Notice>
       )}
@@ -101,11 +107,13 @@ export function BookingsBoard({ rows, today: initialToday }: { rows: BookingRow[
           value={kind} onChange={setKind}
           options={[['ALL', 'All services'], ['DAY_PASS', 'Day passes'], ['TRANSFER', 'Transfers']]}
         />
-        <Segmented value={when} onChange={setWhen} options={whenOptions} countFor={countWhen} />
+        <Segmented value={day ? null : when} onChange={pickWhen} options={whenOptions} countFor={countWhen} />
+        <DayPicker value={day} onChange={pickDay} today={today} />
       </div>
 
       <div style={{ marginTop: 12, fontFamily: 'var(--sans, system-ui)', fontSize: 13, color: T.ink3 }}>
         {filtered.length} {filtered.length === 1 ? 'booking' : 'bookings'}
+        {day && <> on <strong style={{ color: T.ink2 }}>{dayLabel(day)}</strong></>}
         {shown.paid > 0 && <> · <strong style={{ color: T.ink2 }}>{madTotal(shown.paidMinor)}</strong> collected</>}
       </div>
 
