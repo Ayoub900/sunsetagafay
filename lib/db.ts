@@ -343,6 +343,20 @@ export const getGuests = () =>
 export const getGuestById = (id: string) =>
   prisma.guest.findUnique({ where: { id } })
 
+// ─── Popups ────────────────────────────────────────────────────────────────
+
+export const getPopups = () =>
+  prisma.popup.findMany({ orderBy: [{ order: 'asc' }, { createdAt: 'asc' }] })
+
+export const getActivePopups = () =>
+  prisma.popup.findMany({
+    where: { active: true },
+    orderBy: [{ order: 'asc' }, { createdAt: 'asc' }],
+  })
+
+export const getPopupById = (id: string) =>
+  prisma.popup.findUnique({ where: { id } })
+
 // ─── Site Settings ─────────────────────────────────────────────────────────
 
 export async function getSiteSettings() {

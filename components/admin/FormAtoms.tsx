@@ -109,7 +109,7 @@ export function TextArea({
 export function SelectInput({
   name, value, options, onChange, defaultValue,
 }: {
-  name?: string; value?: string; options: string[]; onChange?: (v: string) => void; defaultValue?: string
+  name?: string; value?: string; options: (string | { value: string; label: string })[]; onChange?: (v: string) => void; defaultValue?: string
 }) {
   return (
     <div style={{
@@ -133,7 +133,9 @@ export function SelectInput({
           backgroundSize: '12px',
         }}
       >
-        {options.map(o => <option key={o} value={o}>{o}</option>)}
+        {options.map(o => typeof o === 'string'
+          ? <option key={o} value={o}>{o}</option>
+          : <option key={o.value} value={o.value}>{o.label}</option>)}
       </select>
     </div>
   )

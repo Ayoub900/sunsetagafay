@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { NavServer } from '@/components/NavServer'
 import { Footer } from '@/components/Footer'
+import { SitePopupServer } from '@/components/SitePopupServer'
 import { getDictionary, hasLocale, type Locale } from './dictionaries'
 import { buildAlternates } from '@/lib/seo'
 import { CONTACT_PHONE, CONTACT_EMAIL } from '@/lib/contact'
@@ -114,6 +115,7 @@ export default async function LangLayout({
         {children}
       </main>
       <Footer dict={dict.footer} lang={lang} />
+      <SitePopupServer lang={lang as 'en' | 'fr'} />
     </>
   )
 }

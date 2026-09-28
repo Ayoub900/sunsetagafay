@@ -414,3 +414,41 @@ model SiteSettings {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
+
+// A marketing popup shown to visitors on the public site (a party, an offer,
+// a seasonal announcement). At most one is shown per page load: the first
+// active one (by `order`) whose date window includes today and that the
+// visitor hasn't already dismissed under its `frequency` rule.
+model Popup {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  // Internal label for the admin list only; never shown to visitors.
+  name          String
+  eyebrowEn     String   @default("")
+  eyebrowFr     String   @default("")
+  titleEn       String
+  titleFr       String
+  descriptionEn String   @default("")
+  descriptionFr String   @default("")
+  // Highlighted offer line, e.g. "-20% for bookings before 1 June".
+  offerEn       String   @default("")
+  offerFr       String   @default("")
+  ctaLabelEn    String   @default("")
+  ctaLabelFr    String   @default("")
+  // "/sunset-parties/full-moon" (the visitor's locale is prefixed) or an
+  // absolute http(s) URL (opens in a new tab). Empty = no button.
+  ctaUrl        String   @default("")
+  imageUrl      String   @default("")
+  // Inclusive YYYY-MM-DD window; empty = no bound.
+  startDate     String   @default("")
+  endDate       String   @default("")
+  delaySeconds  Int      @default(2)
+  // "once" = until dismissed on this device, "daily" = at most once a day,
+  // "session" = once per browser session.
+  frequency     String   @default("once")
+  // "all" = every public page, "home" = homepage only.
+  showOn        String   @default("all")
+  active        Boolean  @default(true)
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
